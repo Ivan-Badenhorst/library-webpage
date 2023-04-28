@@ -2,6 +2,9 @@
 
 //This is the book entity: used to store information on books
 
+//This is a better description of book, and book is used to store information on books
+
+
 namespace App\Entity;
 
 use App\Repository\BookRepository;
