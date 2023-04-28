@@ -23,4 +23,11 @@ class BookBinderController extends AbstractController
             'stylesheets' => $this->stylesheets
         ]);
     }
+    #[Route('/register', name: 'register')]
+    public function register(): Response
+    {
+        return $this->render('register.html.twig', [
+            'stylesheets' => $this->stylesheets
+        ]);
+    }
 }

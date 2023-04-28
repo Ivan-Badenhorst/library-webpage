@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="login_register.css">
+</head>
+<body>
+<div class="container">
+    <form id="register-form" onsubmit="register(); return false;">
+        <h1>Register</h1>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" required>
+        <label for="displayname">Display Name:</label>
+        <input type="text" id="displayname" name="displayname" required>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" required>
+        <label for="postal-code">Postal Code:</label>
+        <input type="text" id="postal-code" name="postal-code" required>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+        <fieldset>
+            <legend>Preferred Book Genres:</legend>
+            <label><input type="checkbox" name="genre" value="Romance">Romance</label>
+            <label><input type="checkbox" name="genre" value="Mystery">Mystery</label>
+            <label><input type="checkbox" name="genre" value="Thriller">Thriller</label>
+            <label><input type="checkbox" name="genre" value="Fantasy">Fantasy</label>
+            <label><input type="checkbox" name="genre" value="Science Fiction">Science Fiction</label>
+        </fieldset>
+        <button type="submit">Register</button>
+        <p id="message"></p>
+    </form>
+    <p id="switch">Already have an account? <a href="login">Login here</a></p>
+</div>
+
+<script src="register.js"></script>
+</body>
+</html>

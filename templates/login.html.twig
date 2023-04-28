@@ -2,77 +2,43 @@
 <html>
 <head>
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="login.css">
+    <link rel="stylesheet" type="text/css" href="login_register.css">
 </head>
 <body>
 <div class="container">
-    <form id="login-form" method="post">
-        <h2>Login</h2>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Login</button>
-    </form>
-    <div class="register">
-        <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+    <div class="container">
+        <form id="login-form" onsubmit="login(); return false;">
+            <h1>Login</h1>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            <button type="submit">Login</button>
+            <p id="message"></p>
+        </form>
+        <p id="switch">Don't have an account? <a href="register">Register here</a></p>
+
     </div>
-    <form id="register-form" method="post" style="display:none">
-        <h2>Register</h2>
-        <label for="new-username">Username</label>
-        <input type="text" id="new-username" name="new-username" required>
-        <label for="new-password">Password</label>
-        <input type="password" id="new-password" name="new-password" required>
-        <button type="submit">Register</button>
-    </form>
 </div>
 <script src="script.js"></script>
 </body>
 </html>
+<script>function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-<script>function showRegister() {
-        document.getElementById("login-form").style.display = "none";
-        document.getElementById("register-form").style.display = "block";
+// Hash the password using SHA-256
+        const hashedPassword = sha256(password);
+
+// TODO: Replace this with your own login logic
+        if (username === "example" && hashedPassword === "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3") {
+// Login successful
+            document.getElementById("message").innerHTML = "Login successful!";
+            document.getElementById("message").className = "success";
+        } else {
+// Login failed
+            document.getElementById("message").innerHTML = "Username or password incorrect";
+            document.getElementById("message").className = "error";
+        }
     }
-
-    document.getElementById("login-form").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        // get input values
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-
-        // validate input
-        if (username === "" || password === "") {
-            document.getElementById("login-form").innerHTML += "<p class='error'>Please enter a username and password</p>";
-            return;
-        }
-
-        // make API call to verify user credentials
-        // ...
-
-        // show success message
-        document.getElementById("login-form").innerHTML += "<p class='success'>Login successful!</p>";
-    });
-
-    document.getElementById("register-form").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        // get input values
-        var username = document.getElementById("new-username").value;
-        var password = document.getElementById("new-password").value;
-
-        // validate input
-        if (username === "" || password === "") {
-            document.getElementById("register-form").innerHTML += "<p class='error'>Please enter a username and password</p>";
-            return;
-        }
-
-        // make API call to create new user account
-        // ...
-
-        // show success message
-        document.getElementById("register-form").innerHTML += "<p class='success'>Registration successful!</p>";
-    });
-
 </script>
