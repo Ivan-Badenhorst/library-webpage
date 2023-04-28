@@ -5,6 +5,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +44,14 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
+
+    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: UserGenre::class, orphanRemoval: true)]
+    private Collection $userGenreId;
+
+    public function __construct()
+    {
+        $this->userGenreId = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -152,6 +162,36 @@ class User
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserGenre>
+     */
+    public function getUserGenreId(): Collection
+    {
+        return $this->userGenreId;
+    }
+
+    public function addGenreId(UserGenre $genreId): self
+    {
+        if (!$this->userGenreId->contains($genreId)) {
+            $this->userGenreId->add($genreId);
+            $genreId->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGenreId(UserGenre $genreId): self
+    {
+        if ($this->userGenreId->removeElement($genreId)) {
+            // set the owning side to null (unless already changed)
+            if ($genreId->getUserId() === $this) {
+                $genreId->setUserId(null);
+            }
+        }
 
         return $this;
     }
