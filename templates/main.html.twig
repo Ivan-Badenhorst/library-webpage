@@ -1,8 +1,208 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    <section>
-        <p>
-            This is the main part of the screen.
-        </p>
-    </section>
+    <div>
+        <section class="favourites">
+            <div class="favourite-text">
+                <h1>OUR FAVORITES</h1>
+                <p>Unsure what to read next? Some of the most trending books last month!</p>
+            </div>
+            <div class="favourite-img">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+            </div>
+
+
+        </section>
+
+        <section class="search-books">
+            <form>
+                <label>
+                    <input type="text" placeholder="Search...">
+                </label>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <div class="main-part">
+            <aside class="filters">
+
+                <h1>Filter by category</h1>
+                <form>
+                    <div class="checkboxes">
+                        <label>
+                            <input type="checkbox" name="category" value="fiction"> Fiction
+                        </label>
+                        <label>
+                            <input type="checkbox" name="category" value="non-fiction"> Non-Fiction
+                        </label>
+                        <label>
+                            <input type="checkbox" name="category" value="biography"> Biography
+                        </label>
+                        <label>
+                            <input type="checkbox" name="category" value="history"> History
+                        </label>
+                        <label>
+                            <input type="checkbox" name="category" value="self-help"> Self-Help
+                        </label>
+                        <label>
+                            <input type="checkbox" name="category" value="travel"> Travel
+                        </label>
+                    </div>
+                </form>
+
+                <h1>Filter by Rating</h1>
+                <form>
+                    <div class="checkboxes">
+                        <label>
+                            <input type="checkbox" name="rating" value="very good"> Very good
+                        </label>
+                        <label>
+                            <input type="checkbox" name="rating" value="good"> Good
+                        </label>
+                        <label>
+                            <input type="checkbox" name="rating" value="mediocre"> Mediocre
+                        </label>
+                    </div>
+                </form>
+
+                <h1>Filter by genre</h1>
+                <form>
+                    <div class="checkboxes">
+                        <label>
+                            <input type="checkbox" name="genre" value="romance"> Romance
+                        </label>
+                        <label>
+                            <input type="checkbox" name="genre" value="mystery"> Mystery
+                        </label>
+                        <label>
+                            <input type="checkbox" name="genre" value="fantasy"> Fantasy
+                        </label>
+                        <label>
+                            <input type="checkbox" name="genre" value="sci-fi"> Science Fiction
+                        </label>
+                        <label>
+                            <input type="checkbox" name="genre" value="horror"> Horror
+                        </label>
+                        <label>
+                            <input type="checkbox" name="genre" value="thriller"> Thriller
+                        </label>
+                    </div>
+                </form>
+
+            </aside>
+
+            <section class="book-listings-section">
+                <div class="book-listings">
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">
+                        <div>
+                            <h2>The Name of the Wind</h2>
+                            <p>By Patrick Rothfuss</p>
+                            <p>Genre: Fantasy</p>
+                        </div>
+                    </div>
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>Gone Girl</h2>
+                            <p>By Gillian Flynn</p>
+                            <p>Genre: Mystery</p>
+                        </div>
+                    </div>
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>The Notebook</h2>
+                            <p>By Nicholas Sparks</p>
+                            <p>Genre: Romance</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>The Notebook</h2>
+                            <p>By Nicholas Sparks</p>
+                            <p>Genre: Romance</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>The Notebook</h2>
+                            <p>By Nicholas Sparks</p>
+                            <p>Genre: Romance</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>The Notebook</h2>
+                            <p>By Nicholas Sparks</p>
+                            <p>Genre: Romance</p>
+                        </div>
+                    </div>
+
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>The Notebook</h2>
+                            <p>By Nicholas Sparks</p>
+                            <p>Genre: Romance</p>
+                        </div>
+                    </div>
+
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">
+                        <div class="title-book">
+                            <h2>The Notebook</h2>
+                            <p>By Nicholas Sparks</p>
+                            <p>Genre: Romance</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">
+                        <div>
+                            <h2>The Name of the Wind</h2>
+                            <p>By Patrick Rothfuss</p>
+                            <p>Genre: Fantasy</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">
+                        <div>
+                            <h2>The Name of the Wind</h2>
+                            <p>By Patrick Rothfuss</p>
+                            <p>Genre: Fantasy</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">
+                        <div>
+                            <h2>The Name of the Wind</h2>
+                            <p>By Patrick Rothfuss</p>
+                            <p>Genre: Fantasy</p>
+                        </div>
+                    </div>
+
+                    <div class="book">
+                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">
+                        <div>
+                            <h2>The Name of the Wind</h2>
+                            <p>By Patrick Rothfuss</p>
+                            <p>Genre: Fantasy</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 {% endblock %}

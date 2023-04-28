@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <title>WebTech Project</title>
+    <link rel="icon" href="{{ asset('images/book.svg') }}" type="image/icon type">
     <meta charset="UTF-8" />
     <meta name="keywords" content="webtech project" />
     <meta name="description"
           content="This is the project for the course webtech, made by group 32" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     {% for stylesheet in stylesheets %}
         <link href="{{ asset('css/' ~ stylesheet) }}" rel="stylesheet" type="text/css"/>
     {% endfor %}
@@ -14,7 +18,23 @@
 
 <body>
 <header>
-    <p>This is the header.</p>
+    <div id="logo">
+        <img class="logo-image" src="{{ asset('images/devLogo.png') }}" alt="Bookbinder logo">
+        <h1 id="title">Bookbinder</h1>
+    </div>
+    <div id="navigator">
+        <nav>
+            <ul>
+                <li><a style="text-decoration:none" href="#">Chats</a></li>
+                <li><a style="text-decoration:none" href="#">Reading list</a></li>
+                <li><a style="text-decoration:none" href="#">Meetup</a></li>
+                <li><a style="text-decoration:none" href="#">About</a></li>
+                <li><a style="text-decoration:none" href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="loginButton">Login</button>
+    </div>
+
 </header>
 
 <main>
@@ -22,7 +42,9 @@
 </main>
 
 <footer>
-    <p>This is the footer</p>
+    <p>Copyright &copy 2023 WebTech. KUL&nbsp;All Rights Reserved.&nbsp;&nbsp;
+        <a style="text-decoration:none" href="#">Privacy Policy</a> | <a style="text-decoration:none" href="#">Terms of Use</a>
+    </p>
 </footer>
 </body>
 </html>
