@@ -12,12 +12,13 @@ class BookBinderController extends AbstractController
 
     public function __construct()
     {
-        $this->stylesheets[] = 'main.css';
+        $this->stylesheets[] = 'base.css';
     }
 
     #[Route('/', name: 'home')]
     public function home(): Response
     {
+        $this->stylesheets[] = 'main.css';
         return $this->render('main.html.twig', [
             'stylesheets'=> $this->stylesheets
         ]);
