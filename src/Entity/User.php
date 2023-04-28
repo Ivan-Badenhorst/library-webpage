@@ -1,6 +1,6 @@
 <?php
 
-//this is the user table, used to store information on users
+//This is the user entity: used to store information on users
 
 namespace App\Entity;
 
