@@ -7,6 +7,7 @@
 <body>
 <div class="container">
     <form id="register-form" onsubmit="register(); return false;">
+        <p id="switch">Already have an account? <a href="login">Login here</a></p>
         <h1>Register</h1>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
@@ -37,7 +38,6 @@
         <button type="submit">Register</button>
         <p id="message"></p>
     </form>
-    <p id="switch">Already have an account? <a href="login">Login here</a></p>
 </div>
 
 <script src="register.js"></script>

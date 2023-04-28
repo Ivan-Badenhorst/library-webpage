@@ -14,16 +14,19 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password">
             <button type="submit">Login</button>
-            <p id="message"></p>
+            <p id="message" name = "message">message</p>
+            <p id="switch">Don't have an account? <a href="register">Register here</a></p>
         </form>
-        <p id="switch">Don't have an account? <a href="register">Register here</a></p>
 
     </div>
 </div>
-<script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 </body>
 </html>
 <script>function login() {
+    console.log("login succes")
+
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
@@ -31,7 +34,7 @@
         const hashedPassword = sha256(password);
 
 // TODO: Replace this with your own login logic
-        if (username === "example" && hashedPassword === "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3") {
+        if (username === "example" && hashedPassword === sha256("password")) {
 // Login successful
             document.getElementById("message").innerHTML = "Login successful!";
             document.getElementById("message").className = "success";
@@ -40,5 +43,5 @@
             document.getElementById("message").innerHTML = "Username or password incorrect";
             document.getElementById("message").className = "error";
         }
-    }
+     }
 </script>
