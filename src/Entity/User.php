@@ -1,5 +1,7 @@
 <?php
 
+//this is the user table, used to store information on users
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
