@@ -2,9 +2,13 @@
 
 //this is the user table, used to store information on users
 
+
 namespace App\Entity;
+use Symfony\Component\HttpFoundation\File\File;
 
 use App\Repository\UserRepository;
+use Cassandra\Blob;
+use Doctrine\DBAL\Types\BlobType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +46,41 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
+
+    #[ORM\Column(length: 255)]
+    private ?int $loginTries;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+
+    private $profilePicture;
+
+
+    public function getProfilePicture(): ?string
+    {
+        return stream_get_contents($this->profilePicture);
+    }
+
+    public function setProfilePicture(?File $profilePicture): self
+    {
+        if ($profilePicture) {
+            $this->profilePicture = file_get_contents($profilePicture);
+        }
+
+        return $this;
+    }
+
+    public function getLoginTries(): ?int
+    {
+        return $this->loginTries;
+    }
+
+    public function setLoginTries(?int $loginTries): self
+    {
+        $this->loginTries = $loginTries;
+        return $this;
+    }
+
+
 
     public function getId(): ?int
     {

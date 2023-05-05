@@ -6,132 +6,17 @@
 </head>
 <body>
 <div class="container">
-    <form id="register-form" onsubmit="register(); return false;">
         <p id="switch">Already have an account? <a href="login">Login here</a></p>
-        <h1>Register</h1>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <p id = "emailMessage"></p>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <p id = "passwordMessage"></p>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <p id = "nameMessage"></p>
-        <label for="surname">Surname:</label>
-        <input type="text" id="surname" name="surname" required>
-        <p id = "surnameMessage"></p>
-        <label for="displayname">Display Name:</label>
-        <input type="text" id="displayname" name="displayname" required>
-        <p id = "displaynameMessage"></p>
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required>
-        <p id = "dobMessage"></p>
-        <label for="street">Street:</label>
-        <input type="text" id="street" name="street" required>
-        <p id = "streetMessage"></p>
-        <label for="postal-code">Postal Code:</label>
-        <input type="text" id="postal-code" name="postal-code" required>
-        <p id = "postalCodeMessage"></p>
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
-        <p id = "cityMessage"></p>
-        <fieldset>
-            <legend>Preferred Book Genres:</legend>
-            <label><input type="checkbox" name="genre" value="Romance">Romance</label>
-            <label><input type="checkbox" name="genre" value="Mystery">Mystery</label>
-            <label><input type="checkbox" name="genre" value="Thriller">Thriller</label>
-            <label><input type="checkbox" name="genre" value="Fantasy">Fantasy</label>
-            <label><input type="checkbox" name="genre" value="Science Fiction">Science Fiction</label>
-        </fieldset>
-        <button type="submit"></button>
-        <p id="message"></p>
-    </form>
+        <section class="register">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </section>
+    {% if error is defined %}
+        <p id="message">{{ error }}</p>
+    {% endif %}
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 </body>
 </html>
 
-<script>function register() {
 
-        if (document.getElementById("email").value == "") {
-            document.getElementById("emailMessage").innerHTML = "Please enter an email";
-        } else {
-            document.getElementById("emailMessage").innerHTML = "";
-        }
-        if (document.getElementById("password").value == "") {
-            document.getElementById("passwordMessage").innerHTML = "Please enter a password";
-        } else {
-            document.getElementById("passwordMessage").innerHTML = "";
-        }
-        if (document.getElementById("name").value == "") {
-            document.getElementById("nameMessage").innerHTML = "Please enter a name";
-        } else {
-            document.getElementById("nameMessage").innerHTML = "";
-        }
-        if (document.getElementById("surname").value == "") {
-            document.getElementById("surnameMessage").innerHTML = "Please enter a surname";
-        } else {
-            document.getElementById("surnameMessage").innerHTML = "";
-        }
-        if (document.getElementById("displayname").value == "") {
-            document.getElementById("displaynameMessage").innerHTML = "Please enter a display name";
-        } else {
-            document.getElementById("displaynameMessage").innerHTML = "";
-        }
-        if (document.getElementById("dob").value == "") {
-            document.getElementById("dobMessage").innerHTML = "Please enter a date of birth";
-        } else {
-            document.getElementById("dobMessage").innerHTML = "";
-        }
-        if (document.getElementById("street").value == "") {
-            document.getElementById("streetMessage").innerHTML = "Please enter a street";
-        } else {
-            document.getElementById("streetMessage").innerHTML = "";
-        }
-        if (document.getElementById("postal-code").value == "") {
-            document.getElementById("postalCodeMessage").innerHTML = "Please enter a postal code";
-        } else {
-            document.getElementById("postalCodeMessage").innerHTML = "";
-        }
-        if (document.getElementById("city").value == "") {
-            document.getElementById("cityMessage").innerHTML = "Please enter a city";
-        } else {
-            document.getElementById("cityMessage").innerHTML = "";
-        }
-
-
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const name = document.getElementById("name").value;
-        const surname = document.getElementById("surname").value;
-        const displayname = document.getElementById("displayname").value;
-        const dob = document.getElementById("dob").value;
-        const street = document.getElementById("street").value;
-        const postalCode = document.getElementById("postal-code").value;
-        const city = document.getElementById("city").value;
-        const genres = document.getElementsByName("genre");
-
-// Hash the password using SHA-256
-        const hashedPassword = sha256(password);
-
-
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                if (this.responseText === "success") {
-                    document.getElementById('message').innerHTML = "register successful";
-                } else if (this.responseText === "email") {
-                    document.getElementById('message').innerHTML = "email already exists";}
-                else
-                    {
-                        document.getElementById('message').innerHTML = "...";
-                    }
-                }
-            }
-            ;
-            xhttp.open("POST", "register/handler", true);
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send(`email=${email}&password=${hashedPassword}&name=${name}&surname=${surname}&displayname=${displayname}&dob=${dob}&street=${street}&postalCode=${postalCode}&city=${city}&genres=${genres}`);
-        }
-</script>
