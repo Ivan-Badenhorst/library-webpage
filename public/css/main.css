@@ -92,10 +92,11 @@ button[type="submit"] {
 
 .checkboxes label {
     display: block;
+    margin-left: 20px;
 }
 
 .checkboxes input[type="checkbox"] {
-    margin-right: 5px;
+
 }
 
 .book-listings
@@ -117,6 +118,11 @@ button[type="submit"] {
 .filters {
     display : inline-block;
     width: 18em;
+}
+
+.sticky-filter {
+    position: sticky;
+    top: 0;
 }
 
 aside h1 {

@@ -3,6 +3,13 @@
     padding: 0;
 }
 
+main {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 header {
     display: flex;
     flex-direction: row;
@@ -25,6 +32,7 @@ header {
     flex-direction: row;
     align-items: center;
     justify-items: center;
+    background-color: #01a7c2;
 }
 
 #title {
@@ -36,7 +44,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #a3bac3;
+    background-color: #01a7c2;
 }
 
 footer p {
@@ -74,7 +82,7 @@ li a {
     color: blue;
 }
 
-.loginButton {
+button {
     align-items: center;
     background-color: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -102,18 +110,18 @@ li a {
     margin-left: 20px;
 }
 
-.loginButton:hover,
-.loginButton:focus {
+button:hover,
+button:focus {
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
     color: rgba(0, 0, 0, 0.65);
 }
 
-.loginButton:hover {
+button:hover {
     transform: translateY(-1px);
 }
 
-.loginButton:active {
+button:active {
     background-color: #F0F0F1;
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;

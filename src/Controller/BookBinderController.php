@@ -23,4 +23,13 @@ class BookBinderController extends AbstractController
             'stylesheets'=> $this->stylesheets
         ]);
     }
+
+    #[Route('/book-info', name: 'bookinfo')]
+    public function infoBook(): Response
+    {
+        $this->stylesheets[] = 'bookinfo.css';
+        return $this->render('bookInfo.html.twig', [
+            'stylesheets'=> $this->stylesheets
+        ]);
+    }
 }
