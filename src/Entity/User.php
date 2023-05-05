@@ -51,6 +51,9 @@ class User
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $userBookId;
 
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $profilePicture = null;
+
     public function __construct()
     {
         $this->userGenreId = new ArrayCollection();
@@ -226,6 +229,18 @@ class User
                 $userBookId->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture($profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }
