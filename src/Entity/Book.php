@@ -36,6 +36,9 @@ class Book
     #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $bookUserId;
 
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $bookCover = null;
+
     public function __construct()
     {
         $this->bookGenreId = new ArrayCollection();
@@ -151,6 +154,18 @@ class Book
                 $bookUserId->setBookId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBookCover()
+    {
+        return $this->bookCover;
+    }
+
+    public function setBookCover($bookCover): self
+    {
+        $this->bookCover = $bookCover;
 
         return $this;
     }
