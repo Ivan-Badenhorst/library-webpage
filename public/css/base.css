@@ -70,6 +70,10 @@ li a {
     color: black;
 }
 
+#navigator nav ul li a:hover {
+    color: blue;
+}
+
 .loginButton {
     align-items: center;
     background-color: #FFFFFF;

@@ -10,7 +10,7 @@
     transform: scale(1.05);
 }
 
-img {
+.book img {
     width: 19em;
     height: 30em;
 }
@@ -23,12 +23,30 @@ img {
 
 }
 
+.favourite-img {
+    justify-content: center;
+    align-items: center;
+}
+
+.favourite-img img:hover {
+    transform: scale(1.05);
+}
+
+.favourite-img img {
+    width: 10em;
+    height: 15em;
+    margin: 20px;
+}
+
 .favourite-text {
     display: flex;
     flex-wrap: wrap;
-    width: 10em;
+    width: 15em;
     font-size: 200%;
     font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 50px;
 }
 
 .search-books {
@@ -93,6 +111,7 @@ button[type="submit"] {
     border-width : 0.1em;
     border-style : solid;
     border-color : black;
+    border-radius: 10px;
 }
 
 .filters {
