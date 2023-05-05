@@ -36,8 +36,9 @@ class Book
     #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $bookUserId;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $bookCover = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $bookCover = null;
+
 
     public function __construct()
     {
@@ -158,12 +159,12 @@ class Book
         return $this;
     }
 
-    public function getBookCover()
+    public function getBookCover(): ?string
     {
         return $this->bookCover;
     }
 
-    public function setBookCover($bookCover): self
+    public function setBookCover(?string $bookCover): self
     {
         $this->bookCover = $bookCover;
 
