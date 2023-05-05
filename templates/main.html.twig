@@ -16,12 +16,13 @@
         </section>
 
         <section class="search-books">
-            <form>
-                <label>
-                    <input type="text" placeholder="Search...">
-                </label>
-                <button type="submit">Search</button>
-            </form>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+            {% if search_term is defined %}
+                <p>You searched for: {{ search_term }}</p>
+            {% endif %}
         </section>
 
         <div class="main-part">
