@@ -38,6 +38,11 @@ header {
     border-color: black;
     border-radius: 25px;
     padding: 2px;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
 }
 
 #logo h1 {
@@ -138,3 +143,12 @@ li a {
     transform: translateY(0);
 }
 
+footer p > * {
+    text-decoration: none;
+    color: black;
+}
+
+footer p > *:hover {
+    text-decoration: underline;
+    color: blue;
+}
