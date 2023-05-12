@@ -52,6 +52,34 @@ class auth
         if($this->UserRepository->findOneBy(['email' => $email]) != null){
             return "email";
         }
+        if(strlen($email) > 255){
+            return "email too long";
+        }
+        if(strlen($name) > 255){
+            return "name too long";
+        }
+        if(strlen($surname) > 255){
+            return "surname too long";
+        }
+        if(strlen($displayname) > 255){
+            return "displayname too long";
+        }
+        if(strlen($street) > 255){
+            return "street too long";
+        }
+        if(strlen($city) > 255){
+            return "city too long";
+        }
+        if(strlen($postalCode) > 10){
+            return "postalCode too long";
+        }
+        if(strlen($password) > 255){
+            return "password too long";
+        }
+        if(strlen($password) < 8){
+            return "password too short";
+        }
+
         $user = new User();
         $user->setEmail($email);
         $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
@@ -68,5 +96,12 @@ class auth
         $this->entityManager->flush();
         return "success";
     }
+
+    public function getProfilePicture(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getProfilePicture();
+    }
+
 
 }
