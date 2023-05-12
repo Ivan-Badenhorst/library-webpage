@@ -95,12 +95,7 @@ button[type="submit"] {
     margin-left: 20px;
 }
 
-.checkboxes input[type="checkbox"] {
-
-}
-
-.book-listings
-{
+.book-listings {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -122,7 +117,7 @@ button[type="submit"] {
 
 .sticky-filter {
     position: sticky;
-    top: 0;
+    top: 20px;
 }
 
 aside h1 {
