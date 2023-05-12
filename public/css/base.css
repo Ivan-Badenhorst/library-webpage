@@ -91,7 +91,7 @@ li a {
     color: blue;
 }
 
-button {
+.normalButton {
     align-items: center;
     background-color: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -119,18 +119,18 @@ button {
     margin-left: 20px;
 }
 
-button:hover,
-button:focus {
+.normalButton:hover,
+.normalButton:focus {
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
     color: rgba(0, 0, 0, 0.65);
 }
 
-button:hover {
+.normalButton:hover {
     transform: translateY(-1px);
 }
 
-button:active {
+.normalButton:active {
     background-color: #F0F0F1;
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
