@@ -6,17 +6,25 @@
         Title of the book
     </h1>
     <div class="top-info">
-        <div>
         <h2 class="author">
             Author
         </h2>
         <h3>
             Genre Category and rating
         </h3>
-        </div>
-        <button class="addToFavourites">
-            <span class="star">&#9733;</span> Add to reading list
-        </button>
+        {{ form_start(userBook_form) }}
+            <div>
+                <label for="userBook">BookID</label>
+                {{ form_widget(userBook_form.book__Id) }}
+            </div>
+            <div>
+                <label for="userBook">UserID</label>
+                {{ form_widget(userBook_form.user__Id) }}
+            </div>
+            <div>
+                {{ form_widget(userBook_form.save) }}
+            </div>
+        {{ form_end(userBook_form) }}
     </div>
 
     <div class="subcontainer">
