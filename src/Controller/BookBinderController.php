@@ -32,4 +32,13 @@ class BookBinderController extends AbstractController
             'stylesheets'=> $this->stylesheets
         ]);
     }
+
+    #[Route('/profile', name: 'profile')]
+    public function profile(): Response
+    {
+        $this->stylesheets[] = 'profile.css';
+        return $this->render('profile.html.twig', [
+            'stylesheets'=> $this->stylesheets
+        ]);
+    }
 }

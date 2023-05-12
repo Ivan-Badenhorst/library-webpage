@@ -33,6 +33,15 @@ header {
     align-items: center;
     justify-items: center;
     background-color: #01a7c2;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+    border-radius: 25px;
+    padding: 2px;
+}
+
+#logo h1 {
+    color: black;
 }
 
 #title {

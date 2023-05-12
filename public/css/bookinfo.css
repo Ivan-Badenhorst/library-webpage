@@ -34,8 +34,9 @@
 
 }
 
-.star {
+.heart {
     margin-right: 10px;
+    scale: 150%;
 }
 
 .author {
@@ -46,9 +47,13 @@
     margin-top: 50px;
 }
 
+.subcontainer p {
+    padding: 20px;
+}
+
 img {
     float: left;
-    margin-right: 10px;
+    margin-right: 20px;
     width: 20em;
     height: 31.5em;
 }
@@ -56,11 +61,24 @@ img {
 p {
     text-align: justify;
     font-size: 25px;
+
 }
 
 .reviews {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+
+.reviews > * {
+    width: 45%;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px;
+
 }
 
 .checked {

@@ -19,16 +19,16 @@
 
 <body>
 <header>
-    <div id="logo">
+    <a href="{{ path('home') }}" id="logo" style="text-decoration: none">
         <img class="logo-image" src="{{ asset('images/devLogo.png') }}" alt="Bookbinder logo">
         <h1 id="title">Bookbinder</h1>
-    </div>
+    </a>
     <div id="navigator">
         <nav>
             <ul>
                 <li><a style="text-decoration:none" href="#">Chats</a></li>
                 <li><a style="text-decoration:none" href="#">Reading list</a></li>
-                <li><a style="text-decoration:none" href="#">Meetup</a></li>
+                <li><a class="bibs" style="text-decoration:none" href="#">Meetup</a></li>
                 <li><a style="text-decoration:none" href="#">About</a></li>
                 <li><a style="text-decoration:none" href="#">Contact</a></li>
             </ul>
