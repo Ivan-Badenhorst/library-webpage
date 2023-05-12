@@ -1,16 +1,18 @@
 <?php
-/**
- * @fileoverview Controller for the home page
- * @version 2.2
- */
-
-/**
- * @author Ivan Badenhorst, Emile Schockaert
- * @since 2023-04-25.
- */
 
 namespace App\Controller;
 
+use App\Entity\Book;
+use App\Entity\User;
+use App\Entity\UserBook;
+use App\Repository\BookRepository;
+use App\Repository\UserBookRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use App\Form\BookSearch;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
@@ -63,12 +65,34 @@ class BookBinderController extends AbstractController
         ]);
     }
 
-    #[Route('/book-info', name: 'bookinfo')]
-    public function infoBook(): Response
-    {
+    #[Route("/book-info", name: "bookinfo")]
+    public function addToList(Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
+        // create form
+        // ref : https://symfony.com/doc/current/forms.html
+        $userBook = new UserBook();
+        $form = $this->createFormBuilder($userBook)
+            ->add('book__Id',IntegerType::class, ['label' => 'bookID'])
+            ->add('user__Id',IntegerType::class, ['label' => 'userID'])
+            ->add('save',SubmitType::class, ['label' => 'Add to favorites'])
+            ->getForm();
+
+        // check if form was submitted and handle data
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $book_id = $form->getData()['book__Id'];
+            $user_id = $form->getData()['user__Id'];
+            $book = $bookRepository->findBook($book_id);
+            $user = $userRepository->findUser($user_id);
+            $userBook->setBookId($book);
+            $userBook->setUserId($user);
+            $userBookRepository->save($userBook);
+            return $this->redirectToRoute('home');
+        }
+
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
-            'stylesheets'=> $this->stylesheets
+            'stylesheets'=> $this->stylesheets,
+            'userBook_form'=>$form
         ]);
     }
 
