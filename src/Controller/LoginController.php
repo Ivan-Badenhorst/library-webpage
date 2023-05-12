@@ -14,12 +14,15 @@ use App\Form\register;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 
 
-class BookBinderController extends AbstractController
+class LoginController extends AbstractController
 {
+
+    private SessionInterface $session;
     private array $stylesheets;
 
     public function __construct(private ManagerRegistry $doctrine)
@@ -165,14 +168,23 @@ class BookBinderController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(Request $request): Response
     {
+        $this->session = $request->getSession();
+        $auth = new \App\backend\auth($this->doctrine->getManager());
+        if($auth->isLogged($this->session)){
+            return $this->redirectToRoute('home');
+        }
+
+
         $form = $this->createForm(\App\Form\login::class);
 
         $form->handleRequest($request);
         $this->stylesheets[] = 'login_register.css';
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $auth = new \App\backend\auth($this->doctrine->getManager());
-            $result = $auth->login($form->getData()['email'], $form->getData()['password']);
+
+            $result = $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
             if ($result == "email") {
                 return $this->render('login.html.twig', [
                     'stylesheets'=> $this->stylesheets,

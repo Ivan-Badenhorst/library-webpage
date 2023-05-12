@@ -4,6 +4,7 @@ namespace App\backend;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class auth
 {
@@ -19,7 +20,7 @@ class auth
 
 
 
-    public function login(String $email, String $password)
+    public function login(String $email, String $password, SessionInterface $session)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
 
@@ -35,7 +36,9 @@ class auth
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-
+            $session->set('user_email', $email);
+            $session->set('user_password', password_hash($password, PASSWORD_DEFAULT));
+            //echo($session->get('user_email'));
             return  "success";
         } else {
             $user->setLoginTries($user->getLoginTries() + 1);
@@ -102,6 +105,56 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         return $user->getProfilePicture();
     }
+
+    public function getDisplayName(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getDisplayName();
+    }
+    public function getFirstName(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getFirstName();
+    }
+    public function getLastName(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getLastName();
+    }
+    public function getStreet(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getStreet();
+    }
+    public function getPostalCode(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getPostalCode();
+    }
+    public function getCity(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getCity();
+    }
+    public function getDOB(String $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getDateOfBirth();
+    }
+    public function isLogged(SessionInterface $session)
+    {
+        if($session->get('email') == null){
+            //echo('hello2');
+            return false;
+        }
+        $user = $this->UserRepository->findOneBy($session->get('email'));
+        if($user->getPassword() == $session->get('password')){
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 }
