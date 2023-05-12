@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -28,6 +29,7 @@ class Book
     private ?string $Title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Unique]
     private ?string $isbn = null;
 
     #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: BookGenre::class, orphanRemoval: true)]
@@ -35,6 +37,10 @@ class Book
 
     #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $bookUserId;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $bookCover = null;
+
 
     public function __construct()
     {
@@ -151,6 +157,18 @@ class Book
                 $bookUserId->setBookId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBookCover(): ?string
+    {
+        return $this->bookCover;
+    }
+
+    public function setBookCover(?string $bookCover): self
+    {
+        $this->bookCover = $bookCover;
 
         return $this;
     }

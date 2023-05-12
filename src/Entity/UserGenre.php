@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\UserGenresRepository;
+use App\Repository\UserGenreRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserGenresRepository::class)]
+#[ORM\Entity(repositoryClass: UserGenreRepository::class)]
 class UserGenre
 {
     #[ORM\Id]
