@@ -15,35 +15,35 @@ class UserBook
 
     #[ORM\ManyToOne(inversedBy: 'userBookId')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $userId = null;
+    private ?User $userId = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookUserId')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?book $bookId = null;
+    private ?Book $bookId = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?user
+    public function getUserId(): ?User
     {
         return $this->userId;
     }
 
-    public function setUserId(?user $userId): self
+    public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
 
         return $this;
     }
 
-    public function getBookId(): ?book
+    public function getBookId(): ?Book
     {
         return $this->bookId;
     }
 
-    public function setBookId(?book $bookId): self
+    public function setBookId(?Book $bookId): self
     {
         $this->bookId = $bookId;
 

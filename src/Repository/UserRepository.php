@@ -42,16 +42,15 @@ class UserRepository extends ServiceEntityRepository
     public function findUser(int $userID): User
     {
         // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
 
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $query = $entityManager->createQuery(
+            'SELECT u
+            FROM App\Entity\User u
+            WHERE u.id = :userID'
+        )->setParameter('userID', $userID);
 
-        $queryBuilder
-            ->select('e')
-            ->from(User::class, 'e')
-            ->where('id',$userID)
-            ->getFirstResult();
-
-        return $queryBuilder->getQuery()->getResult();
+        return $query->getResult()[0];
     }
 
 //    /**
