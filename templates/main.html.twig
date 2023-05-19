@@ -7,20 +7,22 @@
                 <p>Unsure what to read next? Some of the most trending books last month!</p>
             </div>
             <div class="favourite-img">
-                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
-                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
-                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
-                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
             </div>
 
 
         </section>
 
-        <section class="search-books">
+        <div class="form-container">
             {{ form_start(form) }}
-            {{ form_widget(form) }}
+            <div class="form-row">
+                {{ form_widget(form) }}
+            </div>
             {{ form_end(form) }}
-        </section>
+        </div>
 
         <div class="main-part">
             <aside class="filters">
@@ -91,7 +93,7 @@
             </aside>
 
             <section class="book-listings-section">
-                <h1>Browse books</h1>
+                <h1 class="title-browse-books">Browse books</h1>
                 <div class="book-listings">
                     {% if books is defined %}
 {#                        {% for book in books %}#}
@@ -118,14 +120,8 @@
                                         <p>Genre: {{ row.genres }}</p>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         {% endfor %}
-
-
                     {% endif %}
                 </div>
             </section>
