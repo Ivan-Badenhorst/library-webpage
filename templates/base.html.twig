@@ -16,8 +16,23 @@
         <link href="{{ asset('css/' ~ stylesheet) }}" rel="stylesheet" type="text/css"/>
     {% endfor %}
     <script>
-        function switchPage(pageUrl) {
+        function switchPage(pageUrl, bookId) {
             window.location.href = pageUrl;
+
+            localStorage.setItem("bookId",bookId);
+
+            var dataToSend = { key: bookId }; // Replace with your data
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ path('bookinfo') }}', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Request successful, do something if needed
+                    console.log('Data sent successfully');
+                }
+            };
+            xhr.send(JSON.stringify(dataToSend));
         }
     </script>
 </head>

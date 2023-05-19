@@ -53,6 +53,20 @@ class BookRepository extends ServiceEntityRepository
         return $query->getResult()[0];
     }
 
+    public function findTitle(int $bookID): String
+    {
+        // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT title
+            FROM App\Entity\Book b
+            WHERE b.id = :bookID'
+        )->setParameter('bookID', $bookID);
+
+        return $query->getResult()[0];
+    }
+
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */

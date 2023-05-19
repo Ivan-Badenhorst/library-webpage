@@ -36,7 +36,11 @@ class BookBinderController extends AbstractController
     }
 
     #[Route("/book-info", name: "bookinfo")]
-    public function addToList(Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
+    public function bookInfo(Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
+        $data = json_decode($request->get('key'), true);
+        $bookId = $data;
+
+        //$book = $bookRepository->findBook($bookId);
         // create form
         // ref : https://symfony.com/doc/current/forms.html
         $userBook = new UserBook();
@@ -62,7 +66,8 @@ class BookBinderController extends AbstractController
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'userBook_form'=>$form
+            'userBook_form'=>$form,
+            'bookId' => $bookId
         ]);
     }
 
