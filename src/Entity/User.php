@@ -59,6 +59,11 @@ class User
 
     public function getProfilePicture(): ?string
     {
+        if($this->profilePicture == null){
+            $default = new File('../public/img/defaultProfilePicture.png');
+            echo $default;
+            return $default;
+        }
         return stream_get_contents($this->profilePicture);
     }
 
@@ -90,8 +95,6 @@ class User
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $userBookId;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $profilePicture = null;
 
     public function __construct()
     {
@@ -272,15 +275,5 @@ class User
         return $this;
     }
 
-    public function getProfilePicture()
-    {
-        return $this->profilePicture;
-    }
 
-    public function setProfilePicture($profilePicture): self
-    {
-        $this->profilePicture = $profilePicture;
-
-        return $this;
-    }
 }

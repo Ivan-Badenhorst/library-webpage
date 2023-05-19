@@ -255,6 +255,7 @@ class LoginController extends AbstractController
     public function image()
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
+        //$imageData = $auth->getProfilePicture("Selma.Anderea@email.com");
         $imageData = $auth->getProfilePicture("newUser@email.com");
         $imageBase64 = base64_encode($imageData);
         return $this->render('displayBlob.html.twig', [
