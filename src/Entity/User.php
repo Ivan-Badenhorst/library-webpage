@@ -17,6 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -60,9 +62,7 @@ class User
     public function getProfilePicture(): ?string
     {
         if($this->profilePicture == null){
-            $default = new File('../public/img/defaultProfilePicture.png');
-            echo $default;
-            return $default;
+            return "null";
         }
         return stream_get_contents($this->profilePicture);
     }

@@ -106,7 +106,13 @@ class auth
     public function getProfilePicture(String $email)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
-        return $user->getProfilePicture();
+        $profilePicture = $user->getProfilePicture();
+        if ($profilePicture == "null") {
+            $user = $this->UserRepository->findOneBy(['email' => 'newUser@email.com']);
+
+            return $user->getProfilePicture();
+            }
+        return $profilePicture;
     }
 
     public function getDisplayName(String $email)

@@ -251,11 +251,11 @@ class LoginController extends AbstractController
     //example of how to display a blob
     //this function will display the profile picture of the user with the email "newUser@email.com"
     //the rest of the code to display the blob can be found in templates\displayBlob.html.twig
-
+    //if the user does not have a profile picture it will display a default image, this image is the
+    //profile picture of newUser@email.com
     public function image()
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
-        //$imageData = $auth->getProfilePicture("Selma.Anderea@email.com");
         $imageData = $auth->getProfilePicture("newUser@email.com");
         $imageBase64 = base64_encode($imageData);
         return $this->render('displayBlob.html.twig', [
