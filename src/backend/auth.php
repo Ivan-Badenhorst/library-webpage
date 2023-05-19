@@ -19,7 +19,8 @@ class auth
     }
 
 
-
+//login user
+//this function should not be called directly, but rather through the login function in the loginController
     public function login(String $email, String $password, SessionInterface $session)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
@@ -50,6 +51,8 @@ class auth
         }
 
     }
+    //register user
+    //this function should not be called directly, but rather through the register function in the loginController
     public function register(String $email, String $password,String $name, String $surname, String $displayname, \DateTime $DOB, String $street, int $postalCode, String $city, File $profilePicture)
     {
         if($this->UserRepository->findOneBy(['email' => $email]) != null){
@@ -141,6 +144,9 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         return $user->getDateOfBirth();
     }
+
+    //check if user is logged in
+    //this function should not be called directly, but rather through the isLogged function in the loginController
     public function isLogged(SessionInterface $session)
     {
         $user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);
@@ -157,6 +163,8 @@ class auth
         return false;
     }
 
+    //logout user
+    //this function should not be called directly, but rather through the logout function in the loginController
     public function logout(SessionInterface $session)
     {
         $session->set('email', "");

@@ -35,20 +35,24 @@ class LoginController extends AbstractController
     #[Route('/register', name: 'register')]
     public function register(Request $request): Response
     {
+        //create form
         $form = $this->createForm(register::class);
-
         $form->handleRequest($request);
+        //add stylesheet
         $this->stylesheets[] = 'login_register.css';
 
-
+        //if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
+            //create auth object and give it the entity manager
             $auth = new \App\backend\auth($this->doctrine->getManager());
+            //get profile picture and set it to default if none is given
             $profilePicture = $form->getData()['profilePicture'];
             if ($profilePicture == null) {
                 $profilePicture = new File('../public/img/defaultProfilePicture.png');
             }
-
+            //send data to auth object
             $result = $auth->register($form->getData()['email'], $form->getData()['password'], $form->getData()['name'], $form->getData()['surname'], $form->getData()['displayname'], $form->getData()['DateOfBirth'], $form->getData()['street'], $form->getData()['postalCode'], $form->getData()['city'], $profilePicture);
+            //check result and return error or success
             if ($result == "email") {
                 return $this->render('register.html.twig', [
                     'stylesheets'=> $this->stylesheets,
@@ -63,11 +67,14 @@ class LoginController extends AbstractController
                     'error' => "file size too big"
                 ]);
             }
+
+            //TODO needs to be changed to redirect to home in the main branch
             else if ($result == "success") {
                 return $this->render('register.html.twig', [
                     'stylesheets'=> $this->stylesheets,
                     'form' => $form->createView(),
-                    'success' => "success"
+                    'succes' => "success"
+
                 ]);
             }
             else if ($result == "email too long") {
@@ -168,23 +175,30 @@ class LoginController extends AbstractController
 
     #[Route('/login', name: 'login')]
     public function login(Request $request, RequestStack $requestStack): Response
-    {
+    {//get session
         $this->session = $requestStack->getSession();
+        //get entity manager (list of all entities in the database
         $auth = new \App\backend\auth($this->doctrine->getManager());
+
+        //check if user is already logged in, if they are redirect them to the home page
+        //this is not necessary as we wont redirect them to the login page if they are already logged in
+        //but its extra redundancy
         if($this->checkSession()){
             return $this->redirectToRoute('home');
         }
 
-
+        //create the login form
         $form = $this->createForm(\App\Form\login::class);
-
         $form->handleRequest($request);
+
+        //add the login css
         $this->stylesheets[] = 'login_register.css';
 
 
-
+        //if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //send data to the auth class to check if the user exists
             $result = $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
             if ($result == "email") {
                 return $this->render('login.html.twig', [
@@ -193,6 +207,7 @@ class LoginController extends AbstractController
                     'error' => "email not found"
                 ]);
             }
+            //if the user has tried to login too many times
             if ($result == "tries") {
                 return $this->render('login.html.twig', [
                     'stylesheets'=> $this->stylesheets,
@@ -200,6 +215,8 @@ class LoginController extends AbstractController
                     'error' => "too many tries"
                 ]);
             }
+
+            //if the user has entered the wrong password
             if ($result == "password") {
                 return $this->render('login.html.twig', [
                     'stylesheets'=> $this->stylesheets,
@@ -207,6 +224,11 @@ class LoginController extends AbstractController
                     'error' => "wrong password"
                 ]);
             }
+
+            //if the login was succesfull
+
+            //TODO this code should be uncommented when it is integrated into the main branch
+            //it cant be used untill then as this branch doesn't have the home page
 //            if ($result == "success") {
 //                return $this->redirectToRoute('home');
 //            }
@@ -227,6 +249,9 @@ class LoginController extends AbstractController
 
 
     //example of how to display a blob
+    //this function will display the profile picture of the user with the email "newUser@email.com"
+    //the rest of the code to display the blob can be found in templates\displayBlob.html.twig
+
     public function image()
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
@@ -238,12 +263,18 @@ class LoginController extends AbstractController
         ]);
     }
 
+//You can use this function to check if a user is logged in,
+//the function returns true if the user is logged in and false
+//if the user is not logged in. You will still have to redirect
+//them to the login page if they are not logged in.
     public function checkSession(): bool
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
         return($auth->isLogged($this->session));
     }
 
+    //You can use this function to log a user out. It does not
+    //return anything and you will still need to redirect them to the login page.
     public function logout(): void
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
