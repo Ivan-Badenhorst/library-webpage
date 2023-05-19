@@ -55,9 +55,28 @@ class BookRepositoryTest extends TestCase
 
     public function testFindLimitedRecords(): void
     {
-        $limit = 5;
+        $limit = 20;
         $expectedResult = [
-            // Array of expected results
+            'The Hunger Games',
+            'The Valley of Horses',
+            'Headlong Hall',
+            'Ape and Essence',
+            'Mr Ape',
+            'AP Advantage',
+            'Ape Adventures (DK READERS)',
+            'Aping language',
+            'Apes and Angels',
+            'AP biology',
+            'Monkeys & apes',
+            'Monkeys & apes',
+            'The Talking Ape',
+            'Abe Anjin',
+            'Hitoshi Abe flicker',
+            'Cubase SX/SL',
+            "Intel's SL architecture",
+            'Mercedes-Benz SL',
+            "Can S&Ls Survive?",
+            'Trees'
         ];
 
         $queryBuilder = $this->getMockBuilder(\Doctrine\ORM\QueryBuilder::class)
@@ -95,6 +114,9 @@ class BookRepositoryTest extends TestCase
         $repository = new YourDatabaseRepository($this->entityManager);
         $result = $repository->findLimitedRecords($limit);
 
+        for ($i = 0; $i <= 20; $i++) {
+            $this->assertEquals($expectedResult[$i], $result[$i].Title());
+        }
         $this->assertEquals($expectedResult, $result);
     }
 }
