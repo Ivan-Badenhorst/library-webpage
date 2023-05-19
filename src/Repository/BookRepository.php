@@ -39,6 +39,20 @@ class BookRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLimitedRecords(int $limit): array
+    {
+       // $repository = $this->getEntityManager()->getRepository(Book::class);
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder
+            ->select('e')
+            ->from(Book::class, 'e')
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */

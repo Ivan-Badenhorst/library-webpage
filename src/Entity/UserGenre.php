@@ -15,7 +15,7 @@ class UserGenre
 
     #[ORM\ManyToOne(inversedBy: '$userGenreId')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $userId = null;
+    private ?User $userId = null;
 
     #[ORM\ManyToOne(inversedBy: '$genreUserId')]
     #[ORM\JoinColumn(nullable: false)]
@@ -26,12 +26,12 @@ class UserGenre
         return $this->id;
     }
 
-    public function getUserId(): ?user
+    public function getUserId(): ?User
     {
         return $this->userId;
     }
 
-    public function setUserId(?user $userId): self
+    public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
 

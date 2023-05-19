@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Form\BookSearch;
+use App\Repository\BookRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class BookBinderController extends AbstractController
 {
@@ -18,7 +20,7 @@ class BookBinderController extends AbstractController
     }
 
     #[Route('/', name: 'home')]
-    public function home(Request $request): Response
+    public function home(Request $request, BookRepository $bookRepository): Response
     {
         $form = $this->createForm(BookSearch::class);
 
@@ -38,11 +40,14 @@ class BookBinderController extends AbstractController
             ]);
         }
 
-
+        //get a list of all books to display
+        //for now these books are random!
+        $products = $bookRepository->findLimitedRecords(40);
 
         return $this->render('main.html.twig', [
             'form' => $form->createView(),
-            'stylesheets'=> $this->stylesheets
+            'stylesheets'=> $this->stylesheets,
+            'books'=>$products
         ]);
     }
 }
