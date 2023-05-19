@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData">
     <serverData>
       <paths name="student@raspberrypi.local:22">
         <serverdata>
@@ -38,6 +38,27 @@
         </serverdata>
       </paths>
       <paths name="student@raspberrypi.local:22 (6)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="student@raspberrypi.local:22 (7)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="student@raspberrypi.local:22 (8)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="student@raspberrypi.local:22 password">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

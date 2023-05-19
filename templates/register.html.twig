@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="login_register.css">
+</head>
+<body>
+<div class="container">
+        <p id="switch">Already have an account? <a href="login">Login here</a></p>
+        <section class="register">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </section>
+    {% if error is defined %}
+        <p id="message">{{ error }}</p>
+    {% endif %}
+    {% if success is defined %}
+        <p id="message">{{ success }}</p>
+    {% endif %}
+</div>
+</body>
+</html>
+
+
