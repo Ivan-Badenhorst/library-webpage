@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -166,11 +167,11 @@ class LoginController extends AbstractController
 
 
     #[Route('/login', name: 'login')]
-    public function login(Request $request): Response
+    public function login(Request $request, RequestStack $requestStack): Response
     {
-        $this->session = $request->getSession();
+        $this->session = $requestStack->getSession();
         $auth = new \App\backend\auth($this->doctrine->getManager());
-        if($auth->isLogged($this->session)){
+        if($this->checkSession()){
             return $this->redirectToRoute('home');
         }
 
@@ -206,6 +207,9 @@ class LoginController extends AbstractController
                     'error' => "wrong password"
                 ]);
             }
+//            if ($result == "success") {
+//                return $this->redirectToRoute('home');
+//            }
         }
 
         return $this->render('login.html.twig', [
@@ -233,5 +237,20 @@ class LoginController extends AbstractController
             'stylesheets'=> $this->stylesheets
         ]);
     }
+
+    public function checkSession(): bool
+    {
+        $auth = new \App\backend\auth($this->doctrine->getManager());
+        return($auth->isLogged($this->session));
+    }
+
+    public function logout(): void
+    {
+        $auth = new \App\backend\auth($this->doctrine->getManager());
+        $auth->logout($this->session);
+    }
+
+
+
 }
 

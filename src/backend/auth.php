@@ -36,9 +36,9 @@ class auth
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $session->set('user_email', $email);
-            $session->set('user_password', password_hash($password, PASSWORD_DEFAULT));
-            //echo($session->get('user_email'));
+            $session->set('email', $email);
+            $session->set('password', $password);
+            //echo($session->get('email'));
             return  "success";
         } else {
             $user->setLoginTries($user->getLoginTries() + 1);
@@ -143,15 +143,25 @@ class auth
     }
     public function isLogged(SessionInterface $session)
     {
-        if($session->get('email') == null){
-            //echo('hello2');
+        $user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);
+
+        if($session->get('email') == ""){
+            header("Location: /login");
             return false;
         }
-        $user = $this->UserRepository->findOneBy($session->get('email'));
-        if($user->getPassword() == $session->get('password')){
+
+        if(password_verify($session->get('password'),$user->getPassword())){
             return true;
         }
+        header("Location: /login");
         return false;
+    }
+
+    public function logout(SessionInterface $session)
+    {
+        $session->set('email', "");
+        $session->set('password', "");
+        header("Location: /login");
     }
 
 
