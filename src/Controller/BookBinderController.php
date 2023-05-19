@@ -32,17 +32,22 @@ class BookBinderController extends AbstractController
             $searchTerm = $form->getData()['search_term'];
 
             // Do something with the search term
+            $products = $bookRepository->searchOnTitle(40, $searchTerm);
 
-            return $this->render('main.html.twig', [
-                'stylesheets'=> $this->stylesheets,
-                'search_term'=>$searchTerm,
-                'form' => $form->createView()
-            ]);
+//            return $this->render('main.html.twig', [
+//                'stylesheets'=> $this->stylesheets,
+//                'search_term'=>$searchTerm,
+//                'form' => $form->createView()
+//            ]);
+        }
+        else{
+            //get a list of all books to display
+            //for now these books are random!
+            $products = $bookRepository->findLimitedRecords(40);
         }
 
-        //get a list of all books to display
-        //for now these books are random!
-        $products = $bookRepository->findLimitedRecords(40);
+
+
 
         return $this->render('main.html.twig', [
             'form' => $form->createView(),

@@ -53,6 +53,22 @@ class BookRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function searchOnTitle(int $limit, String $searchTerm): array
+    {
+        // $repository = $this->getEntityManager()->getRepository(Book::class);
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder
+            ->select('e')
+            ->from(Book::class, 'e')
+            ->where($queryBuilder->expr()->like('e.Title', ':searchTerm'))
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */
