@@ -50,4 +50,51 @@ class BookRepositoryTest extends TestCase
 
         $this->repository->remove($book, true);
     }
+
+
+
+    public function testFindLimitedRecords(): void
+    {
+        $limit = 5;
+        $expectedResult = [
+            // Array of expected results
+        ];
+
+        $queryBuilder = $this->getMockBuilder(\Doctrine\ORM\QueryBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $queryBuilder->expects($this->once())
+            ->method('select')
+            ->with('e');
+
+        $queryBuilder->expects($this->once())
+            ->method('from')
+            ->with(Book::class, 'e');
+
+        $queryBuilder->expects($this->once())
+            ->method('setMaxResults')
+            ->with($limit);
+
+        $query = $this->getMockBuilder(\Doctrine\ORM\AbstractQuery::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $queryBuilder->expects($this->once())
+            ->method('getQuery')
+            ->willReturn($query);
+
+        $query->expects($this->once())
+            ->method('getResult')
+            ->willReturn($expectedResult);
+
+        $this->entityManager->expects($this->once())
+            ->method('createQueryBuilder')
+            ->willReturn($queryBuilder);
+
+        $repository = new YourDatabaseRepository($this->entityManager);
+        $result = $repository->findLimitedRecords($limit);
+
+        $this->assertEquals($expectedResult, $result);
+    }
 }
