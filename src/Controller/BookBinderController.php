@@ -34,11 +34,6 @@ class BookBinderController extends AbstractController
             // Do something with the search term
             $products = $bookRepository->searchOnTitle(40, $searchTerm);
 
-//            return $this->render('main.html.twig', [
-//                'stylesheets'=> $this->stylesheets,
-//                'search_term'=>$searchTerm,
-//                'form' => $form->createView()
-//            ]);
         }
         else{
             //get a list of all books to display
