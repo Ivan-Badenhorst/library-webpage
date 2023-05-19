@@ -6,23 +6,17 @@
         Title of the book
     </h1>
     <div class="top-info">
-        <div class="text-title-genre">
         <h2 class="author">
             Author
         </h2>
         <h3>
             Genre Category and rating
         </h3>
-        </div>
-        <div class="actionBut">
-            <button class="normalButton">
-                <span class="heart">&#9825;</span> Add to reading list
-            </button>
-            <button class="normalButton">
-                <i class="fa fa-thumbs-up"></i>Write a review
-            </button>
-        </div>
-
+        {{ form_start(userBook_form) }}
+            <div>
+                {{ form_widget(userBook_form.save) }}
+            </div>
+        {{ form_end(userBook_form) }}
     </div>
 
     <div class="subcontainer">
