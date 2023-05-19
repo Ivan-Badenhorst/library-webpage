@@ -94,16 +94,38 @@
                 <h1>Browse books</h1>
                 <div class="book-listings">
                     {% if books is defined %}
-                        {% for book in books %}
-                            <div class="book">
-                                <img src="{{book.bookCover}}" alt="Entity Image">
-                                <div>
-                                    <h2>{{ book.Title }}</h2>
-                                    <p>By {{ book.Author }}</p>
-                                    <p>Genre: CHANGE THIS FROM DB</p>
+{#                        {% for book in books %}#}
+{#                            <div class="book">#}
+{#                                <img src="{{book.bookCover}}" alt="Entity Image">#}
+{#                                <div>#}
+{#                                    <h2>{{ book.Title }}</h2>#}
+{#                                    <p>By {{ book.Author }}</p>#}
+{#                                    <p>Genre: {{ book.genres }}</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+                        {% for row in books %}
+                            <div>
+{#                                <h2>{{ row.title }}</h2>#}
+{#                                <p>Genres: {{ row.genres }}</p>#}
+{#                                <!-- Access other fields as needed -->#}
+
+                                <div class="book">#}
+                                    <img src="{{row.bookCover}}" alt="Entity Image">
+                                    <div>
+                                        <h2>{{ row.Title }}</h2>
+                                        <p>By {{ row.Author }}</p>
+                                        <p>Genre: {{ row.genres }}</p>
+                                    </div>
                                 </div>
+
+
+
+
                             </div>
                         {% endfor %}
+
+
                     {% endif %}
                 </div>
             </section>

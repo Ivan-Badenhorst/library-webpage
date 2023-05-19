@@ -45,12 +45,29 @@ class BookRepository extends ServiceEntityRepository
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
-        $queryBuilder
-            ->select('e')
-            ->from(Book::class, 'e')
-            ->setMaxResults($limit);
+//        $queryBuilder
+//            ->select('e')
+//            ->from(Book::class, 'e')
+//            ->setMaxResults($limit);
+//        $queryBuilder
+//            ->select('b', 'GROUP_CONCAT(g.name SEPARATOR \', \') AS genres')
+//            ->from('Book', 'b')
+//            ->join('b.bookGenres', 'bg')
+//            ->join('bg.genre', 'g')
+//            ->groupBy('b.id');
+        $sql = 'SELECT b.*, GROUP_CONCAT(g.genre SEPARATOR \', \') AS genres
+        FROM book b
+        JOIN book_genre bg ON b.id = bg.book_id
+        JOIN genre g ON bg.genre_id = g.id
+        GROUP BY b.id';
 
-        return $queryBuilder->getQuery()->getResult();
+        $connection = $this->getEntityManager()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+
+        return $result;
     }
 
     public function searchOnTitle(int $limit, String $searchTerm): array

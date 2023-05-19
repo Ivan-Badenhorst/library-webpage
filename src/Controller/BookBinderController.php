@@ -42,7 +42,7 @@ class BookBinderController extends AbstractController
         }
 
 
-
+        $products = $bookRepository->findLimitedRecords(40);
 
         return $this->render('main.html.twig', [
             'form' => $form->createView(),
