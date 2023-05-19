@@ -51,50 +51,118 @@ class BookRepositoryTest extends TestCase
         $this->repository->remove($book, true);
     }
 
-
-
     public function testFindLimitedRecords(): void
     {
-        $limit = 5;
+        $limit = 20;
         $expectedResult = [
-            // Array of expected results
-        ];
+            'The Hunger Games',
+            'The Valley of Horses',
+            'Headlong Hall',
+            'Ape and Essence',
+            'Mr Ape',
+            'AP Advantage',
+            'Ape Adventures (DK READERS)',
+            'Aping language',
+            'Apes and Angels',
+            'AP biology',
+            'Monkeys & apes',
+            'Monkeys & apes',
+            'The Talking Ape',
+            'Abe Anjin',
+            'Hitoshi Abe flicker',
+            'Cubase SX/SL',
+            "Intel's SL architecture",
+            'Mercedes-Benz SL',
+            "Can S&Ls Survive?",
+            'Trees'
+        ];; // Set your expected result here
 
-        $queryBuilder = $this->getMockBuilder(\Doctrine\ORM\QueryBuilder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $queryBuilderMock = $this->createMock(\Doctrine\ORM\QueryBuilder::class);
+        $queryMock = $this->createMock(\Doctrine\ORM\AbstractQuery::class);
 
-        $queryBuilder->expects($this->once())
+        $this->entityManagerMock->expects($this->once())
+            ->method('createQueryBuilder')
+            ->willReturn($queryBuilderMock);
+
+        $queryBuilderMock->expects($this->once())
             ->method('select')
-            ->with('e');
-
-        $queryBuilder->expects($this->once())
+            ->with('e')
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
             ->method('from')
-            ->with(Book::class, 'e');
-
-        $queryBuilder->expects($this->once())
+            ->with(Book::class, 'e')
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
             ->method('setMaxResults')
-            ->with($limit);
-
-        $query = $this->getMockBuilder(\Doctrine\ORM\AbstractQuery::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $queryBuilder->expects($this->once())
+            ->with($limit)
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
             ->method('getQuery')
-            ->willReturn($query);
+            ->willReturn($queryMock);
 
-        $query->expects($this->once())
+        $queryMock->expects($this->once())
             ->method('getResult')
             ->willReturn($expectedResult);
 
-        $this->entityManager->expects($this->once())
-            ->method('createQueryBuilder')
-            ->willReturn($queryBuilder);
-
-        $repository = new YourDatabaseRepository($this->entityManager);
-        $result = $repository->findLimitedRecords($limit);
-
+        $result = $this->repository->findLimitedRecords($limit);
         $this->assertEquals($expectedResult, $result);
+        /*for ($i = 0; $i <= 20; $i++) {
+            $this->assertEquals($expectedResult[$i], $result[$i].getTitle());
+        }*/
     }
+
+ /*   public function testSearchOnTitle(): void
+    {
+        $limit = 20;
+        $searchTerm = 'ape';
+        $expectedResult = [
+            'Ape and Essence',
+            'Mr Ape',
+            'Ape Adventures (DK READERS)',
+            'Apes and Angels',
+            'Monkeys & apes',
+            'Monkeys & apes',
+            'The Talking Ape',
+            'Estetické problémy pod napětím'
+        ];; // Set your expected result here
+
+        $queryBuilderMock = $this->createMock(\Doctrine\ORM\QueryBuilder::class);
+        $queryMock = $this->createMock(\Doctrine\ORM\AbstractQuery::class);
+
+        $this->entityManagerMock->expects($this->once())
+            ->method('createQueryBuilder')
+            ->willReturn($queryBuilderMock);
+
+        $queryBuilderMock->expects($this->once())
+            ->method('select')
+            ->with('e')
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
+            ->method('from')
+            ->with(Book::class, 'e')
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
+            ->method('where')
+            ->with($queryBuilderMock->expr()->like('e.title', ':searchTerm'))
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
+            ->method('setParameter')
+            ->with('searchTerm', '%' . $searchTerm . '%')
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
+            ->method('setMaxResults')
+            ->with($limit)
+            ->willReturnSelf();
+        $queryBuilderMock->expects($this->once())
+            ->method('getQuery')
+            ->willReturn($queryMock);
+
+        $queryMock->expects($this->once())
+            ->method('getResult')
+            ->willReturn($expectedResult);
+
+        $result = $this->repository->searchOnTitle($limit, $searchTerm);
+        $this->assertEquals($expectedResult, $result);
+    }*/
+
 }
