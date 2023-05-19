@@ -19,7 +19,8 @@ class auth
     }
 
 
-
+//login user
+//this function should not be called directly, but rather through the login function in the loginController
     public function login(String $email, String $password, SessionInterface $session)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
@@ -36,9 +37,9 @@ class auth
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $session->set('user_email', $email);
-            $session->set('user_password', password_hash($password, PASSWORD_DEFAULT));
-            //echo($session->get('user_email'));
+            $session->set('email', $email);
+            $session->set('password', $password);
+            //echo($session->get('email'));
             return  "success";
         } else {
             $user->setLoginTries($user->getLoginTries() + 1);
@@ -50,6 +51,8 @@ class auth
         }
 
     }
+    //register user
+    //this function should not be called directly, but rather through the register function in the loginController
     public function register(String $email, String $password,String $name, String $surname, String $displayname, \DateTime $DOB, String $street, int $postalCode, String $city, File $profilePicture)
     {
         if($this->UserRepository->findOneBy(['email' => $email]) != null){
@@ -141,17 +144,32 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         return $user->getDateOfBirth();
     }
+
+    //check if user is logged in
+    //this function should not be called directly, but rather through the isLogged function in the loginController
     public function isLogged(SessionInterface $session)
     {
-        if($session->get('email') == null){
-            //echo('hello2');
+        $user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);
+
+        if($session->get('email') == ""){
+            header("Location: /login");
             return false;
         }
-        $user = $this->UserRepository->findOneBy($session->get('email'));
-        if($user->getPassword() == $session->get('password')){
+
+        if(password_verify($session->get('password'),$user->getPassword())){
             return true;
         }
+        header("Location: /login");
         return false;
+    }
+
+    //logout user
+    //this function should not be called directly, but rather through the logout function in the loginController
+    public function logout(SessionInterface $session)
+    {
+        $session->set('email', "");
+        $session->set('password', "");
+        header("Location: /login");
     }
 
 
