@@ -19,10 +19,6 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}
-
-            {% if search_term is defined %}
-                <p>You searched for: {{ search_term }}</p>
-            {% endif %}
         </section>
 
         <div class="main-part">
@@ -96,9 +92,7 @@
             <section class="book-listings-section">
                 <div class="book-listings">
                     {% if books is defined %}
-
                         {% for book in books %}
-
                             <div class="book">#}
                                 <img src="{{book.bookCover}}" alt="Entity Image">
                                 <div>
@@ -107,122 +101,8 @@
                                     <p>Genre: CHANGE THIS FROM DB</p>
                                 </div>
                             </div>
-
-{#                            <div>#}
-{#                                <h2>{{ entity.name }}</h2>#}
-{#                                <p>{{ entity.description }}</p>#}
-{#                                <!-- Other HTML code specific to each object -->#}
-{#                            </div>#}
                         {% endfor %}
-
                     {% endif %}
-                    <div class="book">
-                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">
-                        <div>
-                            <h2>The Name of the Wind</h2>
-                            <p>By Patrick Rothfuss</p>
-                            <p>Genre: Fantasy</p>
-                        </div>
-                    </div>
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>Gone Girl</h2>#}
-{#                            <p>By Gillian Flynn</p>#}
-{#                            <p>Genre: Mystery</p>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>The Notebook</h2>#}
-{#                            <p>By Nicholas Sparks</p>#}
-{#                            <p>Genre: Romance</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>The Notebook</h2>#}
-{#                            <p>By Nicholas Sparks</p>#}
-{#                            <p>Genre: Romance</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>The Notebook</h2>#}
-{#                            <p>By Nicholas Sparks</p>#}
-{#                            <p>Genre: Romance</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>The Notebook</h2>#}
-{#                            <p>By Nicholas Sparks</p>#}
-{#                            <p>Genre: Romance</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>The Notebook</h2>#}
-{#                            <p>By Nicholas Sparks</p>#}
-{#                            <p>Genre: Romance</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of book">#}
-{#                        <div class="title-book">#}
-{#                            <h2>The Notebook</h2>#}
-{#                            <p>By Nicholas Sparks</p>#}
-{#                            <p>Genre: Romance</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">#}
-{#                        <div>#}
-{#                            <h2>The Name of the Wind</h2>#}
-{#                            <p>By Patrick Rothfuss</p>#}
-{#                            <p>Genre: Fantasy</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">#}
-{#                        <div>#}
-{#                            <h2>The Name of the Wind</h2>#}
-{#                            <p>By Patrick Rothfuss</p>#}
-{#                            <p>Genre: Fantasy</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">#}
-{#                        <div>#}
-{#                            <h2>The Name of the Wind</h2>#}
-{#                            <p>By Patrick Rothfuss</p>#}
-{#                            <p>Genre: Fantasy</p>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="book">#}
-{#                        <img src="{{ asset('images/bookcover1.jpeg') }}" alt="Image of book">#}
-{#                        <div>#}
-{#                            <h2>The Name of the Wind</h2>#}
-{#                            <p>By Patrick Rothfuss</p>#}
-{#                            <p>Genre: Fantasy</p>#}
-{#                        </div>#}
-{#                    </div>#}
                 </div>
             </section>
         </div>
