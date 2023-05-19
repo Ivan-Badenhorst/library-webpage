@@ -28,10 +28,18 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
 }
 
-.addToFavourites {
+.actionBut {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+}
 
+.text-title-genre {
+    font-size: 200%;
 }
 
 .heart {
@@ -39,16 +47,12 @@
     scale: 150%;
 }
 
-.author {
+.subcontainer {
     margin-top: 20px;
 }
 
-.subcontainer {
-    margin-top: 50px;
-}
-
 .subcontainer p {
-    padding: 20px;
+    padding: 10px;
 }
 
 .specific-book {
@@ -83,5 +87,9 @@ p {
 
 .checked {
     color: orange;
+}
+
+.fa-thumbs-up {
+    margin-right: 10px;
 }
 
