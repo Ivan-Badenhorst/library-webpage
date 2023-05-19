@@ -50,4 +50,22 @@ class BookBinderController extends AbstractController
             'books'=>$products
         ]);
     }
+
+    #[Route('/book-info', name: 'bookinfo')]
+    public function infoBook(): Response
+    {
+        $this->stylesheets[] = 'bookinfo.css';
+        return $this->render('bookInfo.html.twig', [
+            'stylesheets'=> $this->stylesheets
+        ]);
+    }
+
+    #[Route('/profile', name: 'profile')]
+    public function profile(): Response
+    {
+        $this->stylesheets[] = 'profile.css';
+        return $this->render('profile.html.twig', [
+            'stylesheets'=> $this->stylesheets
+        ]);
+    }
 }

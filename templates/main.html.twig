@@ -7,9 +7,10 @@
                 <p>Unsure what to read next? Some of the most trending books last month!</p>
             </div>
             <div class="favourite-img">
-                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
-                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
-                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
+                <img loading="eager" src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
             </div>
 
 
@@ -23,73 +24,74 @@
 
         <div class="main-part">
             <aside class="filters">
+                <div class="sticky-filter">
+                    <h1>Filter by category</h1>
+                    <form>
+                        <div class="checkboxes">
+                            <label>
+                                <input type="checkbox" name="category" value="fiction"> Fiction
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="non-fiction"> Non-Fiction
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="biography"> Biography
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="history"> History
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="self-help"> Self-Help
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="travel"> Travel
+                            </label>
+                        </div>
+                    </form>
 
-                <h1>Filter by category</h1>
-                <form>
-                    <div class="checkboxes">
-                        <label>
-                            <input type="checkbox" name="category" value="fiction"> Fiction
-                        </label>
-                        <label>
-                            <input type="checkbox" name="category" value="non-fiction"> Non-Fiction
-                        </label>
-                        <label>
-                            <input type="checkbox" name="category" value="biography"> Biography
-                        </label>
-                        <label>
-                            <input type="checkbox" name="category" value="history"> History
-                        </label>
-                        <label>
-                            <input type="checkbox" name="category" value="self-help"> Self-Help
-                        </label>
-                        <label>
-                            <input type="checkbox" name="category" value="travel"> Travel
-                        </label>
-                    </div>
-                </form>
+                    <h1>Filter by Rating</h1>
+                    <form>
+                        <div class="checkboxes">
+                            <label>
+                                <input type="checkbox" name="rating" value="very good"> Very good
+                            </label>
+                            <label>
+                                <input type="checkbox" name="rating" value="good"> Good
+                            </label>
+                            <label>
+                                <input type="checkbox" name="rating" value="mediocre"> Mediocre
+                            </label>
+                        </div>
+                    </form>
 
-                <h1>Filter by Rating</h1>
-                <form>
-                    <div class="checkboxes">
-                        <label>
-                            <input type="checkbox" name="rating" value="very good"> Very good
-                        </label>
-                        <label>
-                            <input type="checkbox" name="rating" value="good"> Good
-                        </label>
-                        <label>
-                            <input type="checkbox" name="rating" value="mediocre"> Mediocre
-                        </label>
-                    </div>
-                </form>
-
-                <h1>Filter by genre</h1>
-                <form>
-                    <div class="checkboxes">
-                        <label>
-                            <input type="checkbox" name="genre" value="romance"> Romance
-                        </label>
-                        <label>
-                            <input type="checkbox" name="genre" value="mystery"> Mystery
-                        </label>
-                        <label>
-                            <input type="checkbox" name="genre" value="fantasy"> Fantasy
-                        </label>
-                        <label>
-                            <input type="checkbox" name="genre" value="sci-fi"> Science Fiction
-                        </label>
-                        <label>
-                            <input type="checkbox" name="genre" value="horror"> Horror
-                        </label>
-                        <label>
-                            <input type="checkbox" name="genre" value="thriller"> Thriller
-                        </label>
-                    </div>
-                </form>
-
+                    <h1>Filter by genre</h1>
+                    <form>
+                        <div class="checkboxes">
+                            <label>
+                                <input type="checkbox" name="genre" value="romance"> Romance
+                            </label>
+                            <label>
+                                <input type="checkbox" name="genre" value="mystery"> Mystery
+                            </label>
+                            <label>
+                                <input type="checkbox" name="genre" value="fantasy"> Fantasy
+                            </label>
+                            <label>
+                                <input type="checkbox" name="genre" value="sci-fi"> Science Fiction
+                            </label>
+                            <label>
+                                <input type="checkbox" name="genre" value="horror"> Horror
+                            </label>
+                            <label>
+                                <input type="checkbox" name="genre" value="thriller"> Thriller
+                            </label>
+                        </div>
+                    </form>
+                </div>
             </aside>
 
             <section class="book-listings-section">
+                <h1>Browse books</h1>
                 <div class="book-listings">
                     {% if books is defined %}
                         {% for book in books %}

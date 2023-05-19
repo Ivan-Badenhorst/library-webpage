@@ -1,0 +1,87 @@
+.container {
+    background-color: white;
+    width: 90%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+}
+
+.book-title {
+    font-size: 5em;
+    font-weight: bold;
+}
+
+.book-title:after {
+    content:' ';
+    display:block;
+    border:2px solid #007090;
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.top-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addToFavourites {
+
+}
+
+.heart {
+    margin-right: 10px;
+    scale: 150%;
+}
+
+.author {
+    margin-top: 20px;
+}
+
+.subcontainer {
+    margin-top: 50px;
+}
+
+.subcontainer p {
+    padding: 20px;
+}
+
+.specific-book {
+    float: left;
+    margin-right: 20px;
+    width: 20em;
+    height: 31.5em;
+}
+
+p {
+    text-align: justify;
+    font-size: 25px;
+
+}
+
+.reviews {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.reviews > * {
+    width: 45%;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px;
+
+}
+
+.checked {
+    color: orange;
+}
+

@@ -1,18 +1,19 @@
 .book {
     display: inline-block;
+    position: relative;
     flex-wrap: wrap;
     width: 19em;
     padding: 20px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
-.book:hover img {
-    transform: scale(1.05);
-}
-
-img {
+.book img {
     width: 19em;
     height: 30em;
+}
+
+.book img:hover {
+    transform: scale(1.05);
 }
 
 .favourites {
@@ -23,12 +24,30 @@ img {
 
 }
 
+.favourite-img {
+    justify-content: center;
+    align-items: center;
+}
+
+.favourite-img img:hover {
+    transform: scale(1.05);
+}
+
+.favourite-img img {
+    width: 10em;
+    height: 15em;
+    margin: 20px;
+}
+
 .favourite-text {
     display: flex;
     flex-wrap: wrap;
-    width: 10em;
+    width: 15em;
     font-size: 200%;
     font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 50px;
 }
 
 .search-books {
@@ -74,14 +93,10 @@ button[type="submit"] {
 
 .checkboxes label {
     display: block;
+    margin-left: 20px;
 }
 
-.checkboxes input[type="checkbox"] {
-    margin-right: 5px;
-}
-
-.book-listings
-{
+.book-listings {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -93,6 +108,7 @@ button[type="submit"] {
     border-width : 0.1em;
     border-style : solid;
     border-color : black;
+    border-radius: 10px;
 }
 
 .filters {
@@ -100,7 +116,13 @@ button[type="submit"] {
     width: 18em;
 }
 
+.sticky-filter {
+    position: sticky;
+    top: 20px;
+}
+
 aside h1 {
     font-weight: bold;
     font-size: 30px;
 }
+

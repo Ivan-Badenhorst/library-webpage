@@ -2,41 +2,39 @@
 <html lang="en">
 <head>
     <title>WebTech Project</title>
-    <link rel="icon" href="{{ asset('images/book.svg') }}" type="image/icon type">
-    <meta charset="UTF-8" />
-<<<<<<< HEAD
-    <meta name="keywords" content="webtech project" />
-=======
-    <meta name="keywords" content="webtech Project" />
->>>>>>> origin/homepage
+    <link rel="icon" href="{{ asset('images/bookIcon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="webtech Project">
     <meta name="description"
-          content="This is the project for the course webtech, made by group 32" />
+          content="This is the project for the course webtech, made by group 32">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     {% for stylesheet in stylesheets %}
-        <link href="{{ asset('css/' ~ stylesheet) }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/' ~ stylesheet) }}" rel="stylesheet" type="text/css">
     {% endfor %}
 </head>
 
 <body>
 <header>
-    <div id="logo">
+    <a href="{{ path('home') }}" id="logo" style="text-decoration: none">
         <img class="logo-image" src="{{ asset('images/devLogo.png') }}" alt="Bookbinder logo">
         <h1 id="title">Bookbinder</h1>
-    </div>
+    </a>
     <div id="navigator">
         <nav>
             <ul>
                 <li><a style="text-decoration:none" href="#">Chats</a></li>
                 <li><a style="text-decoration:none" href="#">Reading list</a></li>
-                <li><a style="text-decoration:none" href="#">Meetup</a></li>
+                <li><a class="bibs" style="text-decoration:none" href="#">Meetup</a></li>
                 <li><a style="text-decoration:none" href="#">About</a></li>
                 <li><a style="text-decoration:none" href="#">Contact</a></li>
             </ul>
         </nav>
-        <button class="loginButton">Login</button>
+        <button class="normalButton">Login</button>
     </div>
 
 </header>
@@ -46,8 +44,8 @@
 </main>
 
 <footer>
-    <p>Copyright &copy 2023 WebTech. KUL&nbsp;All Rights Reserved.&nbsp;&nbsp;
-        <a style="text-decoration:none" href="#">Privacy Policy</a> | <a style="text-decoration:none" href="#">Terms of Use</a>
+    <p>Copyright &copy; 2023 WebTech. KUL&nbsp;All Rights Reserved.&nbsp;&nbsp;
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a>
     </p>
 </footer>
 </body>
