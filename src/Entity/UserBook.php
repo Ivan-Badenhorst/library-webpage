@@ -19,7 +19,7 @@ class UserBook
 
     #[ORM\ManyToOne(inversedBy: 'bookUserId')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?book $bookId = null;
+    private ?Book $bookId = null;
 
     public function getId(): ?int
     {
@@ -38,12 +38,12 @@ class UserBook
         return $this;
     }
 
-    public function getBookId(): ?book
+    public function getBookId(): ?Book
     {
         return $this->bookId;
     }
 
-    public function setBookId(?book $bookId): self
+    public function setBookId(?Book $bookId): self
     {
         $this->bookId = $bookId;
 

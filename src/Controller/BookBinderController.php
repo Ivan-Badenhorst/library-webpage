@@ -71,21 +71,21 @@ class BookBinderController extends AbstractController
         // ref : https://symfony.com/doc/current/forms.html
         $userBook = new UserBook();
         $form = $this->createFormBuilder($userBook)
-            ->add('book__Id',IntegerType::class, ['label' => 'bookID'])
-            ->add('user__Id',IntegerType::class, ['label' => 'userID'])
+            //->add('bookId',IntegerType::class, ['label' => 'bookID'])
+            //->add('userId',IntegerType::class, ['label' => 'userID'])
             ->add('save',SubmitType::class, ['label' => 'Add to favorites'])
             ->getForm();
 
         // check if form was submitted and handle data
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $book_id = $form->getData()['book__Id'];
-            $user_id = $form->getData()['user__Id'];
-            $book = $bookRepository->findBook($book_id);
-            $user = $userRepository->findUser($user_id);
+            //$book_id = $form->getData()['bookId'];
+            //$user_id = $form->getData()['userId'];
+            $book = $bookRepository->findBook(26);
+            $user = $userRepository->findUser(15);
             $userBook->setBookId($book);
             $userBook->setUserId($user);
-            $userBookRepository->save($userBook);
+            $userBookRepository->save($userBook, true);
             return $this->redirectToRoute('home');
         }
 

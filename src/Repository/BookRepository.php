@@ -87,16 +87,15 @@ class BookRepository extends ServiceEntityRepository
     public function findBook(int $bookID): Book
     {
         // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
 
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $query = $entityManager->createQuery(
+            'SELECT b
+            FROM App\Entity\Book b
+            WHERE b.id = :bookID'
+        )->setParameter('bookID', $bookID);
 
-        $queryBuilder
-            ->select('e')
-            ->from(Book::class, 'e')
-            ->where('id',$bookID)
-            ->getFirstResult();
-
-        return $queryBuilder->getQuery()->getResult();
+        return $query->getResult()[0];
     }
 
 //    /**
