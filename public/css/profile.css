@@ -159,7 +159,7 @@ input[type="submit"]:focus {
     width: 40%;
 }
 
-#profileBut {
+.normalButton {
     width: 15em;
 }
 
