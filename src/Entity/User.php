@@ -1,7 +1,8 @@
 <?php
 
 //This is the user entity: used to store information on users
-
+//functions to get all variables are already implemented in the auth class [please use that instead of calling the functions directly from here]
+//if the function you need is not implemented, please add it to the auth class, you can check out the implemented functions as examples
 
 namespace App\Entity;
 use Symfony\Component\HttpFoundation\File\File;

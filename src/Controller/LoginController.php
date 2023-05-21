@@ -33,8 +33,9 @@ class LoginController extends AbstractController
 
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request): Response
-    {
+    public function register(Request $request, RequestStack $requestStack): Response
+    {   //get session
+        $this->session = $requestStack->getSession();
         //create form
         $form = $this->createForm(register::class);
         $form->handleRequest($request);
@@ -53,112 +54,19 @@ class LoginController extends AbstractController
             //send data to auth object
             $result = $auth->register($form->getData()['email'], $form->getData()['password'], $form->getData()['name'], $form->getData()['surname'], $form->getData()['displayname'], $form->getData()['DateOfBirth'], $form->getData()['street'], $form->getData()['postalCode'], $form->getData()['city'], $profilePicture);
             //check result and return error or success
-            if ($result == "email") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "email already in use"
-                ]);
-            }
-            else if ($result == "file size too big") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "file size too big"
-                ]);
+
+            //TODO change redirect to home page once home page is implemented
+            if ($result == "success") {
+                $result = $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
+                return $this->redirectToRoute('home');
             }
 
-            //TODO needs to be changed to redirect to home in the main branch
-            else if ($result == "success") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'succes' => "success"
-
-                ]);
-            }
-            else if ($result == "email too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "email too long"
-                ]);
-            }
-            else if ($result == "name too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "name too long"
-                ]);
-            }
-            else if ($result == "unknown error") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "unknown error"
-                ]);
-            }
-            else if ($result == "email too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "email too long (needs to be at most 255 characters long)"
-                ]);
-            }
-            else if ($result == "surname too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "surname too long (needs to be at most 255 characters long)"
-                ]);
-            }
-            else if ($result == "displayname too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "displayname too long (needs to be at most 255 characters long)"
-                ]);
-            }
-            else if ($result == "street too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "street too long (needs to be at most 255 characters long)"
-                ]);
-            }
-            else if ($result == "city too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "city too long (needs to be at most 255 characters long)"
-                ]);
-            }
-            else if ($result == "postalCode too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "postalCode too long (only 10 digits)"
-                ]);
-            }
-            else if ($result == "password too long") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "password too long (needs to be at most 255 characters long)"
-                ]);
-            }
-            else if ($result == "password too short") {
-                return $this->render('register.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "password too short (needs to be at least 8 characters long)"
-                ]);
-            }
+            //display error message
             else {
                 return $this->render('register.html.twig', [
                     'stylesheets'=> $this->stylesheets,
                     'form' => $form->createView(),
-                    'error' => "unknown error"
+                    'error' => $result
                 ]);
             }
         }
@@ -175,7 +83,7 @@ class LoginController extends AbstractController
 
     #[Route('/login', name: 'login')]
     public function login(Request $request, RequestStack $requestStack): Response
-    {//get session
+    {   //get session
         $this->session = $requestStack->getSession();
         //get entity manager (list of all entities in the database
         $auth = new \App\backend\auth($this->doctrine->getManager());
@@ -200,39 +108,22 @@ class LoginController extends AbstractController
 
             //send data to the auth class to check if the user exists
             $result = $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
-            if ($result == "email") {
+
+            //TODO change redirect to home page once home page is implemented
+            if ($result == "success") {
+                return $this->redirectToRoute('home');
+            }
+
+            //display error message
+            else {
                 return $this->render('login.html.twig', [
                     'stylesheets'=> $this->stylesheets,
                     'form' => $form->createView(),
-                    'error' => "email not found"
+                    'error' => $result
                 ]);
             }
-            //if the user has tried to login too many times
-            if ($result == "tries") {
-                return $this->render('login.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "too many tries"
-                ]);
-            }
-
-            //if the user has entered the wrong password
-            if ($result == "password") {
-                return $this->render('login.html.twig', [
-                    'stylesheets'=> $this->stylesheets,
-                    'form' => $form->createView(),
-                    'error' => "wrong password"
-                ]);
-            }
-
-            //if the login was succesfull
-
-            //TODO this code should be uncommented when it is integrated into the main branch
-            //it cant be used untill then as this branch doesn't have the home page
-//            if ($result == "success") {
-//                return $this->redirectToRoute('home');
-//            }
         }
+
 
         return $this->render('login.html.twig', [
             'form' => $form->createView(),
@@ -276,10 +167,12 @@ class LoginController extends AbstractController
 
     //You can use this function to log a user out. It does not
     //return anything and you will still need to redirect them to the login page.
-    public function logout(): void
+    #[Route('/logout', name: 'logout')]
+    public function logout(): Response
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
         $auth->logout($this->session);
+        return $this->redirectToRoute('login');
     }
 
 
