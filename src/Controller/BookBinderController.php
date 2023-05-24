@@ -24,22 +24,22 @@ class BookBinderController extends AbstractController
     {
         $form = $this->createForm(BookSearch::class);
 
-        $form->handleRequest($request);
+   //     $form->handleRequest($request);
         $this->stylesheets[] = 'main.css';
 
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $searchTerm = $form->getData()['search_term'];
-
-            // Do something with the search term
-            $products = $bookRepository->searchOnTitle(40, $searchTerm);
-
-        }
-        else{
-            //get a list of all books to display
-            //for now these books are random!
-            $products = $bookRepository->findLimitedRecords(40);
-        }
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $searchTerm = $form->getData()['search_term'];
+//
+//            // Do something with the search term
+//            $products = $bookRepository->searchOnTitle(40, $searchTerm);
+//
+//        }
+//        else{
+//            //get a list of all books to display
+//            //for now these books are random!
+//            $products = $bookRepository->findLimitedRecords(40);
+//        }
 
 
         $products = $bookRepository->findLimitedRecords(40);

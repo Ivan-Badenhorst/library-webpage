@@ -5,7 +5,8 @@ namespace App\Repository;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Doctrine\DBAL\FetchMode;
+use Doctrine\ORM\EntityManagerInterface;
 /**
  * @extends ServiceEntityRepository<Book>
  *
@@ -39,11 +40,14 @@ class BookRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function findLimitedRecords(int $limit): array
     {
        // $repository = $this->getEntityManager()->getRepository(Book::class);
 
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+//        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
 //        $queryBuilder
 //            ->select('e')
@@ -57,31 +61,59 @@ class BookRepository extends ServiceEntityRepository
 //            ->groupBy('b.id');
         $sql = 'SELECT b.*, GROUP_CONCAT(g.genre SEPARATOR \', \') AS genres
         FROM book b
-        JOIN book_genre bg ON b.id = bg.book_id
-        JOIN genre g ON bg.genre_id = g.id
-        GROUP BY b.id';
+        JOIN book_genre bg ON b.id = bg.book_id_id
+        JOIN genre g ON bg.genre_id_id = g.id
+        GROUP BY b.id 
+        limit 40';
 
-        $connection = $this->getEntityManager()->getConnection();
-        $statement = $connection->prepare($sql);
-        $statement->execute();
 
-        $result = $statement->fetchAll();
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        //$stmt->bindParam('lim', $limit);
+        $result = $stmt->executeQuery()->fetchAllAssociative();
+        return $result;
 
         return $result;
     }
 
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function searchOnTitle(int $limit, String $searchTerm): array
     {
         // $repository = $this->getEntityManager()->getRepository(Book::class);
 
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+//        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+//
+//        $queryBuilder
+//            ->select('e')
+//            ->from(Book::class, 'e')
+//            ->where($queryBuilder->expr()->like('e.Title', ':searchTerm'))
+//            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+//            ->setMaxResults($limit);
 
-        $queryBuilder
-            ->select('e')
-            ->from(Book::class, 'e')
-            ->where($queryBuilder->expr()->like('e.Title', ':searchTerm'))
-            ->setParameter('searchTerm', '%' . $searchTerm . '%')
-            ->setMaxResults($limit);
+//        $sql = "SELECT b.*, GROUP_CONCAT(g.genre SEPARATOR \', \') AS genres
+//        FROM book b
+//        JOIN book_genre bg ON b.id = bg.book_id_id
+//        JOIN genre g ON bg.genre_id_id = g.id
+//        WHERE b.title like".'%'.$searchTerm.'%'."
+//        GROUP BY b.id
+//        limit 40";
+
+        $sql = 'SELECT b.*, GROUP_CONCAT(g.genre SEPARATOR \', \') AS genres
+        FROM book b
+        JOIN book_genre bg ON b.id = bg.book_id_id
+        JOIN genre g ON bg.genre_id_id = g.id
+        WHERE b.title like "'."%".$searchTerm."%\"".'
+        GROUP BY b.id 
+        limit 40';
+
+        //$searchTerm = '%'.$searchTerm.'%';
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        //$stmt->bindParam('var', $searchTerm);
+        $result = $stmt->executeQuery()->fetchAllAssociative();
+        return $result;
+
 
         return $queryBuilder->getQuery()->getResult();
     }

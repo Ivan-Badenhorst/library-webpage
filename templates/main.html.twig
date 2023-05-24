@@ -16,13 +16,30 @@
 
         </section>
 
+{#        <div class="form-container">#}
+{#            {{ form_start(form) }}#}
+{#            <div class="form-row">#}
+{#                {{ form_widget(form) }}#}
+{#            </div>#}
+{#            {{ form_end(form) }}#}
+{#        </div>#}
+
         <div class="form-container">
-            {{ form_start(form) }}
-            <div class="form-row">
-                {{ form_widget(form) }}
-            </div>
-            {{ form_end(form) }}
+            <form id="book-search-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
+                <div class="form-row">
+                    {{ form_widget(form) }}
+                </div>
+                {{ form_end(form) }}
+{#                <button type="submit">Search</button>#}
+            </form>
         </div>
+
+
+        <!-- Include the JavaScript files -->
+        <script src="{{ asset('js/search.js') }}"></script>
+
+
+
 
         <div class="main-part">
             <aside class="filters">
@@ -92,9 +109,10 @@
                 </div>
             </aside>
 
+
             <section class="book-listings-section">
                 <h1 class="title-browse-books">Browse books</h1>
-                <div class="book-listings">
+                <div class="book-listings" id="books">
                     {% if books is defined %}
 {#                        {% for book in books %}#}
 {#                            <div class="book">#}
@@ -107,16 +125,16 @@
 {#                            </div>#}
 {#                        {% endfor %}#}
                         {% for row in books %}
-                            <div>
+                            <div id="books-container">
 {#                                <h2>{{ row.title }}</h2>#}
 {#                                <p>Genres: {{ row.genres }}</p>#}
 {#                                <!-- Access other fields as needed -->#}
 
-                                <div class="book">#}
-                                    <img src="{{row.bookCover}}" alt="Entity Image">
+                                <div class="book">
+                                    <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
-                                        <h2>{{ row.Title }}</h2>
-                                        <p>By {{ row.Author }}</p>
+                                        <h2>{{ row.title }}</h2>
+                                        <p>By {{ row.author }}</p>
                                         <p>Genre: {{ row.genres }}</p>
                                     </div>
                                 </div>
