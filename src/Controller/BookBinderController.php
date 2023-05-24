@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\BookSearch;
 use App\Repository\BookRepository;
+use App\Repository\GenreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +21,18 @@ class BookBinderController extends AbstractController
     }
 
     #[Route('/', name: 'home')]
-    public function home(Request $request, BookRepository $bookRepository): Response
+    public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository): Response
     {
-        $form = $this->createForm(BookSearch::class);
+        $genres_qry = $genreRepository->getGenre();
+        $genres = [];
+        foreach ($genres_qry as $genre){
 
+            $genres[] = $genre['genre'];
+        }
+
+
+        $form = $this->createForm(BookSearch::class);
+        //$filter = $this->createForm(Filter::class);
    //     $form->handleRequest($request);
         $this->stylesheets[] = 'main.css';
 
@@ -45,6 +54,7 @@ class BookBinderController extends AbstractController
         $products = $bookRepository->findLimitedRecords(40);
 
         return $this->render('main.html.twig', [
+            'genres'=> $genres,
             'form' => $form->createView(),
             'stylesheets'=> $this->stylesheets,
             'books'=>$products

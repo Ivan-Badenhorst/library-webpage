@@ -30,13 +30,11 @@
                     {{ form_widget(form) }}
                 </div>
                 {{ form_end(form) }}
-{#                <button type="submit">Search</button>#}
             </form>
         </div>
 
 
-        <!-- Include the JavaScript files -->
-        <script src="{{ asset('js/search.js') }}"></script>
+
 
 
 
@@ -44,66 +42,53 @@
         <div class="main-part">
             <aside class="filters">
                 <div class="sticky-filter">
-                    <h1>Filter by category</h1>
-                    <form>
-                        <div class="checkboxes">
-                            <label>
-                                <input type="checkbox" name="category" value="fiction"> Fiction
-                            </label>
-                            <label>
-                                <input type="checkbox" name="category" value="non-fiction"> Non-Fiction
-                            </label>
-                            <label>
-                                <input type="checkbox" name="category" value="biography"> Biography
-                            </label>
-                            <label>
-                                <input type="checkbox" name="category" value="history"> History
-                            </label>
-                            <label>
-                                <input type="checkbox" name="category" value="self-help"> Self-Help
-                            </label>
-                            <label>
-                                <input type="checkbox" name="category" value="travel"> Travel
-                            </label>
-                        </div>
-                    </form>
+{#                    <h1>Filter by category</h1>#}
+{#                    <form>#}
+{#                        <div class="checkboxes">#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="category" value="fiction"> Fiction#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="category" value="non-fiction"> Non-Fiction#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="category" value="biography"> Biography#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="category" value="history"> History#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="category" value="self-help"> Self-Help#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="category" value="travel"> Travel#}
+{#                            </label>#}
+{#                        </div>#}
+{#                    </form>#}
 
-                    <h1>Filter by Rating</h1>
-                    <form>
-                        <div class="checkboxes">
-                            <label>
-                                <input type="checkbox" name="rating" value="very good"> Very good
-                            </label>
-                            <label>
-                                <input type="checkbox" name="rating" value="good"> Good
-                            </label>
-                            <label>
-                                <input type="checkbox" name="rating" value="mediocre"> Mediocre
-                            </label>
-                        </div>
-                    </form>
+{#                    <h1>Filter by Rating</h1>#}
+{#                    <form>#}
+{#                        <div class="checkboxes">#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="rating" value="very good"> Very good#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="rating" value="good"> Good#}
+{#                            </label>#}
+{#                            <label>#}
+{#                                <input type="checkbox" name="rating" value="mediocre"> Mediocre#}
+{#                            </label>#}
+{#                        </div>#}
+{#                    </form>#}
 
                     <h1>Filter by genre</h1>
-                    <form>
+                    <form id="filter_genre">
                         <div class="checkboxes">
+                            {% for genre in genres %}
                             <label>
-                                <input type="checkbox" name="genre" value="romance"> Romance
+                                <input type="checkbox" name="genre" value="{{ genre }}" checked> {{ genre }}
                             </label>
-                            <label>
-                                <input type="checkbox" name="genre" value="mystery"> Mystery
-                            </label>
-                            <label>
-                                <input type="checkbox" name="genre" value="fantasy"> Fantasy
-                            </label>
-                            <label>
-                                <input type="checkbox" name="genre" value="sci-fi"> Science Fiction
-                            </label>
-                            <label>
-                                <input type="checkbox" name="genre" value="horror"> Horror
-                            </label>
-                            <label>
-                                <input type="checkbox" name="genre" value="thriller"> Thriller
-                            </label>
+                            {% endfor %}
                         </div>
                     </form>
                 </div>
@@ -145,4 +130,7 @@
             </section>
         </div>
     </div>
+
+    <!-- Include the JavaScript files -->
+    <script src="{{ asset('js/search.js') }}"></script>
 {% endblock %}
