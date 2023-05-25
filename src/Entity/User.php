@@ -18,8 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
-
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -94,7 +92,6 @@ class User
 
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $userBookId;
-
 
     public function __construct()
     {
@@ -274,6 +271,4 @@ class User
 
         return $this;
     }
-
-
 }
