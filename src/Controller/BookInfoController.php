@@ -13,6 +13,7 @@ namespace App\Controller;
 
 use App\Entity\UserBook;
 use App\Form\BookAdd;
+use App\Form\BookRemove;
 use App\Form\BookReview;
 use App\Repository\BookRepository;
 use App\Repository\BookReviewsRepository;
@@ -37,26 +38,53 @@ class BookInfoController extends AbstractController
     }
 
     #[Route("/book-info/{bookId}", name: "book-info")]
-    public function bookInfo($bookId, Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
+    public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository): Response {
         $book = $bookRepository->findBook($bookId);
 
+        $exists = $userBookRepository->check($bookId, 15);
+
         $form = $this->createForm(BookAdd::class);
+        $view = $form->createView();
+
+        if($exists){
+            $view->children['add_to_favorites']->vars['label'] = 'Remove from favorites';
+        }
 
         $form2 = $this->createForm(BookReview::class);
+
 
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'form'=>$form,
+            'form'=>$view,
             'form2'=>$form2,
-            'book' => $book
+            'book'=>$book
         ]);
     }
 
-    /*#[Route('/add/{bookId}/{userId}', name: 'add')]
-    public function add($bookId, $userId, BookRepository $bookRepository): Response
+    #[Route('/add/{bookId}/{userId}', name: 'add')]
+    public function add($bookId, $userId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response
     {
-    }*/
+        $userBook = new UserBook;
+
+        $exists = $userBookRepository->check($bookId, $userId);
+
+        if($exists){
+            $userBook = $userBookRepository->findUserBook($bookId, $userId);
+            $userBookRepository->remove($userBook, true);
+        }
+        else{
+            $book = $bookRepository->findBook($bookId);
+            $user = $userRepository->findUser($userId);
+            $userBook->setBookId($book);
+            $userBook->setUserId($user);
+
+            $userBookRepository->save($userBook, true);
+
+        }
+
+        return new JsonResponse(true);
+    }
 
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response

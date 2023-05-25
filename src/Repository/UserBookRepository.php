@@ -39,6 +39,42 @@ class UserBookRepository extends ServiceEntityRepository
         }
     }
 
+    public function check(int $bookID, int $userID): bool
+    {
+        $exists = false;
+        // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT b
+            FROM App\Entity\UserBook b
+            WHERE b.bookId = :bookID AND b.userId = :userID'
+        )->setParameter('bookID', $bookID);
+        $query->setParameter('userID', $userID);
+
+        if($query->getResult() != null){
+            $exists = true;
+        }
+
+        return $exists;
+    }
+
+    public function findUserBook(int $bookID, int $userID): UserBook
+    {
+        $exists = false;
+        // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT b
+            FROM App\Entity\UserBook b
+            WHERE b.bookId = :bookID AND b.userId = :userID'
+        )->setParameter('bookID', $bookID);
+        $query->setParameter('userID', $userID);
+
+        return $query->getResult()[0];
+    }
+
 //    /**
 //     * @return UserBook[] Returns an array of UserBook objects
 //     */
