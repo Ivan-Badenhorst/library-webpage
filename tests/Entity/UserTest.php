@@ -68,4 +68,12 @@ class UserTest extends TestCase
         $user->removeUserBookId($book);
         $this->assertEquals(0, $user->getUserBookId()->count());
     }
+
+    public function testId()
+    {
+        $user = new User();
+
+        // Test the initial value of id
+        $this->assertNull($user->getId());
+    }
 }

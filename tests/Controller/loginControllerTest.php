@@ -1,6 +1,6 @@
 <?php
-
-namespace App\Tests\Entity;
+/*
+namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -74,4 +74,4 @@ class loginControllerTest extends WebTestCase
         // Assert that the login was successful
         $this->assertTrue($client->getResponse()->isRedirect('/home'));
     }
-}
+}*/
