@@ -105,8 +105,11 @@
 
         books.forEach(function(book) {
             //only display book if it contains at least one of the selected genres
+            let slash = '/';
+            let onclickString = `onclick="switchPage('`+ slash + `book-info` + slash + book.id + `')"`;
+
             if(checkStringForElements(book.genres.toUpperCase(), genres)) {
-                let text = '<div id="books-container">' +
+                let text = '<div id="books-container"' + onclickString + '>' +
                     '<div class="book">' +
                     '<img loading="lazy" src="' + book.book_cover + '" alt="Entity Image">' +
                     '<div>' +
