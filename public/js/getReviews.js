@@ -1,5 +1,6 @@
 const reviewButton = document.getElementById('book-review-form');
 const reviewDiv = document.getElementById('reviewDisplay');
+var num = -5;
 
 
 
@@ -7,7 +8,9 @@ const reviewDiv = document.getElementById('reviewDisplay');
 reviewButton.addEventListener('submit', function(event) {
     event.preventDefault();
     let bookId = document.getElementById('bookId').textContent;
-    getReviews(bookId, 0);
+    num += 5;
+    console.log(num)
+    getReviews(bookId, num);
 });
 
 
@@ -42,7 +45,7 @@ function displayReviews(reviews) {
             '<p>' + review.comment + '</p>'+
             '</div>'+'</div>'
 
-        reviewDiv.innerHTML = text + reviewDiv.innerHTML;
+        reviewDiv.innerHTML = reviewDiv.innerHTML + text;
 
 
     });
