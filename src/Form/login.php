@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class login extends AbstractType
 {
@@ -31,6 +32,10 @@ class login extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add("password", PasswordType::class)
+            ->add('showPassword', CheckboxType::class, [
+                'label' => 'Show Password',
+                'required' => false,
+            ])
             ->add('submit', SubmitType::class);
     }
 }

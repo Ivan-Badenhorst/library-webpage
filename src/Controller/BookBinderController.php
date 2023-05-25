@@ -43,11 +43,7 @@ class BookBinderController extends AbstractController
     #[Route('/', name: 'home')]
     public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
     {
-        if ($this->checkSession($requestStack)==false){
-            echo("no");
-            return $this->redirectToRoute('login');
-        }
-        echo($this->forward('App\Controller\LoginController::checkSession'));
+        $logged = $this->checkSession($requestStack);
         //gets a list of all genres as string
         $genres_qry = $genreRepository->getGenre();
         $genres = [];
@@ -67,29 +63,36 @@ class BookBinderController extends AbstractController
             'genres'=> $genres,
             'form' => $form->createView(),
             'stylesheets'=> $this->stylesheets,
-            'books'=>$products
+            'books'=>$products,
+            'logged' => $logged
         ]);
     }
 
     #[Route('/book-info', name: 'bookinfo')]
-    public function infoBook(): Response
+    public function infoBook(RequestStack $requestStack): Response
     {
+        $logged = $this->checkSession($requestStack);
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
-            'stylesheets'=> $this->stylesheets
+            'stylesheets'=> $this->stylesheets,
+            'logged' => $logged
         ]);
     }
 
     #[Route('/profile', name: 'profile')]
-    public function profile(): Response
+    public function profile(RequestStack $requestStack): Response
     {
+        if($this->checkSession($requestStack)==false){
+            return $this->redirectToRoute('login');
+        }
         $this->stylesheets[] = 'profile.css';
         return $this->render('profile.html.twig', [
-            'stylesheets'=> $this->stylesheets
+            'stylesheets'=> $this->stylesheets,
+            'logged' => true
         ]);
     }
 
-    public function checkSession(RequestStack $requestStack): bool
+    private function checkSession(RequestStack $requestStack): bool
     {
         $session = $requestStack->getSession();
         $auth = new \App\backend\auth($this->doctrine->getManager());
