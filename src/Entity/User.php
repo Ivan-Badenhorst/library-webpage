@@ -54,10 +54,14 @@ class User
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $profilePicture = null;
 
+    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: BookReviews::class, orphanRemoval: true)]
+    private Collection $userReviewId;
+
     public function __construct()
     {
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
+        $this->userReviewId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -241,6 +245,36 @@ class User
     public function setProfilePicture($profilePicture): self
     {
         $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BookReviews>
+     */
+    public function getUserReviewId(): Collection
+    {
+        return $this->userReviewId;
+    }
+
+    public function addUserReviewId(BookReviews $userReviewId): self
+    {
+        if (!$this->userReviewId->contains($userReviewId)) {
+            $this->userReviewId->add($userReviewId);
+            $userReviewId->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserReviewId(BookReviews $userReviewId): self
+    {
+        if ($this->userReviewId->removeElement($userReviewId)) {
+            // set the owning side to null (unless already changed)
+            if ($userReviewId->getUserId() === $this) {
+                $userReviewId->setUserId(null);
+            }
+        }
 
         return $this;
     }

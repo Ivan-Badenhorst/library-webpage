@@ -41,11 +41,15 @@ class Book
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $bookCover = null;
 
+    #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: BookReviews::class, orphanRemoval: true)]
+    private Collection $bookReviewId;
+
 
     public function __construct()
     {
         $this->bookGenreId = new ArrayCollection();
         $this->bookUserId = new ArrayCollection();
+        $this->bookReviewId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +173,36 @@ class Book
     public function setBookCover(?string $bookCover): self
     {
         $this->bookCover = $bookCover;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BookReviews>
+     */
+    public function getBookReviewId(): Collection
+    {
+        return $this->bookReviewId;
+    }
+
+    public function addBookReviewId(BookReviews $bookReviewId): self
+    {
+        if (!$this->bookReviewId->contains($bookReviewId)) {
+            $this->bookReviewId->add($bookReviewId);
+            $bookReviewId->setBookId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookReviewId(BookReviews $bookReviewId): self
+    {
+        if ($this->bookReviewId->removeElement($bookReviewId)) {
+            // set the owning side to null (unless already changed)
+            if ($bookReviewId->getBookId() === $this) {
+                $bookReviewId->setBookId(null);
+            }
+        }
 
         return $this;
     }
