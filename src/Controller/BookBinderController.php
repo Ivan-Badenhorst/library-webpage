@@ -35,10 +35,8 @@ class BookBinderController extends AbstractController
         ]);
     }
 
-    #[Route("/book-info", name: "bookinfo")]
-    public function bookInfo(Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
-        $data = json_decode($request->get('key'), true);
-        $bookId = $data;
+    #[Route("/book-info/{bookId}", name: "book-info")]
+    public function bookInfo($bookId, Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
 
         //$book = $bookRepository->findBook($bookId);
         // create form
