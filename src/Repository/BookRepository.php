@@ -1,4 +1,13 @@
 <?php
+/**
+ * @fileoverview Database repository for the Book table
+ * @version 1.2
+ */
+
+/**
+ * @author Ivan Badenhorst, Aymeric Baume
+ * @since 2023-05-09.
+ */
 
 namespace App\Repository;
 

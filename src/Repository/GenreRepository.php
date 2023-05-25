@@ -1,11 +1,11 @@
 <?php
 /**
  * @fileoverview Database repository for the Genre table
- * @version 1.0.2
+ * @version 1.1
  */
 
 /**
- * @author Ivan Badenhorst, Thomas Deseure
+ * @author Ivan Badenhorst, Aymeric Baume
  * @since 2023-05-09.
  */
 
