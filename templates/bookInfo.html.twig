@@ -10,12 +10,9 @@
         <h2 class="author">
             By {{ book.author }}
         </h2>
-        <h2 id="bookId">
+        <p id="bookId">
             {{ book.id }}
-        </h2>
-        <!--<script>
-            document.getElementById("book").innerHTML=localStorage.getItem("bookId");
-        </script>-->
+        </p>
         <h3>
             Genre Category and rating
         </h3>
@@ -60,4 +57,5 @@
     </div>
 </div>
 
+    <script src="{{ asset('js/addToFavorites.js') }}"></script>
 {% endblock %}
