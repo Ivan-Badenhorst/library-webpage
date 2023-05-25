@@ -84,6 +84,8 @@ class BookRepository extends ServiceEntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         return $stmt->executeQuery()->fetchAllAssociative();
     }
+
+
     public function findBook(int $bookID): Book
     {
         // $repository = $this->getEntityManager()->getRepository(Book::class);
@@ -98,20 +100,7 @@ class BookRepository extends ServiceEntityRepository
         return $query->getResult()[0];
     }
 
-//    /**
-//     * @return Book[] Returns an array of Book objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
 
     /**
      * Returns a list of books based on a search term

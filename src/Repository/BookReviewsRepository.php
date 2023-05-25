@@ -1,10 +1,21 @@
 <?php
+/**
+ * @fileoverview Database repository for the BookReview table
+ * @version 1.0
+ */
+
+/**
+ * @author Ivan Badenhorst, Aymeric Baume
+ * @since 2023-05-25.
+ */
+
 
 namespace App\Repository;
 
 use App\Entity\BookReviews;
 use App\Entity\Genre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,11 +30,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookReviewsRepository extends ServiceEntityRepository
 {
+
+    /**
+     * Constructs a new instance of the database repository.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BookReviews::class);
     }
 
+
+    /**
+     * Used to add a new reviews to a book in the database
+     *
+     * @param BookReviews $entity -> New review to be added to the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function save(BookReviews $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -33,6 +57,13 @@ class BookReviewsRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * Used to delete reviews from a book
+     *
+     * @param BookReviews $entity -> Book review to be removed from the database
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function remove(BookReviews $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -43,11 +74,20 @@ class BookReviewsRepository extends ServiceEntityRepository
     }
 
 
+
+    /**
+     * used to get a list of reviews for a specific book
+     *
+     * @param int $offset -> offset on the results
+     * @param int $limit -> max number of reviews returned
+     * @param int $bookId -> bookId used to get reviews
+     * @return array -> array of review objects
+     * @throws Exception
+     */
     public function getReviews(int $offset, int $limit, int $bookId): array
     {
 
-        //no query builder in order to use GROUP_CONCAT
-
+        //no query builder in order to use limit and offset
         $sql = 'SELECT b.comment, b.score, b.date_added, u.display_name
                 FROM book_reviews b, user as u
                 WHERE u.id = b.user_id_id and b.book_id_id = '.$bookId.' 
@@ -57,24 +97,6 @@ class BookReviewsRepository extends ServiceEntityRepository
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         return $stmt->executeQuery()->fetchAllAssociative();
-//
-//
-//
-//
-//        $entityManager = $this->getEntityManager();
-//
-//        $query = $entityManager->createQuery(
-//            'SELECT u.displayName, b.comment, b.score, b.dateAdded
-//            FROM App\Entity\BookReviews b, App\Entity\User u
-//            WHERE u.id = b.userId
-//            ORDER BY b.dateAdded DESC
-//            OFFSET 40'
-//        );
-////        LIMIT :limit
-////            OFFSET :offset
-//     // $query->setParameter('limit', $limit);
-////        $query->setParameter('offset', $offset);
-//
-//        return $query->getResult();
+
     }
 }
