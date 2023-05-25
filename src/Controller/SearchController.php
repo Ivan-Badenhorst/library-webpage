@@ -1,8 +1,18 @@
 <?php
+/**
+ * @fileoverview Controller for API calls used for search and filter functionality on the home page -> see /src/js/search.js
+ * @version 1.1
+ */
+
+/**
+ * @author Ivan Badenhorst
+ * @since 2023-05-24.
+ */
 
 namespace App\Controller;
 
 use App\Repository\BookRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +21,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class SearchController extends AbstractController
 {
 
-    //listens for ajax requests and returns a json
+    /**
+     * Listens for API call, requesting book search
+     *
+     * @param $title -> search term used for finding books
+     * @param BookRepository $bookRepository
+     * @return JsonResponse -> containing all book information from the search result
+     * @throws Exception
+     */
     #[Route('/search/{title}', name: 'search')]
     public function search($title, BookRepository $bookRepository): Response
     {
