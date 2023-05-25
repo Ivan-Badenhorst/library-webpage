@@ -26,6 +26,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class BookInfoController extends AbstractController
 {
 
+    private array $stylesheets;
+
+    public function __construct()
+    {
+        $this->stylesheets[] = 'base.css';
+    }
 
     #[Route("/book-info/{bookId}", name: "book-info")]
     public function bookInfo($bookId, Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
