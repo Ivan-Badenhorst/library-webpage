@@ -14,9 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\BookSearch;
-use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,23 +65,17 @@ class BookBinderController extends AbstractController
 
     #[Route("/book-info/{bookId}", name: "book-info")]
     public function bookInfo($bookId, Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
-
-        //$book = $bookRepository->findBook($bookId);
+        $book = $bookRepository->findBook($bookId);
         // create form
         // ref : https://symfony.com/doc/current/forms.html
         $userBook = new UserBook();
         $form = $this->createFormBuilder($userBook)
-            //->add('bookId',IntegerType::class, ['label' => 'bookID'])
-            //->add('userId',IntegerType::class, ['label' => 'userID'])
             ->add('save',SubmitType::class, ['label' => 'Add to favorites'])
             ->getForm();
 
         // check if form was submitted and handle data
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //$book_id = $form->getData()['bookId'];
-            //$user_id = $form->getData()['userId'];
-            $book = $bookRepository->findBook(26);
             $user = $userRepository->findUser(15);
             $userBook->setBookId($book);
             $userBook->setUserId($user);
@@ -95,7 +87,7 @@ class BookBinderController extends AbstractController
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
             'userBook_form'=>$form,
-            'bookId' => $bookId
+            'book' => $book
         ]);
     }
 
