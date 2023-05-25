@@ -17,11 +17,11 @@
             <div class="profile-update">
                 <div class="main-info">
                     <button class="imgButton">
-                        <img class="profile-pic" src="{{ asset('images/profilePicture.jpg') }}" alt="profilePicture">
+                        <img src="data:image/png;base64,{{ profilePicture }}" alt="Profile Picture">
                     </button>
 
                     <div class="name">
-                        <h2>Name</h2>
+                        <h2>{{ displayName }}</h2>
                         <h3>Update your photo and personal data</h3>
                     </div>
                 </div>
@@ -29,15 +29,15 @@
             <form>
                 <h2 id="personal-information">Personal information</h2><br>
                 <div class="form-item">
-                    <label for="first-name">First name:</label>
+                    <label for="first-name">First name: {{ firstName }}</label>
                     <input type="text" id="first-name" name="first-name"><br>
-                    <label for="last-name">Last name:</label>
+                    <label for="last-name">Last name: {{ lastName }}</label>
                     <input type="text" id="last-name" name="last-name"><br>
-                    <label for="display-name">Display name:</label>
+                    <label for="display-name">Display name: {{ displayName }}</label>
                     <input type="text" id="display-name" name="display-name"><br>
                 </div>
                 <div class="form-item">
-                    <label for="email">Email:</label>
+                    <label for="email">Email: {{ email }}</label>
                     <input type="email" id="email" name="email"><br>
                 </div>
                 <div class="form-item">
@@ -45,16 +45,12 @@
                     <textarea id="bio" name="bio" rows="4" cols="50"></textarea><br>
                 </div>
                 <div class="form-item">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" name="address"><br>
-                    <label for="city">City:</label>
+                    <label for="address">Street: {{ street }}</label>
+                    <input type="text" id="street" name="street"><br>
+                    <label for="city">City: {{ city }}</label>
                     <input type="text" id="city" name="city"><br>
-                    <label for="postal-code">Postal code:</label>
+                    <label for="postal-code">Postal code: {{ postalCode }}</label>
                     <input type="text" id="postal-code" name="postal-code"><br>
-                    <label for="state">State:</label>
-                    <input type="text" id="state" name="state"><br>
-                    <label for="country">Country:</label>
-                    <input type="text" id="country" name="country">
                 </div>
                 <input type="submit" value="Save" class="save-button-info">
             </form>

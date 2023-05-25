@@ -85,10 +85,22 @@ class BookBinderController extends AbstractController
         if($this->checkSession($requestStack)==false){
             return $this->redirectToRoute('login');
         }
+        $session = $requestStack->getSession();
+
+        $auth = new \App\backend\auth($this->doctrine->getManager());
         $this->stylesheets[] = 'profile.css';
         return $this->render('profile.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'logged' => true
+            'logged' => true,
+            'email' => $session->get('email'),
+            'displayName' => $auth->getDisplayName($session->get('email')),
+            'firstName' => $auth->getFirstName($session->get('email')),
+            'lastName' => $auth->getLastName($session->get('email')),
+            'street' => $auth->getStreet($session->get('email')),
+            'postalCode' => $auth->getPostalCode($session->get('email')),
+            'city' => $auth->getCity($session->get('email')),
+            'DOB' => $auth->getDOB($session->get('email')),
+            'profilePicture' => base64_encode($auth->getProfilePicture($session->get('email')))
         ]);
     }
 
