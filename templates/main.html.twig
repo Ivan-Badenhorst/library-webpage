@@ -55,7 +55,7 @@
                     {% if books is defined %}
 
                         {% for row in books %}
-                            <div id="books-container">
+                            <div id="books-container" onclick="switchPage( '/book-info/{{ row.id }}' )">
                                 <div class="book">
                                     <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
@@ -77,4 +77,5 @@
 
     <!-- Include the JavaScript files -->
     <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/openBookPage.js') }}"></script>
 {% endblock %}
