@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 
 class loginControllerTest extends WebTestCase
 {
@@ -18,6 +19,20 @@ class loginControllerTest extends WebTestCase
         parent::__construct();
     }
 
+    public function testLogin(){
+        $client = static::createClient();
+
+        // Simulate submitting the registration form
+        $crawler = $client->request('GET', '/login');
+        $form = $crawler->selectButton('Submit')->form();
+        $form['login[email]'] = "newUser@email.com";
+        $form['login[password]'] = "password";
+        $client->submit($form);
+        $client->followRedirect();
+        // Assert that the registration was successful
+        $this->assertSame('/', $client->getRequest()->getPathInfo());
+    }
+
     public function testRegister()
     {
         $client = static::createClient();
@@ -30,13 +45,16 @@ class loginControllerTest extends WebTestCase
         $form['register[name]'] = 'name';
         $form['register[surname]'] = 'surname';
         $form['register[displayname]'] = 'displayname';
-        $form['register[DateOfBirth]'] = '2000-01-01';
+        $datetime = new \DateTime('2023-05-25');
+        $datetimeString = $datetime->format('Y-m-d');
+        $form['register[DateOfBirth]']->setValue($datetimeString);
         $form['register[street]'] = 'street';
-        $form['register[postalCode]'] = '1234AB';
+        $form['register[postalCode]']->setValue(1234);
         $form['register[city]'] = 'city';
+        dump($form);
         $client->submit($form);
-
+        $client->followRedirect();
         // Assert that the registration was successful
-        $this->assertTrue($client->getResponse()->isRedirect('/register'));
+        $this->assertSame('/', $client->getRequest()->getPathInfo());
     }
 }

@@ -70,13 +70,15 @@ class LoginController extends AbstractController
             if ($profilePicture == null) {
                 $profilePicture = new File('../public/img/defaultProfilePicture.png');
             }
+            if (gettype($form->getData()['postalCode'])=="integer"){$postalCode = intval($form->getData()['postalCode']);}
+            else {$postalCode = $form->getData()['postalCode'];}
             //send data to auth object
-            $result = $auth->register($form->getData()['email'], $form->getData()['password'], $form->getData()['name'], $form->getData()['surname'], $form->getData()['displayname'], $form->getData()['DateOfBirth'], $form->getData()['street'], $form->getData()['postalCode'], $form->getData()['city'], $profilePicture);
+            $result = $auth->register($form->getData()['email'], $form->getData()['password'], $form->getData()['name'], $form->getData()['surname'], $form->getData()['displayname'], $form->getData()['DateOfBirth'], $form->getData()['street'], $postalCode, $form->getData()['city'], $profilePicture);
+
             //check result and return error or success
 
-            //TODO change redirect to home page once home page is implemented
             if ($result == "success") {
-                $result = $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
+                $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
                 return $this->redirectToRoute('home');
             }
 
@@ -137,7 +139,6 @@ class LoginController extends AbstractController
             //send data to the auth class to check if the user exists
             $result = $auth->login($form->getData()['email'], $form->getData()['password'], $this->session);
 
-            //TODO change redirect to home page once home page is implemented
             if ($result == "success") {
                 return $this->redirectToRoute('home');
             }
@@ -216,15 +217,6 @@ class LoginController extends AbstractController
         $this->session->set('email', "");
         $this->session->set('password', "");
         return $this->redirectToRoute('login');
-    }
-
-    #[Route('/home',name:'temp')]
-    public function temp():Response
-    {
-        return $this->render('displayBlob.html.twig', [
-            'image_data' => "hello",
-            'stylesheets'=> $this->stylesheets
-        ]);
     }
 
 

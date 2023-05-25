@@ -233,17 +233,14 @@ class auth
      */
     public function isLogged(SessionInterface $session)
     {
-        $user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);
-
         if($session->get('email') == ""){
-            header("Location: /login");
             return false;
         }
+        else{$user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);}
 
         if(password_verify($session->get('password'),$user->getPassword())){
             return true;
         }
-        header("Location: /login");
         return false;
     }
 

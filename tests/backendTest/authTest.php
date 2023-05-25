@@ -111,5 +111,5 @@ class AuthTest extends TestCase
             $result = $this->auth->login('nonexisting@test.com', 'password', $this->session);
 
             $this->assertSame('email', $result);
-        }*/
+        }
 }*/
