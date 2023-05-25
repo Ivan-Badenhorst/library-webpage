@@ -13,16 +13,7 @@
                 <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">
             </div>
 
-
         </section>
-
-{#        <div class="form-container">#}
-{#            {{ form_start(form) }}#}
-{#            <div class="form-row">#}
-{#                {{ form_widget(form) }}#}
-{#            </div>#}
-{#            {{ form_end(form) }}#}
-{#        </div>#}
 
         <div class="form-container">
             <form id="book-search-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
@@ -34,61 +25,22 @@
         </div>
 
 
-
-
-
-
-
         <div class="main-part">
             <aside class="filters">
                 <div class="sticky-filter">
-{#                    <h1>Filter by category</h1>#}
-{#                    <form>#}
-{#                        <div class="checkboxes">#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="category" value="fiction"> Fiction#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="category" value="non-fiction"> Non-Fiction#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="category" value="biography"> Biography#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="category" value="history"> History#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="category" value="self-help"> Self-Help#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="category" value="travel"> Travel#}
-{#                            </label>#}
-{#                        </div>#}
-{#                    </form>#}
-
-{#                    <h1>Filter by Rating</h1>#}
-{#                    <form>#}
-{#                        <div class="checkboxes">#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="rating" value="very good"> Very good#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="rating" value="good"> Good#}
-{#                            </label>#}
-{#                            <label>#}
-{#                                <input type="checkbox" name="rating" value="mediocre"> Mediocre#}
-{#                            </label>#}
-{#                        </div>#}
-{#                    </form>#}
 
                     <h1>Filter by genre</h1>
                     <form id="filter_genre">
                         <div class="checkboxes">
+
+
                             {% for genre in genres %}
                             <label>
                                 <input type="checkbox" name="genre" value="{{ genre }}" checked> {{ genre }}
                             </label>
                             {% endfor %}
+
+
                         </div>
                     </form>
                 </div>
@@ -98,23 +50,12 @@
             <section class="book-listings-section">
                 <h1 class="title-browse-books">Browse books</h1>
                 <div class="book-listings" id="books">
+
+
                     {% if books is defined %}
-{#                        {% for book in books %}#}
-{#                            <div class="book">#}
-{#                                <img src="{{book.bookCover}}" alt="Entity Image">#}
-{#                                <div>#}
-{#                                    <h2>{{ book.Title }}</h2>#}
-{#                                    <p>By {{ book.Author }}</p>#}
-{#                                    <p>Genre: {{ book.genres }}</p>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        {% endfor %}#}
+
                         {% for row in books %}
                             <div id="books-container">
-{#                                <h2>{{ row.title }}</h2>#}
-{#                                <p>Genres: {{ row.genres }}</p>#}
-{#                                <!-- Access other fields as needed -->#}
-
                                 <div class="book">
                                     <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
@@ -125,7 +66,10 @@
                                 </div>
                             </div>
                         {% endfor %}
+
                     {% endif %}
+
+
                 </div>
             </section>
         </div>

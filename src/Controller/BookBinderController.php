@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormFactoryInterface;
 
 class BookBinderController extends AbstractController
 {
@@ -30,26 +29,8 @@ class BookBinderController extends AbstractController
             $genres[] = $genre['genre'];
         }
 
-
         $form = $this->createForm(BookSearch::class);
-        //$filter = $this->createForm(Filter::class);
-   //     $form->handleRequest($request);
         $this->stylesheets[] = 'main.css';
-
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $searchTerm = $form->getData()['search_term'];
-//
-//            // Do something with the search term
-//            $products = $bookRepository->searchOnTitle(40, $searchTerm);
-//
-//        }
-//        else{
-//            //get a list of all books to display
-//            //for now these books are random!
-//            $products = $bookRepository->findLimitedRecords(40);
-//        }
-
 
         $products = $bookRepository->findLimitedRecords(40);
 
