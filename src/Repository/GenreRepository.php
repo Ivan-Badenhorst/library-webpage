@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview Database repository for the Genre table
+ * @version 1.0.2
+ */
+
+/**
+ * @author Ivan Badenhorst, Thomas Deseure
+ * @since 2023-05-09.
+ */
+
 
 namespace App\Repository;
 
@@ -16,11 +26,25 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GenreRepository extends ServiceEntityRepository
 {
+
+    /**
+     * Constructs a new instance of the database repository.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Genre::class);
     }
 
+
+    /**
+     * Used to add a new genre to the database
+     *
+     * @param Genre $entity -> New genre to be added to the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     * @return void
+     */
     public function save(Genre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +54,14 @@ class GenreRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * Used to delete a genre from the database
+     *
+     * @param Genre $entity -> New genre to be removed from the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     * @return void
+     */
     public function remove(Genre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -39,9 +71,12 @@ class GenreRepository extends ServiceEntityRepository
         }
     }
 
+
     /**
-     * @return Genre[] Returns an array of Genre objects
-     */
+     * Returns a list of all genres elements in the database.
+     *
+     * @returns Genre[] an array of all Genre objects present in the database.
+    */
     public function getGenre(): array
     {
         return $this->createQueryBuilder('e')
@@ -50,13 +85,5 @@ class GenreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-//    public function findOneBySomeField($value): ?Genre
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
 }

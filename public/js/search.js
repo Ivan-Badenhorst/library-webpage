@@ -10,10 +10,10 @@
 
 
 
-    const searchBar = document.getElementById('book-search-form'); //search bar on home page
-    const genreFilter = document.getElementById('filter_genre');   //genres selector on home page
-    const checkboxes = genreFilter.getElementsByTagName("input"); //list of checkboxes
-    let books; //array used for storing books that are displayed
+    const searchBar = document.getElementById('book-search-form');     //search bar on home page
+    const genreFilter = document.getElementById('filter_genre');       //genres selector on home page
+    const checkboxes = genreFilter.getElementsByTagName("input");   //list of checkboxes
+    let books;                                                                  //array used for storing books that are displayed
 
     /**
      * event listener for search bar submit event
