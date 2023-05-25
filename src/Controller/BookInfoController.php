@@ -15,6 +15,7 @@ use App\Entity\UserBook;
 use App\Form\BookAdd;
 use App\Form\BookReview;
 use App\Repository\BookRepository;
+use App\Repository\BookReviewsRepository;
 use App\Repository\UserBookRepository;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
@@ -60,8 +61,9 @@ class BookInfoController extends AbstractController
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
     {
-        //$reviews = $bookReviewsRepository->getReviews($offset, $title);
-        return $this->render('reviews.html.twig');
+        $reviews = $bookReviewsRepository->getReviews($offset, 5,$bookId);
+        //$response = new Response($this->render('reviews.html.twig'));
+        return new JsonResponse($reviews);
 
     }
 

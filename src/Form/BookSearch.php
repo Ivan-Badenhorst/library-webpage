@@ -28,6 +28,6 @@ class BookSearch extends AbstractType
     {
         $builder
             ->add('search_term', TextType::class)
-            ->add('submit', SubmitType::class);
+            ->add('search', SubmitType::class);
     }
 }
