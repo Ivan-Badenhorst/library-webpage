@@ -1,4 +1,13 @@
 <?php
+/**
+ * @fileoverview Controller for the home page
+ * @version 2.2
+ */
+
+/**
+ * @author Ivan Badenhorst, Emile Schockaert
+ * @since 2023-04-25.
+ */
 
 namespace App\Controller;
 
@@ -19,9 +28,19 @@ class BookBinderController extends AbstractController
         $this->stylesheets[] = 'base.css';
     }
 
+    /**
+     * Generates the home page. All genres from the database are displayed along with a random list of 40 books
+     *
+     * @param Request $request
+     * @param BookRepository $bookRepository
+     * @param GenreRepository $genreRepository
+     * @return Response -> home page of the website
+     * @throws \Doctrine\DBAL\Exception
+     */
     #[Route('/', name: 'home')]
     public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository): Response
     {
+        //gets a list of all genres as string
         $genres_qry = $genreRepository->getGenre();
         $genres = [];
         foreach ($genres_qry as $genre){
@@ -29,9 +48,11 @@ class BookBinderController extends AbstractController
             $genres[] = $genre['genre'];
         }
 
+        //creates a form used as a search bar
         $form = $this->createForm(BookSearch::class);
         $this->stylesheets[] = 'main.css';
 
+        //gets a list of 40 random books
         $products = $bookRepository->findLimitedRecords(40);
 
         return $this->render('main.html.twig', [
