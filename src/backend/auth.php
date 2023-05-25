@@ -247,18 +247,6 @@ class auth
         return false;
     }
 
-    /**
-     * logout user
-     * you can find an example of how to call this function in the logout function in the loginController
-     *
-     * @param SessionInterface $session - session
-     */
-    public function logout(SessionInterface $session)
-    {
-        $session->set('email', "");
-        $session->set('password', "");
-        header("Location: /login");
-    }
 
 
 

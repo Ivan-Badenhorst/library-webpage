@@ -1,5 +1,5 @@
 <?php
-/*
+
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -37,41 +37,6 @@ class loginControllerTest extends WebTestCase
         $client->submit($form);
 
         // Assert that the registration was successful
-        $this->assertTrue($client->getResponse()->isRedirect('/home'));
+        $this->assertTrue($client->getResponse()->isRedirect('/register'));
     }
-
-    public function testLoginWhenLoggedIn()
-    {
-        $client = static::createClient();
-
-        // Simulate submitting the login form
-        $crawler = $client->request('GET', '/login');
-
-        $this->assertSame('/home', $client->getRequest()->getPathInfo());
-    }
-
-    public function testLogout()
-    {
-        $client = static::createClient();
-
-        // Simulate visiting the logout page
-        $client->request('GET', '/logout');
-
-        // Assert that the logout was successful
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
-    }
-    public function testLogin()
-    {
-        $client = static::createClient();
-
-        // Simulate submitting the login form
-        $crawler = $client->request('GET', '/login');
-        $form = $crawler->selectButton('Submit')->form();
-        $form['login[email]'] = $this->email;
-        $form['login[password]'] = $this->password;
-        $client->submit($form);
-
-        // Assert that the login was successful
-        $this->assertTrue($client->getResponse()->isRedirect('/home'));
-    }
-}*/
+}

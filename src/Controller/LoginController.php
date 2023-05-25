@@ -205,16 +205,26 @@ class LoginController extends AbstractController
 
     /**
      * You can use this function to log a user out.
-     * Redirect to here to log a user out, it automatically redirects to login
+     * Redirect to this route to log a user out, it automatically redirects to login
      *
      * @return Response - render login
      */
     #[Route('/logout', name: 'logout')]
-    public function logout(): Response
+    public function logout(RequestStack $requestStack): Response
     {
-        $auth = new \App\backend\auth($this->doctrine->getManager());
-        $auth->logout($this->session);
+        $this->session = $requestStack->getSession();
+        $this->session->set('email', "");
+        $this->session->set('password', "");
         return $this->redirectToRoute('login');
+    }
+
+    #[Route('/home',name:'temp')]
+    public function temp():Response
+    {
+        return $this->render('displayBlob.html.twig', [
+            'image_data' => "hello",
+            'stylesheets'=> $this->stylesheets
+        ]);
     }
 
 
