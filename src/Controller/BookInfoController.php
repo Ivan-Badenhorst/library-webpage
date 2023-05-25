@@ -5,7 +5,7 @@
  */
 
 /**
- * @author Ivan Badenhorst
+ * @author Ivan Badenhorst, Aymeric Baume
  * @since 2023-05-25.
  */
 
@@ -13,7 +13,7 @@ namespace App\Controller;
 
 use App\Entity\UserBook;
 use App\Form\BookAdd;
-use App\Form\BookRemove;
+//use App\Form\BookRemove;
 use App\Form\BookReview;
 use App\Repository\BookRepository;
 use App\Repository\BookReviewsRepository;
@@ -86,11 +86,24 @@ class BookInfoController extends AbstractController
         return new JsonResponse(true);
     }
 
+    /**
+     * Listens for API call for reviews
+     *
+     * @param $bookId -> id of the book for which the call wants reviews
+     * @param $offset -> search offset for returned reviews
+     * @param BookReviewsRepository $bookReviewsRepository
+     * @return JsonResponse -> json containing reviews. Format:
+     *                                    [{
+     *                                          "comment":"",
+     *                                          "score":0,
+     *                                          "date_added":"",
+     *                                          "display_name":""
+     *                                      }, ...]
+     */
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
     {
         $reviews = $bookReviewsRepository->getReviews($offset, 5,$bookId);
-        //$response = new Response($this->render('reviews.html.twig'));
         return new JsonResponse($reviews);
 
     }
