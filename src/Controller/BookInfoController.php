@@ -57,8 +57,6 @@ class BookInfoController extends AbstractController
     {
     }*/
 
-    #[Route('/review/{bookId}', name: 'search')]
-    public function search($title, BookRepository $bookRepository): Response
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
     {
