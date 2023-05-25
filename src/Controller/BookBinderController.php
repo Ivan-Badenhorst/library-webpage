@@ -63,33 +63,7 @@ class BookBinderController extends AbstractController
         ]);
     }
 
-    #[Route("/book-info/{bookId}", name: "book-info")]
-    public function bookInfo($bookId, Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
-        $book = $bookRepository->findBook($bookId);
-        // create form
-        // ref : https://symfony.com/doc/current/forms.html
-        $userBook = new UserBook();
-        $form = $this->createFormBuilder($userBook)
-            ->add('save',SubmitType::class, ['label' => 'Add to favorites'])
-            ->getForm();
 
-        // check if form was submitted and handle data
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $userRepository->findUser(15);
-            $userBook->setBookId($book);
-            $userBook->setUserId($user);
-            $userBookRepository->save($userBook, true);
-            return $this->redirectToRoute('home');
-        }
-
-        $this->stylesheets[] = 'bookinfo.css';
-        return $this->render('bookInfo.html.twig', [
-            'stylesheets'=> $this->stylesheets,
-            'userBook_form'=>$form,
-            'book' => $book
-        ]);
-    }
 
     #[Route('/profile', name: 'profile')]
     public function profile(): Response
