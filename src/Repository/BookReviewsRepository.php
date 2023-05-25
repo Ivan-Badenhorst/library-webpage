@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\BookReviews;
+use App\Entity\Genre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +42,19 @@ class BookReviewsRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return BookReviews[] Returns an array of BookReviews objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?BookReviews
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getReviews(int $offset, int $limit): array
+    {
+        $queryBuilder = $this->createQueryBuilder('r');
+        $queryBuilder
+            ->select('r')
+            ->from(BookReviews::class, 'r')
+            ->orderBy('r.dateAdded', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        $query = $queryBuilder->getQuery();
+        $query->setHydrationMode(AbstractQuery::HYDRATE_OBJECT);
+        return $query->getResult();
+    }
 }

@@ -13,6 +13,7 @@ namespace App\Controller;
 
 use App\Entity\UserBook;
 use App\Repository\BookRepository;
+use App\Repository\BookReviewsRepository;
 use App\Repository\UserBookRepository;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
@@ -61,11 +62,11 @@ class BookInfoController extends AbstractController
         ]);
     }
 
-    #[Route('/review/{bookId}', name: 'search')]
-    public function search($title, BookRepository $bookRepository): Response
+    #[Route('/review/{bookId}/{offset}', name: 'review')]
+    public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
     {
-        $products = $bookRepository->searchOnTitle(40, $title);
-        return new JsonResponse($products);
+        //$reviews = $bookReviewsRepository->getReviews($offset, $title);
+        return $this->render('reviews.html.twig');
 
     }
 
