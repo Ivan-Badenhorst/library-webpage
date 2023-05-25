@@ -10,8 +10,8 @@
         <h2 class="author">
             By {{ book.author }}
         </h2>
-        <h2>
-            Book id: {{ book.id }}
+        <h2 id="bookId">
+            {{ book.id }}
         </h2>
         <!--<script>
             document.getElementById("book").innerHTML=localStorage.getItem("bookId");
@@ -19,11 +19,12 @@
         <h3>
             Genre Category and rating
         </h3>
-        {{ form_start(userBook_form) }}
-            <div>
-                {{ form_widget(userBook_form.save) }}
+        <form id="book-add-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
+            <div class="form-row">
+                {{ form_widget(form) }}
             </div>
-        {{ form_end(userBook_form) }}
+            {{ form_end(form) }}
+        </form>
     </div>
 
     <div class="subcontainer">
@@ -36,7 +37,8 @@
 
     </div>
 
-    <div class="reviews">
+    <!-- <div class="review"> -->
+    <div>
         <!--<div class="review1">
             <div class="rating">
                 <span class="fa fa-star checked"></span>
@@ -49,9 +51,12 @@
             <b>05/05/2023</b>
             <p>Dit is de enige universiteit in België die nog dierproeven op apen uitvoert. Schaam je diep! Dit geldt zowel voor het instituut zelf als de mensen die de dierproeven uitvoeren. Een diploma van een dergelijk instituut is niets waard.</p>
         </div>-->
-        <div>
-            <button>View Reviews</button>
-        </div>
+        <form id="book-review-form" method="{{ form2.vars.method }}" action="{{ form2.vars.action }}">
+            <div class="form-row">
+                {{ form_widget(form2) }}
+            </div>
+            {{ form_end(form2) }}
+        </form>
     </div>
 </div>
 

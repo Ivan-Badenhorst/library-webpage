@@ -12,8 +12,9 @@
 namespace App\Controller;
 
 use App\Entity\UserBook;
+use App\Form\BookAdd;
+use App\Form\BookReview;
 use App\Repository\BookRepository;
-use App\Repository\BookReviewsRepository;
 use App\Repository\UserBookRepository;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
@@ -37,31 +38,27 @@ class BookInfoController extends AbstractController
     #[Route("/book-info/{bookId}", name: "book-info")]
     public function bookInfo($bookId, Request $request, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response {
         $book = $bookRepository->findBook($bookId);
-        // create form
-        // ref : https://symfony.com/doc/current/forms.html
-        $userBook = new UserBook();
-        $form = $this->createFormBuilder($userBook)
-            ->add('save',SubmitType::class, ['label' => 'Add to favorites'])
-            ->getForm();
 
-        // check if form was submitted and handle data
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $userRepository->findUser(15);
-            $userBook->setBookId($book);
-            $userBook->setUserId($user);
-            $userBookRepository->save($userBook, true);
-            return $this->redirectToRoute('home');
-        }
+        $form = $this->createForm(BookAdd::class);
+
+        $form2 = $this->createForm(BookReview::class);
 
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'userBook_form'=>$form,
+            'form'=>$form,
+            'form2'=>$form2,
             'book' => $book
         ]);
     }
 
+    /*#[Route('/add/{bookId}/{userId}', name: 'add')]
+    public function add($bookId, $userId, BookRepository $bookRepository): Response
+    {
+    }*/
+
+    #[Route('/review/{bookId}', name: 'search')]
+    public function search($title, BookRepository $bookRepository): Response
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
     {
