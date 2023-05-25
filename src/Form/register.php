@@ -1,4 +1,13 @@
 <?php
+/**
+ * @fileoverview php class login form:  create form for login page
+ * @version 1.0.0
+ */
+
+/**
+ * @author Thomas Deseure
+ * @since 2023-05-25.
+ */
 
 namespace App\Form;
 
@@ -16,6 +25,12 @@ use Symfony\Component\Validator\Constraints\File;
 
 class register extends AbstractType
 {
+    /**
+     * build form
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

@@ -1,32 +1,51 @@
 <?php
 
+/**
+ * @fileoverview php class for authentification:  all communication with User table happens trough here.
+ * @version 1.0.0
+ */
+
+/**
+ * @author Thomas Deseure
+ * @since 2023-05-25.
+ */
+
+/**
+ *  to call a function from this class, use the following code in your controller:
+ *    //get entity manager (list of all entities in the database)
+ *    $auth = new \App\backend\auth($this->doctrine->getManager());
+ *    //call function
+ *    $auth-><function>;
+ *  you will also need to use this as constructor in your controller (you can add more variables or code if you need them)
+ *    public function __construct(private ManagerRegistry $doctrine)
+ *    {
+ *        $this->stylesheets[] = 'main.css';
+ *    }
+ *  some functions use sessions, preferably call the functions already implemented in loginController.php but if needed you can also call them directly:
+ *  You will need the requestStack, you can get it by putting it as a variable of your controller function, for example:
+ *    public function login(RequestStack $RequestStack): Response{
+ *        //$session = $RequestStack->getSession();
+ *        //$auth = new \App\backend\auth($this->doctrine->getManager());
+ *        //$auth->login($email, $password, $session);
+ *        }
+ */
+
+
 namespace App\backend;
 use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-//to call a function from this class, use the following code in your controller:
-//  //get entity manager (list of all entities in the database
-//  $auth = new \App\backend\auth($this->doctrine->getManager());
-//  //call function
-//  $auth-><function>;
-//you will also need to use this as constructor in your controller (you can add more variables or code if needed)
-//  public function __construct(private ManagerRegistry $doctrine)
-//  {
-//      $this->stylesheets[] = 'main.css';
-//  }
-//some functions use sessions, preferably call the functions already implemented in loginController.php but if needed you can also call them directly:
-//You will need the requestStack, you can get it by putting it as a variable of your controller function, for example:
-//  public function login(RequestStack $RequestStack): Response{
-//      //$session = $RequestStack->getSession();
-//      //$auth = new \App\backend\auth($this->doctrine->getManager());
-//      //$auth->login($email, $password, $session);
-//      }
-//
+
 
 class auth
 {
+    /**
+     * @param \App\Repository\UserRepository $UserRepository - List of all users, gets assigned in the constructor
+     * @param EntityManagerInterface $entityManager - List of all database entities, gets assigned in the constructor
+     */
     private \App\Repository\UserRepository $UserRepository;
     private EntityManagerInterface $entityManager;
 
@@ -37,9 +56,15 @@ class auth
 
     }
 
-
-//login user
-//this function should not be called directly, but rather through the login function in the loginController
+    /**
+     *  login user
+     *  this function should not be called directly, but rather through the login function in the loginController
+     *
+     * @param String $email - email with which the user is trying to login
+     * @param String $password - password with which the suer is trying to login
+     * @param SessionInterface $session - session
+     * @return string - message that reports status of login
+     */
     public function login(String $email, String $password, SessionInterface $session)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
@@ -70,8 +95,23 @@ class auth
         }
 
     }
-    //register user
-    //this function should not be called directly, but rather through the register function in the loginController
+
+    /**
+     * register user
+     * this function should not be called directly, but rather through the register function in the loginController
+     *
+     * @param String $email - email with which the user is trying to register
+     * @param String $password - password with which the suer is trying to register
+     * @param String $name - register inputs
+     * @param String $surname
+     * @param String $displayname
+     * @param \DateTime $DOB
+     * @param String $street
+     * @param int $postalCode
+     * @param String $city
+     * @param File $profilePicture
+     * @return string - message that reports status of register
+     */
     public function register(String $email, String $password,String $name, String $surname, String $displayname, \DateTime $DOB, String $street, int $postalCode, String $city, File $profilePicture)
     {
         if($this->UserRepository->findOneBy(['email' => $email]) != null){
@@ -122,7 +162,15 @@ class auth
         return "success";
     }
 
-    //to find out how to use this function, check the example in the loginController
+    /**
+     * returns profilepicture for a certain email
+     * if profilepicture == "null" (a String assigned to the $profilePicture variable in the User class
+     * when there is no profile picture on the database for this user) a default profilePicture will be returned
+     * the image still needs to be processed, to find out how to use this function, check the example in the loginController
+     *
+     * @param String $email - email
+     * @return string|null - profile picture
+     */
     public function getProfilePicture(String $email)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
@@ -136,7 +184,10 @@ class auth
     }
 
 
-    //following functions can be used to get user information, check the loginController for examples on how to call them
+    /**
+     * following functions can be used to get user information, check the loginController for examples on how to call them
+     * inputs are always email
+     */
     public function getDisplayName(String $email)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
@@ -173,8 +224,13 @@ class auth
         return $user->getDateOfBirth();
     }
 
-    //check if user is logged in
-    //you can find an example of how to call this function in the checkSession function in the loginController
+    /**
+     * check if user is logged in
+     * you can find an example of how to call this function in the checkSession function in the loginController
+     *
+     * @param SessionInterface $session - session
+     * @return bool - if user logged in => true else => false
+     */
     public function isLogged(SessionInterface $session)
     {
         $user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);
@@ -191,8 +247,12 @@ class auth
         return false;
     }
 
-    //logout user
-    //you can find an example of how to call this function in the logout function in the loginController
+    /**
+     * logout user
+     * you can find an example of how to call this function in the logout function in the loginController
+     *
+     * @param SessionInterface $session - session
+     */
     public function logout(SessionInterface $session)
     {
         $session->set('email', "");

@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview php class loginController:  every route that has to do with login / register is described here
+ * @version 1.0.0
+ */
+
+/**
+ * @author Thomas Deseure
+ * @since 2023-05-25.
+
+ */
 
 
 namespace App\Controller;
@@ -31,7 +41,16 @@ class LoginController extends AbstractController
         $this->stylesheets[] = 'main.css';
     }
 
-
+    /**
+     * register function:
+     * makes a form, when the form is filled in and valid, data is sent to the auth class to be processed.
+     * Depending on the status, the register was either succesfull in which case the user is redirected to the home page or unsuccesfull
+     * in which case an error message is returned.
+     *
+     * @param Request $request - necessary for from
+     * @param RequestStack $requestStack - necessary to get session
+     * @return Response - render page
+     */
     #[Route('/register', name: 'register')]
     public function register(Request $request, RequestStack $requestStack): Response
     {   //get session
@@ -80,7 +99,16 @@ class LoginController extends AbstractController
         ]);
     }
 
-
+    /**
+     * login function:
+     * makes a form, when the form is filled in and valid, data is sent to the auth class to be processed.
+     * Depending on the status, the login was either succesfull in which case the user is redirected to the home page or unsuccesfull
+     * in which case an error message is returned.
+     *
+     * @param Request $request - necessary for from
+     * @param RequestStack $requestStack - necessary to get session
+     * @return Response - render page
+     */
     #[Route('/login', name: 'login')]
     public function login(Request $request, RequestStack $requestStack): Response
     {   //get session
@@ -136,18 +164,23 @@ class LoginController extends AbstractController
     private \App\Repository\UserRepository $UserRepository;
     private EntityManagerInterface $entityManager;
 
+    /**
+     * example of how to display a profile picture
+     * this function will display the profile picture of the user with the email "newUser@email.com"
+     * the rest of the code to display the blob can be found in templates\displayBlob.html.twig
+     * if the user does not have a profile picture it will display a default image, this image is the
+     * profile picture of newUser@email.com
+     *
+     * @return Response - render page
+     */
     #[Route('/image', name: 'image')]
 
 
-    //example of how to display a blob
-    //this function will display the profile picture of the user with the email "newUser@email.com"
-    //the rest of the code to display the blob can be found in templates\displayBlob.html.twig
-    //if the user does not have a profile picture it will display a default image, this image is the
-    //profile picture of newUser@email.com
+
     public function image()
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
-        $imageData = $auth->getProfilePicture("newUser@email.com");
+        $imageData = $auth->getProfilePicture("Shell.Lutero@email.com");
         $imageBase64 = base64_encode($imageData);
         return $this->render('displayBlob.html.twig', [
             'image_data' => $imageBase64,
@@ -155,18 +188,27 @@ class LoginController extends AbstractController
         ]);
     }
 
-//You can use this function to check if a user is logged in,
-//the function returns true if the user is logged in and false
-//if the user is not logged in. You will still have to redirect
-//them to the login page if they are not logged in.
+    /**
+     * You can use this function to check if a user is logged in,
+     * the function returns true if the user is logged in and false
+     * if the user is not logged in. You will still have to redirect
+     * them to the login page if they are not logged in.
+     *
+     * @return bool - if logged in => true, else => false
+     */
     public function checkSession(): bool
     {
         $auth = new \App\backend\auth($this->doctrine->getManager());
         return($auth->isLogged($this->session));
     }
 
-    //You can use this function to log a user out. It does not
-    //return anything and you will still need to redirect them to the login page.
+
+    /**
+     * You can use this function to log a user out.
+     * Redirect to here to log a user out, it automatically redirects to login
+     *
+     * @return Response - render login
+     */
     #[Route('/logout', name: 'logout')]
     public function logout(): Response
     {

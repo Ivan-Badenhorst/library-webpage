@@ -62,6 +62,9 @@ class User
 
     public function getProfilePicture(): ?string
     {
+        /**
+         * cannot use function stream_get_contents() for null so string "null" is returned
+         */
         if($this->profilePicture == null){
             return "null";
         }
@@ -70,10 +73,6 @@ class User
 
     public function setProfilePicture(?File $profilePicture): self
     {
-        if ($profilePicture) {
-            $this->profilePicture = file_get_contents($profilePicture);
-        }
-
         return $this;
     }
 
