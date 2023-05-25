@@ -28,27 +28,36 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
 }
 
-.addToFavourites {
-
+.actionBut {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
 }
 
-.star {
+.text-title-genre {
+    font-size: 200%;
+}
+
+.heart {
     margin-right: 10px;
-}
-
-.author {
-    margin-top: 20px;
+    scale: 150%;
 }
 
 .subcontainer {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
-img {
+.subcontainer p {
+    padding: 10px;
+}
+
+.specific-book {
     float: left;
-    margin-right: 10px;
+    margin-right: 20px;
     width: 20em;
     height: 31.5em;
 }
@@ -56,14 +65,31 @@ img {
 p {
     text-align: justify;
     font-size: 25px;
+
 }
 
 .reviews {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+
+.reviews > * {
+    width: 45%;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px;
+
 }
 
 .checked {
     color: orange;
+}
+
+.fa-thumbs-up {
+    margin-right: 10px;
 }
 

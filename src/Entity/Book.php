@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -28,6 +29,7 @@ class Book
     private ?string $Title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Unique]
     private ?string $isbn = null;
 
     #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: BookGenre::class, orphanRemoval: true)]
@@ -36,10 +38,18 @@ class Book
     #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $bookUserId;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $bookCover = null;
+
+    #[ORM\OneToMany(mappedBy: 'bookId', targetEntity: BookReviews::class, orphanRemoval: true)]
+    private Collection $bookReviewId;
+
+
     public function __construct()
     {
         $this->bookGenreId = new ArrayCollection();
         $this->bookUserId = new ArrayCollection();
+        $this->bookReviewId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +159,48 @@ class Book
             // set the owning side to null (unless already changed)
             if ($bookUserId->getBookId() === $this) {
                 $bookUserId->setBookId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getBookCover(): ?string
+    {
+        return $this->bookCover;
+    }
+
+    public function setBookCover(?string $bookCover): self
+    {
+        $this->bookCover = $bookCover;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BookReviews>
+     */
+    public function getBookReviewId(): Collection
+    {
+        return $this->bookReviewId;
+    }
+
+    public function addBookReviewId(BookReviews $bookReviewId): self
+    {
+        if (!$this->bookReviewId->contains($bookReviewId)) {
+            $this->bookReviewId->add($bookReviewId);
+            $bookReviewId->setBookId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookReviewId(BookReviews $bookReviewId): self
+    {
+        if ($this->bookReviewId->removeElement($bookReviewId)) {
+            // set the owning side to null (unless already changed)
+            if ($bookReviewId->getBookId() === $this) {
+                $bookReviewId->setBookId(null);
             }
         }
 

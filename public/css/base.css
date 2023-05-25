@@ -32,7 +32,21 @@ header {
     flex-direction: row;
     align-items: center;
     justify-items: center;
-    background-color: #01a7c2;
+    background-color: #ffffff;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+    border-radius: 25px;
+    padding: 2px;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+}
+
+#logo h1 {
+    color: black;
 }
 
 #title {
@@ -82,7 +96,7 @@ li a {
     color: blue;
 }
 
-button {
+.normalButton {
     align-items: center;
     background-color: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -110,18 +124,18 @@ button {
     margin-left: 20px;
 }
 
-button:hover,
-button:focus {
+.normalButton:hover,
+.normalButton:focus {
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
     color: rgba(0, 0, 0, 0.65);
 }
 
-button:hover {
+.normalButton:hover {
     transform: translateY(-1px);
 }
 
-button:active {
+.normalButton:active {
     background-color: #F0F0F1;
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
@@ -129,3 +143,12 @@ button:active {
     transform: translateY(0);
 }
 
+footer p > * {
+    text-decoration: none;
+    color: black;
+}
+
+footer p > *:hover {
+    text-decoration: underline;
+    color: blue;
+}
