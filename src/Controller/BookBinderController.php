@@ -14,7 +14,10 @@ namespace App\Controller;
 use App\Form\BookSearch;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
+use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +26,7 @@ class BookBinderController extends AbstractController
 {
     private array $stylesheets;
 
-    public function __construct()
+    public function __construct(private ManagerRegistry $doctrine)
     {
         $this->stylesheets[] = 'base.css';
     }
@@ -38,8 +41,13 @@ class BookBinderController extends AbstractController
      * @throws \Doctrine\DBAL\Exception
      */
     #[Route('/', name: 'home')]
-    public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository): Response
+    public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
     {
+        if ($this->checkSession($requestStack)==false){
+            echo("no");
+            return $this->redirectToRoute('login');
+        }
+        echo($this->forward('App\Controller\LoginController::checkSession'));
         //gets a list of all genres as string
         $genres_qry = $genreRepository->getGenre();
         $genres = [];
@@ -79,5 +87,12 @@ class BookBinderController extends AbstractController
         return $this->render('profile.html.twig', [
             'stylesheets'=> $this->stylesheets
         ]);
+    }
+
+    public function checkSession(RequestStack $requestStack): bool
+    {
+        $session = $requestStack->getSession();
+        $auth = new \App\backend\auth($this->doctrine->getManager());
+        return($auth->isLogged($session));
     }
 }

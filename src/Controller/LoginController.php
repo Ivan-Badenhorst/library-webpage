@@ -13,7 +13,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,8 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\register;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
@@ -121,7 +118,7 @@ class LoginController extends AbstractController
         //check if user is already logged in, if they are redirect them to the home page
         //this is not necessary as we wont redirect them to the login page if they are already logged in
         //but its extra redundancy
-        if($this->checkSession()){
+        if($this->checkSession($requestStack)){
             return $this->redirectToRoute('home');
         }
 
@@ -197,11 +194,13 @@ class LoginController extends AbstractController
      *
      * @return bool - if logged in => true, else => false
      */
-    public function checkSession(): bool
+    public function checkSession(RequestStack $requestStack): bool
     {
+        $this->session = $requestStack->getSession();
         $auth = new \App\backend\auth($this->doctrine->getManager());
         return($auth->isLogged($this->session));
     }
+
 
 
     /**
