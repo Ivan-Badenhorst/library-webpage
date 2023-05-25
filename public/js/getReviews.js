@@ -1,10 +1,24 @@
+/**
+ * @fileoverview JavaScript file to control review display of book-info page
+ * @version 1.0.0
+ */
+
+/**
+ * @author Ivan Badenhorst
+ * @since 2023-05-25.
+ */
+
+
 const reviewButton = document.getElementById('book-review-form');
 const reviewDiv = document.getElementById('reviewDisplay');
 var num = -5;
 
 
-
-
+/**
+ * event listener for the view more reviews button
+ * @listens {Event} submit
+ * @description adds a new set of reviews to the display each time the button is clicked
+ */
 reviewButton.addEventListener('submit', function(event) {
     event.preventDefault();
     let bookId = document.getElementById('bookId').textContent;
@@ -14,6 +28,13 @@ reviewButton.addEventListener('submit', function(event) {
 });
 
 
+/**
+ * gets a list of reviews as json to display -> see BookInfoController for route
+ *
+ * @param {string} bookId -> id of the book for which you want reviews
+ * @param {int} offset -> search offset ex: if =5, reviews returned will start at the 6th review (ordered by date/time)
+ * @return void
+ */
 function getReviews(bookId, offset){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
@@ -29,13 +50,24 @@ function getReviews(bookId, offset){
 }
 
 
-
+/**
+ * Displays new reviews under the previously displayed reviews
+ *
+ * @param {JSON} reviews -> json containing reviews to display. json format:
+ *                                      [{
+ *                                          "comment":"",
+ *                                          "score":0,
+ *                                          "date_added":"",
+ *                                          "display_name":""
+ *                                      }, ...]
+ * @return void
+ * @description adds reviews into the 'reviewDisplay' div
+ */
 function displayReviews(reviews) {
 
     let button = document.getElementById('book_review_view_reviews');
     button.innerText = "see more..."
     reviews.forEach(function(review) {
-        //only display book if it contains at least one of the selected genres
 
         let text = '<div className="review">' +
             '<div className="rating">' +

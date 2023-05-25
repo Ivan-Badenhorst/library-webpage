@@ -1,5 +1,5 @@
 /**
- * @fileoverview JavaScript file for XYZ home-page:  to update and display books
+ * @fileoverview JavaScript file  to update and display books
  * @version 1.0.0
  */
 
