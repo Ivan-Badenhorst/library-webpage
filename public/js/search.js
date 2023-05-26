@@ -209,7 +209,7 @@
                 let onclickString = `onclick="switchPage('`+ slash + `book-info` + slash + book.id + `')"`;
 
                 //if(checkStringForElements(book.genres.toUpperCase(), genres)) {
-                    let text = '<div id="book-container"' + onclickString + '>' +
+                    let text = '<div id="book-container" class="book"' + onclickString + '>' +
                         '<img loading="eager" src="' + book.book_cover + '" alt="Entity Image">' +
                         '<div>' +
                         '<h2>' + book.title + '</h2>' +
