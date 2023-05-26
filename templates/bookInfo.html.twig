@@ -51,10 +51,21 @@
 
 
     </div>
+
+    <div class="addReview">
+        <form id="write-review-form" method="{{ form3.vars.method }}" action="{{ form3.vars.action }}">
+            <div class="form-row">
+                {{ form_widget(form3) }}
+            </div>
+            {{ form_end(form3) }}
+        </form>
+    </div>
 </div>
 
     <!-- Include the JavaScript files -->
     <script src="{{ asset('js/getReviews.js') }}"></script>
 
     <script src="{{ asset('js/addToFavorites.js') }}"></script>
+
+    <script src="{{ asset('js/writeReview.js') }}"></script>
 {% endblock %}

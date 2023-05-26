@@ -11,9 +11,11 @@
 
 namespace App\Controller;
 
+use App\Entity\BookReviews;
 use App\Entity\UserBook;
 use App\Form\BookAdd;
 use App\Form\BookReview;
+use App\Form\WriteReview;
 use App\Repository\BookRepository;
 use App\Repository\BookReviewsRepository;
 use App\Repository\UserBookRepository;
@@ -60,14 +62,17 @@ class BookInfoController extends AbstractController
         }
 
         $form2 = $this->createForm(BookReview::class);
-
         $view2 = $form2->createView();
+
+        $form3 = $this->createForm(WriteReview::class);
+        $view3 = $form3->createView();
 
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
             'form'=>$view,
             'form2'=>$view2,
+            'form3'=>$view3,
             'book'=>$book
         ]);
     }
@@ -103,6 +108,24 @@ class BookInfoController extends AbstractController
             $userBookRepository->save($userBook, true);
 
         }
+
+        return new JsonResponse(true);
+    }
+
+    #[Route('/write/{bookId}/{userId}/{score}/{comment}', name: 'write')]
+    public function writeReview($bookId, $userId, $score, $comment, BookRepository $bookRepository,
+                                UserRepository $userRepository, BookReviewsRepository $bookReviewsRepository): Response
+    {
+        $bookReview = new BookReviews;
+
+        $book = $bookRepository->findBook($bookId);
+        $user = $userRepository->findUser($userId);
+        $bookReview->setBookId($book);
+        $bookReview->setUserId($user);
+        $bookReview->setScore($score);
+        $bookReview->setComment($comment);
+
+        $bookReviewsRepository->save($bookReview, true);
 
         return new JsonResponse(true);
     }
