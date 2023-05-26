@@ -57,14 +57,16 @@ class BookBinderController extends AbstractController
         $this->stylesheets[] = 'main.css';
 
         //gets a list of 40 random books
-        $products = $bookRepository->findLimitedRecords(40);
+        $books = $bookRepository->findLimitedRecords(40);
+        $favourites = $bookRepository->findFavourites(4);
 
         return $this->render('main.html.twig', [
             'genres'=> $genres,
             'form' => $form->createView(),
             'stylesheets'=> $this->stylesheets,
-            'books'=>$products,
-            'pageControl'=>$pageControl->createView()
+            'books'=>$books,
+            'pageControl'=>$pageControl->createView(),
+            'favourites'=>$favourites
         ]);
     }
 

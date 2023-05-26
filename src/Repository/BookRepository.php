@@ -148,4 +148,28 @@ class BookRepository extends ServiceEntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         return $stmt->executeQuery()->fetchAllAssociative();
     }
+
+    public function findFavourites(int $limit)
+    {
+        $sql = "SELECT book.*, AVG(review.score) as average_score
+                FROM book, book_reviews as review
+                WHERE book.id = review.book_id_id
+                GROUP BY book.id
+                ORDER BY average_score DESC
+                LIMIT ".$limit;
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        return $stmt->executeQuery()->fetchAllAssociative();
+
+//        $queryBuilder = $this->createQueryBuilder('n');
+//        $queryBuilder->select('book.id, book.bookCover, AVG(review.score) as average_score')
+//            ->from('App\Entity\Book', 'book')
+//            ->join('App\Entity\BookReviews', 'review', 'WITH', 'book.id=review.bookId')
+//            ->groupBy('book.id')
+//            ->orderBy('average_score', 'DESC')
+//            ->setMaxResults($limit);
+//
+//        return $queryBuilder->getQuery()->getResult();
+
+    }
 }
