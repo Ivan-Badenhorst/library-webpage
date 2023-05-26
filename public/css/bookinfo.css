@@ -1,8 +1,9 @@
 .container {
+    display: flex;
+    flex-direction: column;
     background-color: white;
     width: 90%;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 40px 0;
     padding: 20px;
 }
 
@@ -28,68 +29,55 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 15px 0;
 }
 
-.actionBut {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 10px;
-}
-
-.text-title-genre {
-    font-size: 200%;
-}
-
-.heart {
-    margin-right: 10px;
-    scale: 150%;
+#bookId {
+    display: none;
 }
 
 .subcontainer {
-    margin-top: 20px;
+    width: 100%;
 }
 
-.subcontainer p {
-    padding: 10px;
-}
-
-.specific-book {
+img {
     float: left;
-    margin-right: 20px;
+    margin-right: 25px;
     width: 20em;
     height: 31.5em;
 }
 
-p {
+.summary {
     text-align: justify;
     font-size: 25px;
-
+    margin-right: 25px;
 }
 
 .reviews {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
-.reviews > * {
-    width: 45%;
-    border-style: solid;
-    border-width: thin;
-    border-color: black;
-    border-radius: 25px;
-    padding: 10px;
-    margin: 10px;
+.review-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
 
+.review-container > * {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    text-align: justify;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .checked {
     color: orange;
 }
-
-.fa-thumbs-up {
-    margin-right: 10px;
-}
-
