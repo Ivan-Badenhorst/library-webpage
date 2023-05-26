@@ -92,7 +92,6 @@ class BookInfoController extends AbstractController
      * Listens for API and reacts by adding or removing the book from the reading list database.
      *
      * @param $bookId -> id of the book being displayed
-     * @param $userId -> id of the user currently logged in
      * @param BookRepository $bookRepository
      * @param UserRepository $userRepository
      * @param UserBookRepository $userBookRepository
@@ -130,7 +129,6 @@ class BookInfoController extends AbstractController
      * Listens for API and reacts by adding a review to the book review table.
      *
      * @param $bookId -> id of the book being displayed
-     * @param $userId -> id of the user currently logged in
      * @param $score -> score of the review
      * @param $comment -> comment of the review
      * @param BookRepository $bookRepository

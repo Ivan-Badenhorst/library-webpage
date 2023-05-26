@@ -33,6 +33,7 @@ class WriteReview extends AbstractType
         $builder
             ->add('score', ChoiceType::class,
                 ['choices' => [
+                    '0' => '0',
                     '1' => '1',
                     '2' => '2',
                     '3' => '3',
