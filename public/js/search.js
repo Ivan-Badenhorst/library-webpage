@@ -44,6 +44,25 @@
         currentPage.disabled = false;
         currentPage.value = page.toString();
         currentPage.disabled = true;
+        previousButton.disabled = false;
+        let title = "";
+        title += titleInput.value;
+        if( title === "" || title == null){
+            title = "%"
+        }
+        fetchBooks(title, genres);
+    });
+
+    previousButton.addEventListener('click', function(event){
+        event.preventDefault();
+        let genres = getGenres();
+        page -= 1;
+        currentPage.disabled = false;
+        currentPage.value = page.toString();
+        currentPage.disabled = true;
+        if(page === 0){
+            previousButton.disabled = true;
+        }
         let title = "";
         title += titleInput.value;
         if( title === "" || title == null){
@@ -82,6 +101,13 @@
         if( title === "" || title == null){
             title = "%"
         }
+
+        page = 0;
+        currentPage.disabled = false;
+        currentPage.value = page.toString();
+        currentPage.disabled = true;
+        previousButton.disabled = true;
+
         let genres = getGenres();
         fetchBooks(title, genres);
         console.log(books);
