@@ -32,6 +32,11 @@
     padding: 15px 0;
 }
 
+.main-info-book {
+    display: flex;
+    flex-direction: column;
+}
+
 #bookId {
     display: none;
 }
@@ -40,7 +45,7 @@
     width: 100%;
 }
 
-img {
+.subcontainer img {
     float: left;
     margin-right: 25px;
     width: 20em;

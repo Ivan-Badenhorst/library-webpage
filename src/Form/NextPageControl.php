@@ -13,7 +13,7 @@ class NextPageControl extends AbstractType
     {
         $builder
             ->add('previous', ButtonType::class, [
-                'label' => 'Previous Page',
+                'label' => '< Previous Page',
                 'attr' => ['class' => 'btn btn-primary'],
             ])
             ->add('current', TextType::class, [
@@ -22,7 +22,7 @@ class NextPageControl extends AbstractType
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('next', ButtonType::class, [
-                'label' => 'Next Page',
+                'label' => 'Next Page >',
                 'attr' => ['class' => 'btn btn-primary'],
             ]);
     }

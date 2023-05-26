@@ -4,7 +4,7 @@
         <section class="favourites">
             <div class="favourite-text">
                 <h1>OUR FAVORITES</h1>
-                <p>Unsure what to read next? Some of the most trending books last month!</p>
+                <p>Unsure what to read next? Checkout some of the most trending books last month!</p>
             </div>
             <div class="favourite-img">
                 {% for book in favourites %}
@@ -69,12 +69,12 @@
 
 
                 </div>
-                <div>
+                <div class="control-pages">
                     {{ form_start(pageControl) }}
 
-                    {{ form_row(pageControl.previous, {'id':'previousButton'}) }}
-                    {{ form_row(pageControl.current, {'id':'currentPage'}) }}
-                    {{ form_row(pageControl.next, {'id':'nextButton'}) }}
+                    {{ form_row(pageControl.previous, { 'id':'previousButton' }) }}
+                    {{ form_row(pageControl.current, { 'id':'currentPage' }) }}
+                    {{ form_row(pageControl.next, { 'id':'nextButton' }) }}
 
                     {{ form_end(pageControl) }}
                 </div>
