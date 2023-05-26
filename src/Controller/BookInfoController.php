@@ -147,7 +147,7 @@ class BookInfoController extends AbstractController
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
     {
-        $reviews = $bookReviewsRepository->getReviews($offset, 5,$bookId);
+        $reviews = $bookReviewsRepository->getReviews($offset, 6,$bookId);
         return new JsonResponse($reviews);
 
     }

@@ -7,18 +7,15 @@
     </h1>
 
     <div class="top-info">
-        <div class="main-info">
-            <h2 class="author">
-                By {{ book.author }}
-            </h2>
-            <h3>
-                Genre Category and rating
-            </h3>
-            <p id="bookId">
-                {{ book.id }}
-            </p>
-        </div>
-
+        <h2 class="author">
+            By {{ book.author }}
+        </h2>
+        <p id="bookId">
+            {{ book.id }}
+        </p>
+        <h3>
+            Genre Category and rating
+        </h3>
         <form id="book-add-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
             <div class="form-row">
                 {{ form_widget(form) }}
@@ -29,16 +26,16 @@
 
     <div class="subcontainer">
         <div>
-            <img loading="lazy" src="{{ book.bookCover }}" alt="Image of trending books">
+            <img loading="eager" src="{{ book.bookCover }}" alt="Image of trending books">
         </div>
-        <p class="summary">
+        <p>
             {{ book.summary }}
         </p>
 
     </div>
 
     <div class="reviews">
-        <div id="reviewDisplay">
+        <div id="reviewDisplay" class="review-container">
 
         </div>
 
@@ -49,16 +46,6 @@
             {{ form_end(form2) }}
         </form>
 
-
-    </div>
-
-    <div class="addReview">
-        <form id="write-review-form" method="{{ form3.vars.method }}" action="{{ form3.vars.action }}">
-            <div class="form-row">
-                {{ form_widget(form3) }}
-            </div>
-            {{ form_end(form3) }}
-        </form>
     </div>
 </div>
 
@@ -66,6 +53,4 @@
     <script src="{{ asset('js/getReviews.js') }}"></script>
 
     <script src="{{ asset('js/addToFavorites.js') }}"></script>
-
-    <script src="{{ asset('js/writeReview.js') }}"></script>
 {% endblock %}
