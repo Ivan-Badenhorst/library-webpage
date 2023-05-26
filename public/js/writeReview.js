@@ -12,6 +12,19 @@ const writeReviewForm = document.getElementById('write-review-form')            
 const book_id = document.getElementById('bookId')                                  //field containing bookId
 const score = document.getElementById('write_review_score')
 const comment = document.getElementById('write_review_comment')
+const postButton = document.getElementById('write_review_submit_review')
+
+let commentTextArea = document.getElementById('write_review_comment');
+let boolValue = commentTextArea.getAttribute('logged');
+let logged = (boolValue === 'true');
+
+console.log("this executes at open");
+if(logged === false){
+    commentTextArea.textContent = 'You need to log in in order to place reviews';
+    commentTextArea.disabled = true;
+    postButton.disabled = true;
+}
+
 
 /**
  * event listener for write review event
@@ -23,6 +36,7 @@ writeReviewForm.addEventListener('submit', function(event) {
     let bookId = parseInt(book_id.textContent)
     let reviewScore = parseInt(score.value)
     let reviewComment = comment.value
+    reviewComment = reviewComment.replace(/\./g, "%*%*%");
 
     writeReview(bookId, reviewScore, reviewComment)
 

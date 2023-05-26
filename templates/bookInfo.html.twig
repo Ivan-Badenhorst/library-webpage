@@ -51,8 +51,22 @@
     </div>
     <form id="write-review-form" method="{{ form3.vars.method }}" action="{{ form3.vars.action }}">
         <div class="form-row">
-            {{ form_widget(form3) }}
+            {{ form_row(form3.score) }}
+            {% if logged %}
+                {{ form_row(form3.comment,    { 'attr': {
+                    'id': 'commentTextArea',
+                    'logged': 'true'}
+                }) }}
+            {% else %}
+                {{ form_row(form3.comment,    { 'attr': {
+                    'id': 'commentTextArea',
+                    'logged': 'false'}
+                }) }}
+            {% endif %}
+
+            {{ form_row(form3.submit_review) }}
         </div>
+
         {{ form_end(form3) }}
         </form>
 </div>

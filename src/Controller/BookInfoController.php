@@ -57,13 +57,17 @@ class BookInfoController extends AbstractController
         $logged = $this->checkSession($requestStack);
         $book = $bookRepository->findBook($bookId);
 
-        $email = $requestStack->getSession()->get('email');
-        //get id from email
-        $auth = new auth($entityManager);
-        $userID = $auth->getID($email);
+        if($logged) {
+            $email = $requestStack->getSession()->get('email');
+            //get id from email
+            $auth = new auth($entityManager);
+            $userID = $auth->getID($email);
 
-        $exists = $userBookRepository->check($bookId, $userID);
-
+            $exists = $userBookRepository->check($bookId, $userID);
+        }
+        else{
+            $exists = false;
+        }
         $form = $this->createForm(BookAdd::class);
         $view = $form->createView();
 
@@ -141,6 +145,8 @@ class BookInfoController extends AbstractController
                                 UserRepository $userRepository, BookReviewsRepository $bookReviewsRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
     {
         $bookReview = new BookReviews;
+
+        $comment  = str_replace('%*%*%', '.', $comment);
 
         $email = $requestStack->getSession()->get('email');
         //get id from email
