@@ -57,7 +57,7 @@
                         {% for row in books %}
                             <div id="books-container" onclick="switchPage( '/book-info/{{ row.id }}' )">
                                 <div class="book">
-                                    <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
+                                    <img loading="eager" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
                                         <h2>{{ row.title }}</h2>
                                         <p>By {{ row.author }}</p>
@@ -75,7 +75,7 @@
                     {{ form_start(pageControl) }}
 
                     {{ form_row(pageControl.previous, {'id':'previousButton'}) }}
-                    {{ form_row(pageControl.current) }}
+                    {{ form_row(pageControl.current, {'id':'currentPage'}) }}
                     {{ form_row(pageControl.next, {'id':'nextButton'}) }}
 
                     {{ form_end(pageControl) }}

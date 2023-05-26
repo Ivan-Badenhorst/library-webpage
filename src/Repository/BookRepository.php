@@ -111,16 +111,31 @@ class BookRepository extends ServiceEntityRepository
      * @return array -> array of books qualifying for the search term
      * @throws Exception
      */
-    public function searchOnTitle(int $limit, String $searchTerm): array
+    public function searchOnTitle(int $limit, String $searchTerm, array $genres, int $offset = 0): array
     {
         //no query builder in order to use GROUP_CONCAT
         $sql = 'SELECT b.*, GROUP_CONCAT(g.genre SEPARATOR \', \') AS genres
         FROM book b
         JOIN book_genre bg ON b.id = bg.book_id_id
-        JOIN genre g ON bg.genre_id_id = g.id
-        WHERE b.title like "'."%".$searchTerm."%\"".'
-        GROUP BY b.id 
-        limit '.$limit;
+        JOIN genre g ON bg.genre_id_id = g.id'.' WHERE b.title like "'."%".$searchTerm."%\"";
+
+        $sql = $sql.' GROUP BY b.id ';
+
+        if(count($genres) > 0){
+            $sql = $sql.'HAVING ';
+        }
+
+        $count = 0;
+        foreach ($genres as $genre){
+            if($count > 0){
+                $sql = $sql.' or ';
+            }
+            $count += 1;
+            $sql = $sql.'FIND_IN_SET('.'\''.$genre.'\''.', genres) > 0';
+
+        }
+
+        $sql = $sql.' limit '.$limit.' offset '.$offset;
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         return $stmt->executeQuery()->fetchAllAssociative();

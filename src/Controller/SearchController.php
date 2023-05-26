@@ -25,14 +25,15 @@ class SearchController extends AbstractController
      * Listens for API call, requesting book search
      *
      * @param $title -> search term used for finding books
+     * @param $genres -> list of genres used to filter books
      * @param BookRepository $bookRepository
      * @return JsonResponse -> containing all book information from the search result
      * @throws Exception
      */
-    #[Route('/search/{title}', name: 'search')]
-    public function search($title, BookRepository $bookRepository): Response
+    #[Route('/search/{title}/{genres}/{offset}', name: 'search')]
+    public function search($title, $genres, $offset, BookRepository $bookRepository): Response
     {
-        $products = $bookRepository->searchOnTitle(40, $title);
+        $products = $bookRepository->searchOnTitle(41, $title, explode(",", $genres), $offset);
         return new JsonResponse($products);
 
     }
