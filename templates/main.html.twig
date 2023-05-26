@@ -71,6 +71,15 @@
 
 
                 </div>
+                <div>
+                    {{ form_start(pageControl) }}
+
+                    {{ form_row(pageControl.previous, {'id':'previousButton'}) }}
+                    {{ form_row(pageControl.current) }}
+                    {{ form_row(pageControl.next, {'id':'nextButton'}) }}
+
+                    {{ form_end(pageControl) }}
+                </div>
             </section>
         </div>
     </div>

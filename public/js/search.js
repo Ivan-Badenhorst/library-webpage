@@ -1,6 +1,6 @@
 /**
  * @fileoverview JavaScript file  to update and display books
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 /**

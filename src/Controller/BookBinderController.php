@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Entity\User;
 use App\Entity\UserBook;
 use App\Form\BookReview;
+use App\Form\NextPageControl;
 use App\Repository\BookRepository;
 use App\Repository\UserBookRepository;
 use App\Repository\UserRepository;
@@ -51,6 +52,8 @@ class BookBinderController extends AbstractController
 
         //creates a form used as a search bar
         $form = $this->createForm(BookSearch::class);
+        //create form for page control
+        $pageControl = $this->createForm(NextPageControl::class);
         $this->stylesheets[] = 'main.css';
 
         //gets a list of 40 random books
@@ -60,7 +63,8 @@ class BookBinderController extends AbstractController
             'genres'=> $genres,
             'form' => $form->createView(),
             'stylesheets'=> $this->stylesheets,
-            'books'=>$products
+            'books'=>$products,
+            'pageControl'=>$pageControl->createView()
         ]);
     }
 
