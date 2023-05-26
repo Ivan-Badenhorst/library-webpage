@@ -112,6 +112,21 @@ class BookBinderController extends AbstractController
         ]);
     }
 
+
+    #[Route('/about', name: 'about')]
+    public function about(RequestStack $requestStack): Response
+    {
+        $logged = $this->checkSession($requestStack);
+
+        $this->stylesheets[] = 'readingList.css';
+        $this->stylesheets[] = 'about.css';
+        return $this->render('about.html.twig', [
+            'stylesheets'=> $this->stylesheets,
+            'logged'=>$logged
+        ]);
+    }
+
+
     #[Route('/profile', name: 'profile')]
     public function profile(Request $request,RequestStack $requestStack): Response
     {
