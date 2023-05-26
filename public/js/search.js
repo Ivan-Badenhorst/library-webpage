@@ -50,6 +50,7 @@
         if( title === "" || title == null){
             title = "%"
         }
+        searchBar.scrollIntoView();
         fetchBooks(title, genres);
     });
 
@@ -68,7 +69,9 @@
         if( title === "" || title == null){
             title = "%"
         }
+        searchBar.scrollIntoView();
         fetchBooks(title, genres);
+
     });
 
 
