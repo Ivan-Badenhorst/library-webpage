@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Tests\Entity;
 
 use App\Entity\User;
@@ -21,6 +20,7 @@ class UserTest extends TestCase
         $street = '123 Main St';
         $postalCode = 12345;
         $city = 'Anytown';
+        $loginTries = 3;
 
         // Test setters
         $user->setEmail($email);
@@ -32,6 +32,7 @@ class UserTest extends TestCase
         $user->setStreet($street);
         $user->setPostalCode($postalCode);
         $user->setCity($city);
+        $user->setLoginTries($loginTries);
 
         // Test getters
         $this->assertEquals($email, $user->getEmail());
@@ -43,6 +44,7 @@ class UserTest extends TestCase
         $this->assertEquals($street, $user->getStreet());
         $this->assertEquals($postalCode, $user->getPostalCode());
         $this->assertEquals($city, $user->getCity());
+        $this->assertEquals($loginTries, $user->getLoginTries());
     }
 
     public function testUserGenres()
@@ -68,4 +70,13 @@ class UserTest extends TestCase
         $user->removeUserBookId($book);
         $this->assertEquals(0, $user->getUserBookId()->count());
     }
+
+    public function testId()
+    {
+        $user = new User();
+
+        // Test the initial value of id
+        $this->assertNull($user->getId());
+    }
 }
+
