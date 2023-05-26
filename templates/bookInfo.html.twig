@@ -26,7 +26,7 @@
 
     <div class="subcontainer">
         <div>
-            <img loading="lazy" src="{{ book.bookCover }}" alt="Image of trending books">
+            <img loading="eager" src="{{ book.bookCover }}" alt="Image of trending books">
         </div>
         <p>
             {{ book.summary }}
@@ -35,28 +35,13 @@
     </div>
 
     <div class="reviews">
-        <div id="reviewDisplay">
-{#        <!--<div class="review1">#}
-{#            <div class="rating">#}
-{#                <span class="fa fa-star checked"></span>#}
-{#                <span class="fa fa-star checked"></span>#}
-{#                <span class="fa fa-star checked"></span>#}
-{#                <span class="fa fa-star"></span>#}
-{#                <span class="fa fa-star"></span>#}
-{#            </div>#}
-{#            <h3>Name of the reviewer</h3>#}
-{#            <b>05/05/2023</b>#}
-{#            <p>Dit is de enige universiteit in België die nog dierproeven op apen uitvoert. Schaam je diep! Dit geldt zowel voor het instituut zelf als de mensen die de dierproeven uitvoeren. Een diploma van een dergelijk instituut is niets waard.</p>#}
-{#        </div>-->#}
-        </div>
-        <div>
+
         <form id="book-review-form" method="{{ form2.vars.method }}" action="{{ form2.vars.action }}">
             <div class="form-row">
                 {{ form_widget(form2) }}
             </div>
             {{ form_end(form2) }}
         </form>
-        </div>
 
     </div>
 </div>
