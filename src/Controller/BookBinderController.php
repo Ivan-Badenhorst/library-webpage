@@ -14,12 +14,6 @@ namespace App\Controller;
 use App\Form\BookSearch;
 use App\Form\NextPageControl;
 use App\Repository\BookRepository;
-use App\Repository\UserBookRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Repository\GenreRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\PersonalInfo;
 use App\Form\SecurityPrivacy;
 use App\Form\Preferences;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 class BookBinderController extends AbstractController
@@ -139,64 +134,76 @@ class BookBinderController extends AbstractController
         $this->stylesheets[] = 'profile.css';
 
         $persInfo = $this->createForm(PersonalInfo::class);
-        $pref = $this->createForm(Preferences::class);
         $SecPriv = $this->createForm(SecurityPrivacy::class);
 
         $persInfo->handleRequest($request);
-        $pref->handleRequest($request);
         $SecPriv->handleRequest($request);
 
         if ($persInfo->isSubmitted() && $persInfo->isValid()) {
-            // Handle form submission and process checkbox values
+            $lastname = $persInfo->get('firstName')->getData();
+            $surname = $persInfo->get('lastName')->getData();
+            $displayName = $persInfo->get('displayName')->getData();
+            $bio = $persInfo->get('bio')->getData();
+            $street = $persInfo->get('street')->getData();
+            $postalCode = $persInfo->get('postalCode')->getData();
+            $city = $persInfo->get('city')->getData();
+            $DOB = $persInfo->get('dateOfBirth')->getData();
+            $profilePic = $persInfo->get('profilePicture')->getData();
+            $email = $persInfo->get('email')->getData();
+            if ($lastname == null) {
+                $lastname = $auth->getLastName($session->get('email'));
+            }
+            if ($surname == null) {
+                $surname = $auth->getFirstName($session->get('email'));
+            }
+            if ($email == null) {
+                $email = $session->get('email');
+            }
+            if ($DOB == null) {
+                $DOB = $auth->getDOB($session->get('email'));
+            }
+            if ($bio == null) {
+                $bio = $auth->getBio($session->get('email'));
+            }
+            if ($displayName == null) {
+                $displayName = $auth->getDisplayName($session->get('email'));
+            }
+            if ($street == null) {
+                $street = $auth->getStreet($session->get('email'));
+            }
+            if ($postalCode == null) {
+                $postalCode = $auth->getPostalCode($session->get('email'));
+            }
+            if ($city == null) {
+                $city = $auth->getCity($session->get('email'));
+            }
+            if ($profilePic == null) {
+                $auth->updatePersonalInfo($session->get('email'), $email, $lastname, $surname, $displayName, $bio, $street, $postalCode, $city, $DOB);
+            }
+            else{
+                    $auth->updatePersonalInfo($session->get('email'), $email, $lastname, $surname, $displayName, $bio, $street, $postalCode, $city, $DOB, $profilePic);
+                }
+            }
 
-            // Access checkbox values
-            $checkbox1Value = $persInfo->get('checkbox1')->getData();
-            $checkbox2Value = $persInfo->get('checkbox2')->getData();
-            $checkbox3Value = $persInfo->get('checkbox3')->getData();
-
-            // ... Process the checkbox values as needed
-
-            // Redirect or return a response
-        }
-        if ($pref->isSubmitted() && $pref->isValid()) {
-            // Handle form submission and process checkbox values
-
-            // Access checkbox values
-            $checkbox1Value = $pref->get('checkbox1')->getData();
-            $checkbox2Value = $pref->get('checkbox2')->getData();
-            $checkbox3Value = $pref->get('checkbox3')->getData();
-
-            // ... Process the checkbox values as needed
-
-            // Redirect or return a response
-        }
         if ($SecPriv->isSubmitted() && $SecPriv->isValid()) {
-            // Handle form submission and process checkbox values
-
-            // Access checkbox values
-            $checkbox1Value = $SecPriv->get('checkbox1')->getData();
-            $checkbox2Value = $SecPriv->get('checkbox2')->getData();
-            $checkbox3Value = $SecPriv->get('checkbox3')->getData();
-
-            // ... Process the checkbox values as needed
-
-            // Redirect or return a response
+            $newPassword = $SecPriv->get('password')->getData();
+            $auth->updatePassword($session->get('email'), $newPassword);
         }
 
         return $this->render('profile.html.twig', [
             'personalInfo' => $persInfo->createView(),
-            'preferences' => $pref->createView(),
             'securityPrivacy' => $SecPriv->createView(),
             'stylesheets'=> $this->stylesheets,
             'logged' => true,
             'email' => $session->get('email'),
             'displayName' => $auth->getDisplayName($session->get('email')),
+            'bio' => $auth->getBio($session->get('email')),
             'firstName' => $auth->getFirstName($session->get('email')),
             'lastName' => $auth->getLastName($session->get('email')),
             'street' => $auth->getStreet($session->get('email')),
             'postalCode' => $auth->getPostalCode($session->get('email')),
             'city' => $auth->getCity($session->get('email')),
-            'DOB' => $auth->getDOB($session->get('email')),
+            'DOB' => $auth->getDOB($session->get('email'))->format('Y-m-d'),
             'profilePicture' => base64_encode($auth->getProfilePicture($session->get('email')))
         ]);
     }

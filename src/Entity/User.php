@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -68,10 +70,23 @@ class User
     #[ORM\Column(length: 255)]
     private ?int $loginTries;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $bio = null;
+
     public function __construct()
     {
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
+        return $this;
     }
 
 
@@ -88,6 +103,7 @@ class User
 
     public function setProfilePicture(?File $profilePicture): self
     {
+        $this->profilePicture = $profilePicture;
         return $this;
     }
 

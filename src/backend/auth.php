@@ -249,6 +249,36 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         return $user->getId();
     }
+    public function getBio(string $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getBio();
+    }
+
+
+    public function updatePersonalInfo(string $email,string $newEmail, string $name, string $surname, string $displayname, string $bio, string $street, int $postalCode, string $city, \DateTime $DOB)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        $user->setEmail($newEmail);
+        $user->setFirstName($name);
+        $user->setLastName($surname);
+        $user->setDisplayName($displayname);
+        $user->setDateOfBirth($DOB);
+        $user->setStreet($street);
+        $user->setPostalCode($postalCode);
+        $user->setCity($city);
+        $user->setBio($bio);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    public function updatePassword(string $email, string $password)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
 
 
 }
