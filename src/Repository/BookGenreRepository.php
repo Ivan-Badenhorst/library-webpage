@@ -26,11 +26,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookGenreRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructs a new instance of the database repository.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BookGenre::class);
     }
 
+    /**
+     * Used to add a new book genre to the database
+     *
+     * @param BookGenre $entity -> New book genre to be added to the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function save(BookGenre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,6 +51,12 @@ class BookGenreRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Used to remove a book genre from the database
+     *
+     * @param BookGenre $entity -> BookGenre to be removed from the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function remove(BookGenre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

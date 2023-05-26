@@ -14,6 +14,7 @@ namespace App\Repository;
 
 use App\Entity\BookReviews;
 use App\Entity\Genre;
+use App\Form\BookReview;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\AbstractQuery;
@@ -30,7 +31,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookReviewsRepository extends ServiceEntityRepository
 {
-
     /**
      * Constructs a new instance of the database repository.
      *
@@ -41,11 +41,10 @@ class BookReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, BookReviews::class);
     }
 
-
     /**
-     * Used to add a new reviews to a book in the database
+     * Used to add a new book review to the database
      *
-     * @param BookReviews $entity -> New review to be added to the database.
+     * @param BookReviews $entity -> New book to be added to the database.
      * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
      */
     public function save(BookReviews $entity, bool $flush = false): void
@@ -57,11 +56,10 @@ class BookReviewsRepository extends ServiceEntityRepository
         }
     }
 
-
     /**
-     * Used to delete reviews from a book
+     * Used to remove a book review from the database
      *
-     * @param BookReviews $entity -> Book review to be removed from the database
+     * @param BookReviews $entity -> BookReviews to be removed from the database.
      * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
      */
     public function remove(BookReviews $entity, bool $flush = false): void

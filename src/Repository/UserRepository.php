@@ -26,11 +26,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructs a new instance of the database repository.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * Used to add a new user to the database
+     *
+     * @param User $entity -> New user to be added to the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function save(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,6 +51,12 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Used to remove a user from the database
+     *
+     * @param User $entity -> User to be removed from the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function remove(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

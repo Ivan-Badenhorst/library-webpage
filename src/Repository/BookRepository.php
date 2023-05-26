@@ -38,7 +38,7 @@ class BookRepository extends ServiceEntityRepository
     }
 
     /**
-     * Used to add a new genre to the database
+     * Used to add a new book to the database
      *
      * @param Book $entity -> New book to be added to the database.
      * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
@@ -53,6 +53,8 @@ class BookRepository extends ServiceEntityRepository
     }
 
     /**
+     * Used to remove a book from the database
+     *
      * @param Book $entity -> Book to be removed from the database.
      * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
      */

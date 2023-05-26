@@ -26,11 +26,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserGenreRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructs a new instance of the database repository.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserGenre::class);
     }
 
+    /**
+     * Used to add a new user genre to the database
+     *
+     * @param UserGenre $entity -> New UserGenre to be added to the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function save(UserGenre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,6 +51,12 @@ class UserGenreRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Used to remove a user genre from the database
+     *
+     * @param UserGenre $entity -> UserGenre to be removed from the database.
+     * @param bool $flush (optional) -> indicates if change will be synchronized to the database. Default = false.
+     */
     public function remove(UserGenre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
