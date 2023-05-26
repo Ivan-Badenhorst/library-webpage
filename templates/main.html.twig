@@ -55,16 +55,16 @@
                     {% if books is defined %}
 
                         {% for row in books %}
-                            <div id="books-container" onclick="switchPage( '/book-info/{{ row.id }}' )">
-                                <div class="book">
-                                    <img loading="eager" src="{{row.book_cover}}" alt="Entity Image">
+
+                                <div id="book-container" class="book" onclick="switchPage( '/book-info/{{ row.id }}' )">
+                                    <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
                                         <h2>{{ row.title }}</h2>
                                         <p>By {{ row.author }}</p>
                                         <p>Genre: {{ row.genres }}</p>
                                     </div>
                                 </div>
-                            </div>
+
                         {% endfor %}
 
                     {% endif %}
