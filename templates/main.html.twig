@@ -8,12 +8,9 @@
             </div>
             <div class="favourite-img">
                 {% for book in favourites %}
-                    <img src="{{ book.book_cover }}" onclick="switchPage( '/book-info/{{ book.id }}' )">
+                    <img src="{{ book.book_cover }}" onclick="switchPage( '/book-info/{{ book.id }}' )" alt="favourite book">
                 {% endfor %}
-{#                <img src="{{  }}" alt="Image of trending books">#}
-{#                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">#}
-{#                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">#}
-{#                <img src="{{ asset('images/bookcover2.jpeg') }}" alt="Image of trending books">#}
+
             </div>
 
         </section>
