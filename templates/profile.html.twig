@@ -26,6 +26,7 @@
                 </div>
             </div>
                 <h2 id="personal-information">Personal information</h2><br>
+            {{ message }}
                     {{ form_start(personalInfo) }}
                     {{ form_row(personalInfo.firstName, {'id': 'firstName', 'label': 'First Name: '~ firstName }) }}
                     {{ form_row(personalInfo.lastName, {'id': 'lastName', 'label': 'Last Name: '~ lastName}) }}
@@ -42,6 +43,7 @@
 
 
             <h2 id="security">Security/Privacy</h2><br>
+            {{ message2 }}
                 {{ form_start(securityPrivacy) }}
                 {{ form_row(securityPrivacy.password,{'id':'password', 'label': 'New Password' }) }}
                 {{ form_row(securityPrivacy.showPassword,{'id':'passwordCheck' }) }}

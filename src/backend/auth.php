@@ -176,7 +176,7 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         $profilePicture = $user->getProfilePicture();
         if ($profilePicture == "null") {
-            $user = $this->UserRepository->findOneBy(['email' => 'newUser@email.com']);
+            $user = $this->UserRepository->findOneBy(['email' => 'newUser2@email.com']);
 
             return $user->getProfilePicture();
             }
@@ -270,6 +270,24 @@ class auth
         $user->setBio($bio);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+    }
+    public function updatePersonalInfoWPic(string $email,string $newEmail, string $name, string $surname, string $displayname, string $bio, string $street, int $postalCode, string $city, \DateTime $DOB, File $profilePicture)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        $user->setEmail($newEmail);
+        $user->setFirstName($name);
+        $user->setLastName($surname);
+        $user->setDisplayName($displayname);
+        $user->setDateOfBirth($DOB);
+        $user->setStreet($street);
+        $user->setPostalCode($postalCode);
+        $user->setCity($city);
+        $user->setBio($bio);
+        $user->setProfilePicture($profilePicture);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
     }
 
     public function updatePassword(string $email, string $password)

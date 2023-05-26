@@ -62,7 +62,7 @@ class User
     private Collection $userBookId;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $profilePicture = null;
+    private $profilePicture;
 
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: BookReviews::class, orphanRemoval: true)]
     private Collection $userReviewId;
@@ -103,7 +103,7 @@ class User
 
     public function setProfilePicture(?File $profilePicture): self
     {
-        $this->profilePicture = $profilePicture;
+        $this->profilePicture = file_get_contents($profilePicture);
         return $this;
     }
 

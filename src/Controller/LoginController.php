@@ -67,7 +67,23 @@ class LoginController extends AbstractController
             if ($profilePicture == null) {
                 $profilePicture = new File('../public/img/defaultProfilePicture.png');
             }
-            if (gettype($form->getData()['postalCode'])=="integer"){$postalCode = intval($form->getData()['postalCode']);}
+            else if($profilePicture->getSize()>2000000){
+                return $this->render('register.html.twig', [
+                    'stylesheets'=> $this->stylesheets,
+                    'form' => $form->createView(),
+                    'error' => "Profile picture is too big, max size is 2MB",
+                    'logged' => false
+                ]);
+            }
+            else if($profilePicture->getMimeType()!="image/jpeg"){
+                return $this->render('register.html.twig', [
+                    'stylesheets'=> $this->stylesheets,
+                    'form' => $form->createView(),
+                    'error' => "Profile picture is not a jpeg",
+                    'logged' => false
+                ]);
+            }
+            if (gettype($form->getData()['postalCode'])!=="integer"){$postalCode = intval($form->getData()['postalCode']);}
             else {$postalCode = $form->getData()['postalCode'];}
             //send data to auth object
             $result = $auth->register($form->getData()['email'], $form->getData()['password'], $form->getData()['name'], $form->getData()['surname'], $form->getData()['displayname'], $form->getData()['DateOfBirth'], $form->getData()['street'], $postalCode, $form->getData()['city'], $profilePicture);
