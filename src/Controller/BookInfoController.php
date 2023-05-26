@@ -50,7 +50,6 @@ class BookInfoController extends AbstractController
      * @param BookRepository $bookRepository
      * @param UserBookRepository $userBookRepository
      * @return JsonResponse -> containing the forms and the book that was clicked on
-     * @throws Exception
      */
     #[Route("/book-info/{bookId}", name: "book-info")]
     public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository,  RequestStack $requestStack): Response {
@@ -93,7 +92,6 @@ class BookInfoController extends AbstractController
      * @param UserRepository $userRepository
      * @param UserBookRepository $userBookRepository
      * @return JsonResponse -> true since it doesnt need to display anything
-     * @throws Exception
      */
     #[Route('/add/{bookId}/{userId}', name: 'add')]
     public function add($bookId, $userId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
@@ -118,12 +116,23 @@ class BookInfoController extends AbstractController
             $userBook->setUserId($user);
 
             $userBookRepository->save($userBook, true);
-
         }
 
         return new JsonResponse(true);
     }
 
+    /**
+     * Listens for API and reacts by adding a review to the book review table.
+     *
+     * @param $bookId -> id of the book being displayed
+     * @param $userId -> id of the user currently logged in
+     * @param $score -> score of the review
+     * @param $comment -> comment of the review
+     * @param BookRepository $bookRepository
+     * @param UserRepository $userRepository
+     * @param BookReviewsRepository $bookReviewsRepository
+     * @return JsonResponse -> true since it doesnt need to display anything
+     */
     #[Route('/write/{bookId}/{userId}/{score}/{comment}', name: 'write')]
     public function writeReview($bookId, $userId, $score, $comment, BookRepository $bookRepository,
                                 UserRepository $userRepository, BookReviewsRepository $bookReviewsRepository): Response
@@ -136,6 +145,9 @@ class BookInfoController extends AbstractController
         $bookReview->setUserId($user);
         $bookReview->setScore($score);
         $bookReview->setComment($comment);
+
+        $timeZone = new \DateTimeZone('Europe/Brussels');
+        $bookReview->setDateAdded(new \DateTime('now', $timeZone));
 
         $bookReviewsRepository->save($bookReview, true);
 
