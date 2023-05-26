@@ -7,15 +7,18 @@
     </h1>
 
     <div class="top-info">
-        <h2 class="author">
-            By {{ book.author }}
-        </h2>
-        <p id="bookId">
-            {{ book.id }}
-        </p>
-        <h3>
-            Genre Category and rating
-        </h3>
+        <div class="main-info">
+            <h2 class="author">
+                By {{ book.author }}
+            </h2>
+            <h3>
+                Genre Category and rating
+            </h3>
+            <p id="bookId">
+                {{ book.id }}
+            </p>
+        </div>
+
         <form id="book-add-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
             <div class="form-row">
                 {{ form_widget(form) }}
@@ -26,15 +29,18 @@
 
     <div class="subcontainer">
         <div>
-            <img loading="eager" src="{{ book.bookCover }}" alt="Image of trending books">
+            <img loading="lazy" src="{{ book.bookCover }}" alt="Image of trending books">
         </div>
-        <p>
+        <p class="summary">
             {{ book.summary }}
         </p>
 
     </div>
 
     <div class="reviews">
+        <div id="reviewDisplay">
+
+        </div>
 
         <form id="book-review-form" method="{{ form2.vars.method }}" action="{{ form2.vars.action }}">
             <div class="form-row">
@@ -42,6 +48,7 @@
             </div>
             {{ form_end(form2) }}
         </form>
+
 
     </div>
 </div>
