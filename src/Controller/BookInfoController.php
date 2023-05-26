@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\backend\auth;
 use App\Entity\BookReviews;
 use App\Entity\UserBook;
 use App\Form\BookAdd;
@@ -21,9 +22,12 @@ use App\Repository\BookReviewsRepository;
 use App\Repository\UserBookRepository;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,7 +37,7 @@ class BookInfoController extends AbstractController
 
     private array $stylesheets;
 
-    public function __construct()
+    public function __construct(private ManagerRegistry $doctrine)
     {
         $this->stylesheets[] = 'base.css';
     }
@@ -49,7 +53,9 @@ class BookInfoController extends AbstractController
      * @throws Exception
      */
     #[Route("/book-info/{bookId}", name: "book-info")]
-    public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository): Response {
+    public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository,  RequestStack $requestStack): Response {
+
+        $logged = $this->checkSession($requestStack);
         $book = $bookRepository->findBook($bookId);
 
         $exists = $userBookRepository->check($bookId, 15);
@@ -73,7 +79,8 @@ class BookInfoController extends AbstractController
             'form'=>$view,
             'form2'=>$view2,
             'form3'=>$view3,
-            'book'=>$book
+            'book'=>$book,
+            'logged'=>$logged
         ]);
     }
 
@@ -89,19 +96,24 @@ class BookInfoController extends AbstractController
      * @throws Exception
      */
     #[Route('/add/{bookId}/{userId}', name: 'add')]
-    public function add($bookId, $userId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response
+    public function add($bookId, $userId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
     {
         $userBook = new UserBook;
 
-        $exists = $userBookRepository->check($bookId, $userId);
+        $email = $requestStack->getSession()->get('email');
+        //get id from email
+        $auth = new auth($entityManager);
+        $userID = $auth->getID($email);
+
+        $exists = $userBookRepository->check($bookId, $userID);
 
         if($exists){
-            $userBook = $userBookRepository->findUserBook($bookId, $userId);
+            $userBook = $userBookRepository->findUserBook($bookId, $userID);
             $userBookRepository->remove($userBook, true);
         }
         else{
             $book = $bookRepository->findBook($bookId);
-            $user = $userRepository->findUser($userId);
+            $user = $userRepository->findUser($userID);
             $userBook->setBookId($book);
             $userBook->setUserId($user);
 
@@ -150,6 +162,14 @@ class BookInfoController extends AbstractController
         $reviews = $bookReviewsRepository->getReviews($offset, 6,$bookId);
         return new JsonResponse($reviews);
 
+    }
+
+
+    private function checkSession(RequestStack $requestStack): bool
+    {
+        $session = $requestStack->getSession();
+        $auth = new auth($this->doctrine->getManager());
+        return($auth->isLogged($session));
     }
 
 }

@@ -65,11 +65,43 @@ class User
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: BookReviews::class, orphanRemoval: true)]
     private Collection $userReviewId;
 
+    #[ORM\Column(length: 255)]
+    private ?int $loginTries;
+
     public function __construct()
     {
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
     }
+
+
+    public function getProfilePicture(): ?string
+    {
+        /**
+         * cannot use function stream_get_contents() for null so string "null" is returned
+         */
+        if($this->profilePicture == null){
+            return "null";
+        }
+        return stream_get_contents($this->profilePicture);
+    }
+
+    public function setProfilePicture(?File $profilePicture): self
+    {
+        return $this;
+    }
+
+    public function getLoginTries(): ?int
+    {
+        return $this->loginTries;
+    }
+
+    public function setLoginTries(?int $loginTries): self
+    {
+        $this->loginTries = $loginTries;
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -244,17 +276,9 @@ class User
         return $this;
     }
 
-    public function getProfilePicture()
-    {
-        return $this->profilePicture;
-    }
 
-    public function setProfilePicture($profilePicture): self
-    {
-        $this->profilePicture = $profilePicture;
 
-        return $this;
-    }
+
 
     /**
      * @return Collection<int, BookReviews>

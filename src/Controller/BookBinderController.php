@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Form\BookSearch;
+use App\Form\NextPageControl;
 use App\Repository\BookRepository;
 use App\Repository\UserBookRepository;
 use App\Repository\UserRepository;
