@@ -32,11 +32,6 @@ header {
     flex-direction: row;
     align-items: center;
     justify-items: center;
-    background-color: #ffffff;
-    border-style: solid;
-    border-width: thin;
-    border-color: black;
-    border-radius: 25px;
     padding: 2px;
     transition: transform 0.3s;
 }
@@ -87,13 +82,19 @@ header nav ul {
     font-size: 20px;
 }
 
-li a {
+li a{
     font-weight: bold;
     color: black;
 }
 
-#navigator nav ul li a:hover {
+li {
+    transition: transform 0.1s;
+}
+
+#navigator nav ul li:hover,
+#navigator nav ul li a:hover{
     color: blue;
+    transform: scale(1.05);
 }
 
 .normalButton {
