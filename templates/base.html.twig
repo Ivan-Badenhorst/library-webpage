@@ -16,11 +16,6 @@
     {% for stylesheet in stylesheets %}
         <link href="{{ asset('css/' ~ stylesheet) }}" rel="stylesheet" type="text/css">
     {% endfor %}
-    <script>
-        function switchPage(pageUrl) {
-            window.location.href = pageUrl;
-        }
-    </script>
 </head>
 
 <body>
@@ -32,11 +27,11 @@
     <div id="navigator">
         <nav>
             <ul>
-                <li><a style="text-decoration: none" href="#">Chats</a></li>
-                <li><a style="text-decoration: none" href="#">Reading list</a></li>
-                <li><a style="text-decoration: none" href="#">Meetup</a></li>
-                <li><a style="text-decoration: none" href="#">About</a></li>
-                <li><a style="text-decoration: none" href="#">Contact</a></li>
+                <li><a style="text-decoration:none" href="#">Chats</a></li>
+                <li><a style="text-decoration:none" href="{{ path('readlist') }}">Reading list</a></li>
+                <li><a style="text-decoration:none" href="#">Meetup</a></li>
+                <li><a style="text-decoration:none" href="#">About</a></li>
+                <li><a style="text-decoration:none" href="#">Contact</a></li>
             </ul>
         </nav>
         <button class="normalButton">Login</button>

@@ -69,7 +69,6 @@ class User
     {
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
-        $this->userReviewId = new ArrayCollection();
     }
 
     public function getId(): ?int
