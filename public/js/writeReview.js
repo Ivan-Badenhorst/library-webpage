@@ -11,8 +11,8 @@
 const writeReviewForm = document.getElementById('write-review-form')              //add/remove from favorites button
 const book_id = document.getElementById('bookId')                                  //field containing bookId
 const user_id = 15
-const score = document.getElementById('write-review-score').value
-const comment = document.getElementById('write-review-comment')
+const score = document.getElementById('write_review_score')
+const comment = document.getElementById('write_review_comment')
 
 /**
  * event listener for write review event
@@ -20,12 +20,11 @@ const comment = document.getElementById('write-review-comment')
  * @description fetches field values and calls writeReview
  */
 writeReviewForm.addEventListener('submit', function(event) {
-    console.log(bookid.textContent)
     event.preventDefault()
     let bookId = parseInt(book_id.textContent)
     let userId = user_id
-    let reviewScore = parseInt(score)
-    let reviewComment = comment.textContent
+    let reviewScore = parseInt(score.value)
+    let reviewComment = comment.value
 
     writeReview(bookId, userId, reviewScore, reviewComment)
 });

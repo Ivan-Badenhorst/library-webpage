@@ -11,7 +11,7 @@
 const favoriteForm = document.getElementById('book-add-form')              //add/remove from favorites button
 const bookid = document.getElementById('bookId')                           //field containing bookId
 const userid = 15
-const favoriteButon = document.getElementById('book_add_add_to_favorites') //actual button in the form
+const favoriteButton = document.getElementById('book_add_add_to_favorites') //actual button in the form
 
 /**
  * event listener for add/remove from favorites submit event
@@ -19,17 +19,16 @@ const favoriteButon = document.getElementById('book_add_add_to_favorites') //act
  * @description calls add book and changes the state of the button depending on whether the userBook was or wasn't in the database
  */
 favoriteForm.addEventListener('submit', function(event) {
-    console.log(bookid.textContent)
     event.preventDefault()
     let bookId = parseInt(bookid.textContent)
     let userId = userid
     add(bookId, userId)
 
-    if(favoriteButon.textContent === 'Add to favorites'){
-        favoriteButon.textContent = 'Remove from favorites'
+    if(favoriteButton.textContent === 'Add to favorites'){
+        favoriteButton.textContent = 'Remove from favorites'
     }
     else{
-        favoriteButon.textContent = 'Add to favorites'
+        favoriteButton.textContent = 'Add to favorites'
     }
 });
 
