@@ -148,6 +148,8 @@ class BookInfoController extends AbstractController
     {
         $bookReview = new BookReviews;
 
+        $comment  = str_replace('%*%*%', '.', $comment);
+
         $email = $requestStack->getSession()->get('email');
         //get id from email
         $auth = new auth($entityManager);
