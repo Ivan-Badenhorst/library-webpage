@@ -33,11 +33,13 @@
                     <form id="filter_genre">
                         <div class="checkboxes">
 
+
                             {% for genre in genres %}
                             <label>
                                 <input type="checkbox" name="genre" value="{{ genre }}" checked> {{ genre }}
                             </label>
                             {% endfor %}
+
 
                         </div>
                     </form>

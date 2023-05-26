@@ -34,4 +34,5 @@ class BookGenreTest extends TestCase
         // Test the initial value of id
         $this->assertNull($bookGenre->getId());
     }
+
 }
