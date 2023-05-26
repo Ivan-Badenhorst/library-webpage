@@ -26,4 +26,13 @@ class BookGenreTest extends TestCase
 
         $this->assertEquals($genre, $bookGenre->getGenreId());
     }
+
+    public function testId()
+    {
+        $bookGenre = new BookGenre();
+
+        // Test the initial value of id
+        $this->assertNull($bookGenre->getId());
+    }
+
 }

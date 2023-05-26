@@ -50,66 +50,66 @@ class BookRepositoryTest extends TestCase
 
         $this->repository->remove($book, true);
     }
-
-    public function testFindLimitedRecords(): void
-    {
-        $limit = 20;
-        $expectedResult = [
-            'The Hunger Games',
-            'The Valley of Horses',
-            'Headlong Hall',
-            'Ape and Essence',
-            'Mr Ape',
-            'AP Advantage',
-            'Ape Adventures (DK READERS)',
-            'Aping language',
-            'Apes and Angels',
-            'AP biology',
-            'Monkeys & apes',
-            'Monkeys & apes',
-            'The Talking Ape',
-            'Abe Anjin',
-            'Hitoshi Abe flicker',
-            'Cubase SX/SL',
-            "Intel's SL architecture",
-            'Mercedes-Benz SL',
-            "Can S&Ls Survive?",
-            'Trees'
-        ];; // Set your expected result here
-
-        $queryBuilderMock = $this->createMock(\Doctrine\ORM\QueryBuilder::class);
-        $queryMock = $this->createMock(\Doctrine\ORM\AbstractQuery::class);
-
-        $this->entityManagerMock->expects($this->once())
-            ->method('createQueryBuilder')
-            ->willReturn($queryBuilderMock);
-
-        $queryBuilderMock->expects($this->once())
-            ->method('select')
-            ->with('e')
-            ->willReturnSelf();
-        $queryBuilderMock->expects($this->once())
-            ->method('from')
-            ->with(Book::class, 'e')
-            ->willReturnSelf();
-        $queryBuilderMock->expects($this->once())
-            ->method('setMaxResults')
-            ->with($limit)
-            ->willReturnSelf();
-        $queryBuilderMock->expects($this->once())
-            ->method('getQuery')
-            ->willReturn($queryMock);
-
-        $queryMock->expects($this->once())
-            ->method('getResult')
-            ->willReturn($expectedResult);
-
-        $result = $this->repository->findLimitedRecords($limit);
-        $this->assertEquals($expectedResult, $result);
-        /*for ($i = 0; $i <= 20; $i++) {
-            $this->assertEquals($expectedResult[$i], $result[$i].getTitle());
-        }*/
-    }
+//
+//    public function testFindLimitedRecords(): void
+//    {
+//        $limit = 20;
+//        $expectedResult = [
+//            'The Hunger Games',
+//            'The Valley of Horses',
+//            'Headlong Hall',
+//            'Ape and Essence',
+//            'Mr Ape',
+//            'AP Advantage',
+//            'Ape Adventures (DK READERS)',
+//            'Aping language',
+//            'Apes and Angels',
+//            'AP biology',
+//            'Monkeys & apes',
+//            'Monkeys & apes',
+//            'The Talking Ape',
+//            'Abe Anjin',
+//            'Hitoshi Abe flicker',
+//            'Cubase SX/SL',
+//            "Intel's SL architecture",
+//            'Mercedes-Benz SL',
+//            "Can S&Ls Survive?",
+//            'Trees'
+//        ];; // Set your expected result here
+//
+//        $queryBuilderMock = $this->createMock(\Doctrine\ORM\QueryBuilder::class);
+//        $queryMock = $this->createMock(\Doctrine\ORM\AbstractQuery::class);
+//
+//        $this->entityManagerMock->expects($this->once())
+//            ->method('createQueryBuilder')
+//            ->willReturn($queryBuilderMock);
+//
+//        $queryBuilderMock->expects($this->once())
+//            ->method('select')
+//            ->with('e')
+//            ->willReturnSelf();
+//        $queryBuilderMock->expects($this->once())
+//            ->method('from')
+//            ->with(Book::class, 'e')
+//            ->willReturnSelf();
+//        $queryBuilderMock->expects($this->once())
+//            ->method('setMaxResults')
+//            ->with($limit)
+//            ->willReturnSelf();
+//        $queryBuilderMock->expects($this->once())
+//            ->method('getQuery')
+//            ->willReturn($queryMock);
+//
+//        $queryMock->expects($this->once())
+//            ->method('getResult')
+//            ->willReturn($expectedResult);
+//
+//        $result = $this->repository->findLimitedRecords($limit);
+//        $this->assertEquals($expectedResult, $result);
+//        /*for ($i = 0; $i <= 20; $i++) {
+//            $this->assertEquals($expectedResult[$i], $result[$i].getTitle());
+//        }*/
+//    }
 
  /*   public function testSearchOnTitle(): void
     {

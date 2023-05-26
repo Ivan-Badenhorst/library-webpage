@@ -1,10 +1,15 @@
 <?php
 
 //This is the user entity: used to store information on users
+//functions to get all variables are already implemented in the auth class [please use that instead of calling the functions directly from here]
+//if the function you need is not implemented, please add it to the auth class, you can check out the implemented functions as examples
 
 namespace App\Entity;
+use Symfony\Component\HttpFoundation\File\File;
 
 use App\Repository\UserRepository;
+use Cassandra\Blob;
+use Doctrine\DBAL\Types\BlobType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -45,23 +50,53 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
+    #[ORM\Column(length: 255)]
+    private ?int $loginTries;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+
+    private $profilePicture;
+
+
+    public function getProfilePicture(): ?string
+    {
+        /**
+         * cannot use function stream_get_contents() for null so string "null" is returned
+         */
+        if($this->profilePicture == null){
+            return "null";
+        }
+        return stream_get_contents($this->profilePicture);
+    }
+
+    public function setProfilePicture(?File $profilePicture): self
+    {
+        return $this;
+    }
+
+    public function getLoginTries(): ?int
+    {
+        return $this->loginTries;
+    }
+
+    public function setLoginTries(?int $loginTries): self
+    {
+        $this->loginTries = $loginTries;
+        return $this;
+    }
+
+
+
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: UserGenre::class, orphanRemoval: true)]
     private Collection $userGenreId;
 
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: UserBook::class, orphanRemoval: true)]
     private Collection $userBookId;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $profilePicture = null;
-
-    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: BookReviews::class, orphanRemoval: true)]
-    private Collection $userReviewId;
-
     public function __construct()
     {
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
-        $this->userReviewId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,48 +266,6 @@ class User
             // set the owning side to null (unless already changed)
             if ($userBookId->getUserId() === $this) {
                 $userBookId->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getProfilePicture()
-    {
-        return $this->profilePicture;
-    }
-
-    public function setProfilePicture($profilePicture): self
-    {
-        $this->profilePicture = $profilePicture;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, BookReviews>
-     */
-    public function getUserReviewId(): Collection
-    {
-        return $this->userReviewId;
-    }
-
-    public function addUserReviewId(BookReviews $userReviewId): self
-    {
-        if (!$this->userReviewId->contains($userReviewId)) {
-            $this->userReviewId->add($userReviewId);
-            $userReviewId->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserReviewId(BookReviews $userReviewId): self
-    {
-        if ($this->userReviewId->removeElement($userReviewId)) {
-            // set the owning side to null (unless already changed)
-            if ($userReviewId->getUserId() === $this) {
-                $userReviewId->setUserId(null);
             }
         }
 
