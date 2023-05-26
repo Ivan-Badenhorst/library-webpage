@@ -66,30 +66,37 @@ function getReviews(bookId, offset){
 function displayReviews(reviews) {
 
     let button = document.getElementById('book_review_view_reviews');
-    button.innerText = "see more..."
+    button.innerText = "see more...";
+    let count = 0;
     reviews.forEach(function(review) {
-
-        let ratingHTML = ''
-        for (var i = 0; i < 5; i++) {
-            if (i < (review.score/2)) {
-                ratingHTML += '<span class="fa fa-star checked"></span>'; // Filled star symbol
-            } else {
-                ratingHTML += '<span class="fa fa-star"></span>'; // Empty star symbol
-            }
+        count += 1;
+        if(count === 6){
+            reviewButton.style.display = 'inline';
         }
+        else{
 
-        let text = '<div class="review">' +
-            '<h3>'+ review.display_name+'</h3>'+
-            '<div class="rating">' +
-                ratingHTML+
-            '</div>'+
-            '<b>'+review.date_added+'</b>'+
-            '<p>' + review.comment + '</p>'+
-            '</div>'
+            reviewButton.style.display = 'none';
 
-        reviewDiv.innerHTML = reviewDiv.innerHTML + text;
+            let ratingHTML = ''
+            for (var i = 0; i < 5; i++) {
+                if (i < (review.score/2)) {
+                    ratingHTML += '<span class="fa fa-star checked"></span>'; // Filled star symbol
+                } else {
+                    ratingHTML += '<span class="fa fa-star"></span>'; // Empty star symbol
+                }
+            }
 
+            let text = '<div class="review">' +
+                '<h3>'+ review.display_name+'</h3>'+
+                '<div class="rating">' +
+                    ratingHTML+
+                '</div>'+
+                '<b>'+review.date_added+'</b>'+
+                '<p>' + review.comment + '</p>'+
+                '</div>'
 
+            reviewDiv.innerHTML = reviewDiv.innerHTML + text;
+        }
     });
 
 }
