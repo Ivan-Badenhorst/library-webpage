@@ -244,8 +244,11 @@ class auth
         return false;
     }
 
-
-
+    public function getID(string $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getId();
+    }
 
 
 }

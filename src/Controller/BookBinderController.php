@@ -14,13 +14,16 @@ namespace App\Controller;
 use App\Form\BookSearch;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
-use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\PersonalInfo;
+use App\Form\SecurityPrivacy;
+use App\Form\Preferences;
+
 
 class BookBinderController extends AbstractController
 {
@@ -78,9 +81,24 @@ class BookBinderController extends AbstractController
             'logged' => $logged
         ]);
     }
+    #[Route('/read-list', name: 'readlist')]
+    public function readlist(RequestStack $requestStack): Response
+    {
+        if($this->checkSession($requestStack)==false){
+            return $this->redirectToRoute('login');
+        }
+        $session = $requestStack->getSession();
+        $readingList = new \App\backend\ReadingList($this->doctrine->getManager());
+        $list = $readingList->getReadingList($session->get('email'));
+        $this->stylesheets[] = 'readingList.css';
+        return $this->render('readingList.html.twig', [
+            'stylesheets'=> $this->stylesheets,
+            'list' => $list
+        ]);
+    }
 
     #[Route('/profile', name: 'profile')]
-    public function profile(RequestStack $requestStack): Response
+    public function profile(Request $request,RequestStack $requestStack): Response
     {
         if($this->checkSession($requestStack)==false){
             return $this->redirectToRoute('login');
@@ -89,7 +107,56 @@ class BookBinderController extends AbstractController
 
         $auth = new \App\backend\auth($this->doctrine->getManager());
         $this->stylesheets[] = 'profile.css';
+
+        $persInfo = $this->createForm(PersonalInfo::class);
+        $pref = $this->createForm(Preferences::class);
+        $SecPriv = $this->createForm(SecurityPrivacy::class);
+
+        $persInfo->handleRequest($request);
+        $pref->handleRequest($request);
+        $SecPriv->handleRequest($request);
+
+        if ($persInfo->isSubmitted() && $persInfo->isValid()) {
+            // Handle form submission and process checkbox values
+
+            // Access checkbox values
+            $checkbox1Value = $persInfo->get('checkbox1')->getData();
+            $checkbox2Value = $persInfo->get('checkbox2')->getData();
+            $checkbox3Value = $persInfo->get('checkbox3')->getData();
+
+            // ... Process the checkbox values as needed
+
+            // Redirect or return a response
+        }
+        if ($pref->isSubmitted() && $pref->isValid()) {
+            // Handle form submission and process checkbox values
+
+            // Access checkbox values
+            $checkbox1Value = $pref->get('checkbox1')->getData();
+            $checkbox2Value = $pref->get('checkbox2')->getData();
+            $checkbox3Value = $pref->get('checkbox3')->getData();
+
+            // ... Process the checkbox values as needed
+
+            // Redirect or return a response
+        }
+        if ($SecPriv->isSubmitted() && $SecPriv->isValid()) {
+            // Handle form submission and process checkbox values
+
+            // Access checkbox values
+            $checkbox1Value = $SecPriv->get('checkbox1')->getData();
+            $checkbox2Value = $SecPriv->get('checkbox2')->getData();
+            $checkbox3Value = $SecPriv->get('checkbox3')->getData();
+
+            // ... Process the checkbox values as needed
+
+            // Redirect or return a response
+        }
+
         return $this->render('profile.html.twig', [
+            'personalInfo' => $persInfo->createView(),
+            'preferences' => $pref->createView(),
+            'securityPrivacy' => $SecPriv->createView(),
             'stylesheets'=> $this->stylesheets,
             'logged' => true,
             'email' => $session->get('email'),

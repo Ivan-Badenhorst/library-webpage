@@ -13,7 +13,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,8 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\register;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
@@ -38,7 +35,7 @@ class LoginController extends AbstractController
 
     public function __construct(private ManagerRegistry $doctrine)
     {
-        $this->stylesheets[] = 'main.css';
+        $this->stylesheets[] = 'login_register.css';
     }
 
     /**

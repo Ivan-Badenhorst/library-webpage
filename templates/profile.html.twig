@@ -26,75 +26,21 @@
                     </div>
                 </div>
             </div>
-            <form>
                 <h2 id="personal-information">Personal information</h2><br>
-                <div class="form-item">
-                    <label for="first-name">First name: {{ firstName }}</label>
-                    <input type="text" id="first-name" name="first-name"><br>
-                    <label for="last-name">Last name: {{ lastName }}</label>
-                    <input type="text" id="last-name" name="last-name"><br>
-                    <label for="display-name">Display name: {{ displayName }}</label>
-                    <input type="text" id="display-name" name="display-name"><br>
-                </div>
-                <div class="form-item">
-                    <label for="email">Email: {{ email }}</label>
-                    <input type="email" id="email" name="email"><br>
-                </div>
-                <div class="form-item">
-                    <label for="bio">Bio:</label>
-                    <textarea id="bio" name="bio" rows="4" cols="50"></textarea><br>
-                </div>
-                <div class="form-item">
-                    <label for="address">Street: {{ street }}</label>
-                    <input type="text" id="street" name="street"><br>
-                    <label for="city">City: {{ city }}</label>
-                    <input type="text" id="city" name="city"><br>
-                    <label for="postal-code">Postal code: {{ postalCode }}</label>
-                    <input type="text" id="postal-code" name="postal-code"><br>
-                </div>
-                <input type="submit" value="Save" class="save-button-info">
-            </form>
-            <form>
+                {{ form_start(personalInfo) }}
+                {{ form_widget(personalInfo) }}
+                {{ form_end(personalInfo)   }}
                 <h2 id="preferences">Preferences</h2><br>
-                <div class="form-item">
-                <label for="preference1">
-                    <input type="checkbox" id="preference1" name="preferences" value="preference1">
-                    Preference 1
-                </label><br>
-
-                <label for="preference2">
-                    <input type="checkbox" id="preference2" name="preferences" value="preference2">
-                    Preference 2
-                </label><br>
-
-                <label for="preference3">
-                    <input type="checkbox" id="preference3" name="preferences" value="preference3">
-                    Preference 3
-                </label>
-                </div>
-                <input type="submit" value="Save" class="save-button-pref">
-            </form>
-                <form>
-                    <h2 id="security">Security/Privacy</h2><br>
-                    <label for="password">Password (8 characters minimum):</label>
-                    <input type="password" id="password" name="password" minlength="8" required style="width: 20em; margin-right: 10px">
-                    <input type="submit" value="Save" class="save-button-pass"><br>
-                    <label>
-                        <input type="checkbox" onclick="myFunction()">
-                    </label>Show Password
-                    <script>
-                        function myFunction() {
-                            const x = document.getElementById("password");
-                            if (x.type === "password") {
-                                x.type = "text";
-                            } else {
-                                x.type = "password";
-                            }
-                        }
-                    </script>
-                </form>
+                {{ form_start(preferences) }}
+                {{ form_widget(preferences ) }}
+                {{ form_end(preferences)   }}
+                <h2 id="security">Security/Privacy</h2><br>
+                {{ form_start(securityPrivacy) }}
+                {{ form_widget(securityPrivacy) }}
+                {{ form_end(securityPrivacy) }}
         </section>
     </div>
 </div>
 
+    <script src="{{ asset('js/passwordCheckbox_profile.js') }}"></script>
 {% endblock %}
