@@ -34,7 +34,6 @@ favoriteForm.addEventListener('submit', function(event) {
  * Brief description of the function.
  *
  * @param {int} bookId - the id of the book being added/removed
- * @param {int} userId - the id of the user currently logged in
  * @returns {void}
  */
 function add(bookId){

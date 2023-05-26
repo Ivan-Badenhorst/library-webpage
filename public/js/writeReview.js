@@ -39,13 +39,15 @@ writeReviewForm.addEventListener('submit', function(event) {
     reviewComment = reviewComment.replace(/\./g, "%*%*%");
 
     writeReview(bookId, reviewScore, reviewComment)
+
+    score.value = 0
+    comment.value = ''
 });
 
 /**
  * Brief description of the function.
  *
  * @param {int} bookId - the id of the book being reviewed
- * @param {int} userId - the id of the user currently logged in
  * @param {int} reviewScore - the score of the review
  * @param {String} reviewComment - the comment of the review
  * @returns {void}
