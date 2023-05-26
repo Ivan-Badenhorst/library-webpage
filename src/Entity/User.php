@@ -1,6 +1,14 @@
 <?php
+/**
+ * @fileoverview Entity file for the User table in the database, contains definitions of its columns and methods to fetch/change their values.
+ * This table in the database stores all users registered in the website
+ * @version 1.0
+ */
 
-//This is the user entity: used to store information on users
+/**
+ * @author Aymeric Baume
+ * @since 2023-04-28.
+ */
 
 namespace App\Entity;
 

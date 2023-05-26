@@ -13,7 +13,6 @@ namespace App\Controller;
 
 use App\Entity\UserBook;
 use App\Form\BookAdd;
-//use App\Form\BookRemove;
 use App\Form\BookReview;
 use App\Repository\BookRepository;
 use App\Repository\BookReviewsRepository;
@@ -37,6 +36,16 @@ class BookInfoController extends AbstractController
         $this->stylesheets[] = 'base.css';
     }
 
+    /**
+     * Initializes the book info page after the div containing each book's information is clicked on.
+     * Checks for whether the user has the book in their reading list and changes the state of the favorites form accordingly.
+     *
+     * @param $bookId -> id of the book that was clicked on, used to find the book and then fetch all its data.
+     * @param BookRepository $bookRepository
+     * @param UserBookRepository $userBookRepository
+     * @return JsonResponse -> containing the forms and the book that was clicked on
+     * @throws Exception
+     */
     #[Route("/book-info/{bookId}", name: "book-info")]
     public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository): Response {
         $book = $bookRepository->findBook($bookId);
@@ -52,16 +61,28 @@ class BookInfoController extends AbstractController
 
         $form2 = $this->createForm(BookReview::class);
 
+        $view2 = $form2->createView();
 
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
             'form'=>$view,
-            'form2'=>$form2,
+            'form2'=>$view2,
             'book'=>$book
         ]);
     }
 
+    /**
+     * Listens for API and reacts by adding or removing the book from the reading list database.
+     *
+     * @param $bookId -> id of the book being displayed
+     * @param $userId -> id of the user currently logged in
+     * @param BookRepository $bookRepository
+     * @param UserRepository $userRepository
+     * @param UserBookRepository $userBookRepository
+     * @return JsonResponse -> true since it doesnt need to display anything
+     * @throws Exception
+     */
     #[Route('/add/{bookId}/{userId}', name: 'add')]
     public function add($bookId, $userId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository): Response
     {

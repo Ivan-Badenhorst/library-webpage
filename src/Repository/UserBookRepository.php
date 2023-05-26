@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview Repository for the UserBook table in the database, contains methods to save or remove entities into the table
+ * This table in the database stores the books that all users have added to their reading lists
+ * @version 1.0
+ */
+
+/**
+ * @author Aymeric Baume
+ * @since 2023-04-28.
+ */
 
 namespace App\Repository;
 
@@ -39,6 +49,13 @@ class UserBookRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Checks if a UserBook that matches the book ID and user ID provided exists
+     *
+     * @param int $bookID -> id of the book in the database
+     * @param int $userID -> id of the user logged in
+     * @return bool -> whether it exists in the database or not
+     */
     public function check(int $bookID, int $userID): bool
     {
         $exists = false;
@@ -59,6 +76,13 @@ class UserBookRepository extends ServiceEntityRepository
         return $exists;
     }
 
+    /**
+     * Returns a UserBook that matches the book ID and user ID provided
+     *
+     * @param int $bookID -> id of the book in the database
+     * @param int $userID -> id of the user logged in
+     * @return UserBook -> entity that matches the id
+     */
     public function findUserBook(int $bookID, int $userID): UserBook
     {
         $exists = false;

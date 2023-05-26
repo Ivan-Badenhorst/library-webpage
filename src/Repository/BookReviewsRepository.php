@@ -1,14 +1,14 @@
 <?php
 /**
- * @fileoverview Database repository for the BookReview table
+ * @fileoverview Repository for the BookReviews table in the database, contains methods to save or remove entities into the table
+ * This table in the database stores what genres a book fits into
  * @version 1.0
  */
 
 /**
- * @author Ivan Badenhorst, Aymeric Baume
+ * @author Aymeric Baume, Ivan Badenhorst
  * @since 2023-05-25.
  */
-
 
 namespace App\Repository;
 

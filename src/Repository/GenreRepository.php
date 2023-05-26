@@ -1,6 +1,7 @@
 <?php
 /**
- * @fileoverview Database repository for the Genre table
+ * @fileoverview Repository for the Genre table in the database, contains methods to save or remove entities into the table
+ * This table in the database stores all genres that books can fit into and users can search for.
  * @version 1.1
  */
 

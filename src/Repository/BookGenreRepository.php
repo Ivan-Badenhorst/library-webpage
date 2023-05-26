@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview Repository for the BookGenre table in the database, contains methods to save or remove entities into the table
+ * This table in the database stores what genres a book fits into
+ * @version 1.0
+ */
+
+/**
+ * @author Aymeric Baume
+ * @since 2023-04-28.
+ */
 
 namespace App\Repository;
 

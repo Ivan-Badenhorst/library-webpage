@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview Entity file for the BookReviews table in the database, contains definitions of its columns and methods to fetch/change their values.
+ * This table in the database stores the reviews written by users for each book
+ * @version 1.0
+ */
+
+/**
+ * @author Aymeric Baume
+ * @since 2023-05-25.
+ */
 
 namespace App\Entity;
 

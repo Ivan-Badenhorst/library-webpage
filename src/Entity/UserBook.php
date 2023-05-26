@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview Entity file for the UserBook table in the database, contains definitions of its columns and methods to fetch/change their values.
+ * This table in the database stores the books that all users have added to their reading lists
+ * @version 1.0
+ */
+
+/**
+ * @author Aymeric Baume
+ * @since 2023-04-28.
+ */
 
 namespace App\Entity;
 

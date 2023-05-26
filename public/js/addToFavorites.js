@@ -1,8 +1,23 @@
-const addButton = document.getElementById('book-add-form')
-const bookid = document.getElementById('bookId')
-const favoriteButon = document.getElementById('book_add_add_to_favorites')
+/**
+ * @fileoverview JavaScript file for book page: to display book info and add/remove it from the reading list
+ * @version 1.0.0
+ */
 
-addButton.addEventListener('submit', function(event) {
+/**
+ * @author Aymeric Baume
+ * @since 2023-05-25.
+ */
+
+const favoriteForm = document.getElementById('book-add-form')              //add/remove from favorites button
+const bookid = document.getElementById('bookId')                           //field containing bookId
+const favoriteButon = document.getElementById('book_add_add_to_favorites') //actual button in the form
+
+/**
+ * event listener for add/remove from favorites submit event
+ * @listens {Event} submit
+ * @description calls add book and changes the state of the button depending on whether the userBook was or wasn't in the database
+ */
+favoriteForm.addEventListener('submit', function(event) {
     console.log(bookid.textContent)
     event.preventDefault()
     let bookId = parseInt(bookid.textContent)
@@ -17,7 +32,13 @@ addButton.addEventListener('submit', function(event) {
     }
 });
 
-
+/**
+ * Brief description of the function.
+ *
+ * @param {int} bookId - the id of the book being added/removed
+ * @param {int} userId - the id of the user currently logged in
+ * @returns {void}
+ */
 function add(bookId, userId){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results

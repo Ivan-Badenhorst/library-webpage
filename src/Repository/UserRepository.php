@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview Repository for the User table in the database, contains methods to save or remove entities into the table
+ * This table in the database stores all users registered in the website
+ * @version 1.2
+ */
+
+/**
+ * @author Aymeric Baume
+ * @since 2023-04-28.
+ */
 
 namespace App\Repository;
 
@@ -39,6 +49,12 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Returns a user that matches the user ID provided
+     *
+     * @param int $userID -> id of the user in the database
+     * @return User -> entity that matches the id
+     */
     public function findUser(int $userID): User
     {
         // $repository = $this->getEntityManager()->getRepository(Book::class);

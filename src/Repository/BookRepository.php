@@ -1,6 +1,7 @@
 <?php
 /**
- * @fileoverview Database repository for the Book table
+ * @fileoverview Repository for the Book table in the database, contains methods to save or remove entities into the table
+ * This table in the database stores the books and their relevant information.
  * @version 1.2
  */
 
@@ -85,7 +86,12 @@ class BookRepository extends ServiceEntityRepository
         return $stmt->executeQuery()->fetchAllAssociative();
     }
 
-
+    /**
+     * Returns a book that matches the book ID provided
+     *
+     * @param int $bookID -> id of the book in the database
+     * @return Book -> entity that matches the id
+     */
     public function findBook(int $bookID): Book
     {
         // $repository = $this->getEntityManager()->getRepository(Book::class);

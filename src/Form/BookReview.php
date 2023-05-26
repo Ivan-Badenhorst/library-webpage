@@ -1,4 +1,13 @@
 <?php
+/**
+ * @fileoverview Form for viewing reviews functionality
+ * @version 1.0
+ */
+
+/**
+ * @author Aymeric Baume
+ * @since 2023-05-25.
+ */
 
 namespace App\Form;
 
@@ -10,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class BookReview extends AbstractType
 {
     /**
-     * Form used for search functionality on the home-page
+     * Form used for viewing reviews in the book-info page
      *
      * @param FormBuilderInterface $builder
      * @param array $options
