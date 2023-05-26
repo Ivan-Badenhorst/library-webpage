@@ -27,11 +27,12 @@
     <div id="navigator">
         <nav>
             <ul>
-                <li><a style="text-decoration:none" href="#">Chats</a></li>
+                <li><a style="text-decoration:none" href="{{ path('underconstr') }}">Chats</a></li>
                 <li><a style="text-decoration:none" href="{{ path('readlist') }}">Reading list</a></li>
-                <li><a style="text-decoration:none" href="#">Meetup</a></li>
+                <li><a style="text-decoration:none" href="{{ path('underconstr') }}">Meetup</a></li>
                 <li><a style="text-decoration:none" href="#">About</a></li>
-                <li><a style="text-decoration:none" href="#">Contact</a></li>
+                <li><a style="text-decoration:none" href="{{ path('contact') }}">Contact</a></li>
+                <li><a style="text-decoration:none" href="{{  path(('profile')) }}">Profile</a></li>
             </ul>
         </nav>
         {% if logged %}
