@@ -1,16 +1,15 @@
 <?php
 
+
 namespace App\Tests\Repository;
 
-use App\Entity\Genre;
-use App\Repository\GenreRepository;
-use App\Repository\BookRepository;
+use App\Entity\BookReviews;
+use App\Repository\BookReviewsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class GenreRepositoryTest extends KernelTestCase
+class BookReviewsRepositoryTest extends KernelTestCase
 {
     private $entityManagerMock;
     private $repository;
@@ -23,32 +22,31 @@ class GenreRepositoryTest extends KernelTestCase
         $managerRegistryMock = $this->createMock(ManagerRegistry::class);
         $managerRegistryMock->method('getManagerForClass')->willReturn($this->entityManagerMock);
 
-        $this->repository = new GenreRepository($managerRegistryMock);
+        $this->repository = new BookReviewsRepository($managerRegistryMock);
     }
 
     public function testSave()
     {
-        $Genre = new Genre();
+        $bookReview = new BookReviews();
         $this->entityManagerMock->expects($this->once())
             ->method('persist')
-            ->with($Genre);
+            ->with($bookReview);
         $this->entityManagerMock->expects($this->once())
             ->method('flush');
 
-        $this->repository->save($Genre, true);
+        $this->repository->save($bookReview, true);
     }
-
 
     public function testRemove()
     {
-        $Genre = new Genre();
+        $bookReview = new BookReviews();
         $this->entityManagerMock->expects($this->once())
             ->method('remove')
-            ->with($Genre);
+            ->with($bookReview);
         $this->entityManagerMock->expects($this->once())
             ->method('flush');
 
-        $this->repository->remove($Genre, true);
-
+        $this->repository->remove($bookReview, true);
     }
+
 }
