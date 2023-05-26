@@ -10,7 +10,6 @@
 
 const favoriteForm = document.getElementById('book-add-form')              //add/remove from favorites button
 const bookid = document.getElementById('bookId')                           //field containing bookId
-const userid = 15
 const favoriteButton = document.getElementById('book_add_add_to_favorites') //actual button in the form
 
 /**
@@ -21,8 +20,7 @@ const favoriteButton = document.getElementById('book_add_add_to_favorites') //ac
 favoriteForm.addEventListener('submit', function(event) {
     event.preventDefault()
     let bookId = parseInt(bookid.textContent)
-    let userId = userid
-    add(bookId, userId)
+    add(bookId)
 
     if(favoriteButton.textContent === 'Add to favorites'){
         favoriteButton.textContent = 'Remove from favorites'
@@ -39,10 +37,10 @@ favoriteForm.addEventListener('submit', function(event) {
  * @param {int} userId - the id of the user currently logged in
  * @returns {void}
  */
-function add(bookId, userId){
+function add(bookId){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
-    xhr.open('GET', '/add/' + bookId + '/' + userId, true);
+    xhr.open('GET', '/add/' + bookId , true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log("got response")

@@ -98,8 +98,8 @@ class BookInfoController extends AbstractController
      * @param UserBookRepository $userBookRepository
      * @return JsonResponse -> true since it doesnt need to display anything
      */
-    #[Route('/add/{bookId}/{userId}', name: 'add')]
-    public function add($bookId, $userId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
+    #[Route('/add/{bookId}', name: 'add')]
+    public function add($bookId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
     {
         $userBook = new UserBook;
 
@@ -138,11 +138,16 @@ class BookInfoController extends AbstractController
      * @param BookReviewsRepository $bookReviewsRepository
      * @return JsonResponse -> true since it doesnt need to display anything
      */
-    #[Route('/write/{bookId}/{userId}/{score}/{comment}', name: 'write')]
-    public function writeReview($bookId, $userId, $score, $comment, BookRepository $bookRepository,
-                                UserRepository $userRepository, BookReviewsRepository $bookReviewsRepository): Response
+    #[Route('/write/{bookId}/{score}/{comment}', name: 'write')]
+    public function writeReview($bookId, $score, $comment, BookRepository $bookRepository,
+                                UserRepository $userRepository, BookReviewsRepository $bookReviewsRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
     {
         $bookReview = new BookReviews;
+
+        $email = $requestStack->getSession()->get('email');
+        //get id from email
+        $auth = new auth($entityManager);
+        $userId = $auth->getID($email);
 
         $book = $bookRepository->findBook($bookId);
         $user = $userRepository->findUser($userId);

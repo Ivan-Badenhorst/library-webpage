@@ -10,7 +10,6 @@
 
 const writeReviewForm = document.getElementById('write-review-form')              //add/remove from favorites button
 const book_id = document.getElementById('bookId')                                  //field containing bookId
-const user_id = 15
 const score = document.getElementById('write_review_score')
 const comment = document.getElementById('write_review_comment')
 
@@ -22,11 +21,10 @@ const comment = document.getElementById('write_review_comment')
 writeReviewForm.addEventListener('submit', function(event) {
     event.preventDefault()
     let bookId = parseInt(book_id.textContent)
-    let userId = user_id
     let reviewScore = parseInt(score.value)
     let reviewComment = comment.value
 
-    writeReview(bookId, userId, reviewScore, reviewComment)
+    writeReview(bookId, reviewScore, reviewComment)
 });
 
 /**
@@ -38,10 +36,10 @@ writeReviewForm.addEventListener('submit', function(event) {
  * @param {String} reviewComment - the comment of the review
  * @returns {void}
  */
-function writeReview(bookId, userId, reviewScore, reviewComment){
+function writeReview(bookId, reviewScore, reviewComment){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
-    xhr.open('GET', '/write/' + bookId + '/' + userId + '/' + reviewScore + '/' + reviewComment, true);
+    xhr.open('GET', '/write/' + bookId + '/' + reviewScore + '/' + reviewComment, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log("got response")
