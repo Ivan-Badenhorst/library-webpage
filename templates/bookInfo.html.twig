@@ -16,12 +16,14 @@
         <h3>
             Genre Category and rating
         </h3>
+        {% if logged %}
         <form id="book-add-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
             <div class="form-row">
                 {{ form_widget(form) }}
             </div>
             {{ form_end(form) }}
         </form>
+        {% endif %}
     </div>
 
     <div class="subcontainer">

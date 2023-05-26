@@ -53,12 +53,17 @@ class BookInfoController extends AbstractController
      * @throws Exception
      */
     #[Route("/book-info/{bookId}", name: "book-info")]
-    public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository,  RequestStack $requestStack): Response {
+    public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository,  RequestStack $requestStack, EntityManagerInterface $entityManager): Response {
 
         $logged = $this->checkSession($requestStack);
         $book = $bookRepository->findBook($bookId);
 
-        $exists = $userBookRepository->check($bookId, 15);
+        $email = $requestStack->getSession()->get('email');
+        //get id from email
+        $auth = new auth($entityManager);
+        $userID = $auth->getID($email);
+
+        $exists = $userBookRepository->check($bookId, $userID);
 
         $form = $this->createForm(BookAdd::class);
         $view = $form->createView();
