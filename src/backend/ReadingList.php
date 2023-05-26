@@ -23,11 +23,18 @@ class ReadingList
 
     public function getReadingList(String $email){
         $userID = $this->auth->getID($email);
-        $listOfUserBooks = $this->UserBookRepository->findAll(['userId' => $userID]);
+        if($userID == null){
+            return null;
+        }
+        if($this->UserBookRepository->findOneBy(['userId' => $userID]) == null){
+            return null;
+        }
+        $listOfUserBooks = $this->UserBookRepository->findBy(['userId' => $userID]);
         $listOfIDs = [];
         $listOfTitle = [];
         $listOfSummary = [];
         $ListOfAuthor = [];
+        $ListOfCover = [];
         foreach($listOfUserBooks as $item){
 
             $book = $this->BookRepository->findOneBy(['id' => $item->getBookId()]);
@@ -36,10 +43,11 @@ class ReadingList
                 $listOfTitle[] = $book->getTitle();
                 $listOfSummary[] = $book->getSummary();
                 $ListOfAuthor[] = $book->getAuthor();
+                $listOfCover[] = $book->getBookCover();
             }
 
         }
-        return [$listOfIDs,$listOfTitle , $listOfSummary, $ListOfAuthor];
+        return [$listOfIDs,$listOfTitle , $listOfSummary, $ListOfAuthor, $listOfCover];
     }
 
 }
