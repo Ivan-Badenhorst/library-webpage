@@ -15,7 +15,9 @@ use App\Form\BookSearch;
 use App\Form\NextPageControl;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,6 +93,23 @@ class BookBinderController extends AbstractController
         ]);
     }
 
+    /**
+     * Listens for API call, requesting book search
+     *
+     * @param $title -> search term used for finding books
+     * @param $genres -> list of genres used to filter books
+     * @param $offset -> search offset
+     * @param BookRepository $bookRepository
+     * @return JsonResponse -> containing all book information from the search result
+     * @throws Exception
+     */
+    #[Route('/search/{title}/{genres}/{offset}', name: 'search')]
+    public function search($title, $genres, $offset, BookRepository $bookRepository): Response
+    {
+        $products = $bookRepository->searchOnTitle(41, $title, explode(",", $genres), $offset);
+        return new JsonResponse($products);
+
+    }
 
     /**
      * Used to check if a user is logged in -> uses session
@@ -104,6 +123,8 @@ class BookBinderController extends AbstractController
         $auth = new \App\backend\auth($this->doctrine->getManager());
         return($auth->isLogged($session));
     }
+
+
 
 
 
