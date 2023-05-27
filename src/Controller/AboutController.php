@@ -1,4 +1,13 @@
 <?php
+/**
+ * @fileoverview Controller for the about page
+ * @version 1.0
+ */
+
+/**
+ * @author Ivan Badenhorst
+ * @since 2023-05-27.
+ */
 
 namespace App\Controller;
 
@@ -19,7 +28,7 @@ class AboutController extends AbstractController
     }
 
     /**
-     * Webpage with information about the website
+     * Renders a page containing about information
      *
      * @param RequestStack $requestStack
      * @return Response
@@ -42,7 +51,7 @@ class AboutController extends AbstractController
      * returns true if the user is logged in
      *
      * @param RequestStack $requestStack
-     * @return bool
+     * @return bool -> true indicates the user is logged in and vice versa for false
      */
     private function checkSession(RequestStack $requestStack): bool
     {
