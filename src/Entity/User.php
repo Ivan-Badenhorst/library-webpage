@@ -6,7 +6,7 @@
  */
 
 /**
- * @author Aymeric Baume
+ * @author Aymeric Baume, Thomas Deseure
  * @since 2023-04-28.
  */
 
@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -60,7 +62,7 @@ class User
     private Collection $userBookId;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $profilePicture = null;
+    private $profilePicture;
 
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: BookReviews::class, orphanRemoval: true)]
     private Collection $userReviewId;
@@ -68,10 +70,23 @@ class User
     #[ORM\Column(length: 255)]
     private ?int $loginTries;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $bio = null;
+
     public function __construct()
     {
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
+        return $this;
     }
 
 
@@ -83,11 +98,17 @@ class User
         if($this->profilePicture == null){
             return "null";
         }
-        return stream_get_contents($this->profilePicture);
+        if (is_resource($this->profilePicture)) {
+            return stream_get_contents($this->profilePicture);
+        } else {
+            return "noload";
+        }
+
     }
 
     public function setProfilePicture(?File $profilePicture): self
     {
+        $this->profilePicture = file_get_contents($profilePicture);
         return $this;
     }
 

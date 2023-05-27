@@ -34,6 +34,6 @@ class SecurityPrivacy extends AbstractType
                 'label' => 'Show Password',
                 'required' => false,
             ])
-            ->add('submit', SubmitType::class);
+            ->add('save', SubmitType::class);
     }
 }
