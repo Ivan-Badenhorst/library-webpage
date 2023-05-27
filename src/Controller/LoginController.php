@@ -75,11 +75,11 @@ class LoginController extends AbstractController
                     'logged' => false
                 ]);
             }
-            else if($profilePicture->getMimeType()!="image/jpeg"){
+            else if($profilePicture->getMimeType()!="image/jpeg"&&$profilePicture->getMimeType()!="image/png"&&$profilePicture->getMimeType()!="image/jpg"){
                 return $this->render('register.html.twig', [
                     'stylesheets'=> $this->stylesheets,
                     'form' => $form->createView(),
-                    'error' => "Profile picture is not a jpeg",
+                    'error' => "Profile picture is not a jpeg or png file",
                     'logged' => false
                 ]);
             }

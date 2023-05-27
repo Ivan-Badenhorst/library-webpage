@@ -176,10 +176,14 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         $profilePicture = $user->getProfilePicture();
         if ($profilePicture == "null") {
-            $user = $this->UserRepository->findOneBy(['email' => 'newUser2@email.com']);
+            $user = $this->UserRepository->findOneBy(['email' => 'newUser@email.com']);
 
             return $user->getProfilePicture();
             }
+        if ($profilePicture == "noload"){
+            $user = $this->UserRepository->findOneBy(['email' => 'couldnt.load@email.com']);
+            return $user->getProfilePicture();
+        }
         return $profilePicture;
     }
 
@@ -272,12 +276,12 @@ class auth
         $this->entityManager->flush();
 
     }
-    public function updatePersonalInfoWPic(string $email,string $newEmail, string $name, string $surname, string $displayname, string $bio, string $street, int $postalCode, string $city, \DateTime $DOB, File $profilePicture)
+    public function updatePersonalInfoWPic(string $email,string $newEmail, string $firstname, string $lastname, string $displayname, string $bio, string $street, int $postalCode, string $city, \DateTime $DOB, File $profilePicture)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         $user->setEmail($newEmail);
-        $user->setFirstName($name);
-        $user->setLastName($surname);
+        $user->setFirstName($firstname);
+        $user->setLastName($lastname);
         $user->setDisplayName($displayname);
         $user->setDateOfBirth($DOB);
         $user->setStreet($street);

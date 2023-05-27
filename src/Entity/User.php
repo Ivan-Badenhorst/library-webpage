@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Masterminds\HTML5\Exception;
 use Symfony\Component\HttpFoundation\File\File;
 
 
@@ -98,7 +99,12 @@ class User
         if($this->profilePicture == null){
             return "null";
         }
-        return stream_get_contents($this->profilePicture);
+        if (is_resource($this->profilePicture)) {
+            return stream_get_contents($this->profilePicture);
+        } else {
+            return "noload";
+        }
+
     }
 
     public function setProfilePicture(?File $profilePicture): self
