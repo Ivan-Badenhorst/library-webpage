@@ -33,7 +33,6 @@
 
 namespace App\backend;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -180,7 +179,97 @@ class auth
 
             return $user->getProfilePicture();
             }
+        if ($profilePicture == "noload"){
+            $user = $this->UserRepository->findOneBy(['email' => 'couldnt.load@email.com']);
+            return $user->getProfilePicture();
+        }
         return $profilePicture;
+    }
+
+
+    /**
+     * check if user is logged in
+     * you can find an example of how to call this function in the checkSession function in the loginController
+     *
+     * @param SessionInterface $session - session
+     * @return bool - if user logged in => true else => false
+     */
+    public function isLogged(SessionInterface $session)
+    {
+        if($session->get('email') == ""){
+            return false;
+        }
+        else{$user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);}
+
+        if(password_verify($session->get('password'),$user->getPassword())){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * updatePersonalInfo and updatePersonalInfoWPic are the same function, but updatePersonalInfoWPic is used when the user wants to change his profile picture
+     * they are used to update the personal info of a user
+     *
+     * @param string $email
+     * @param string $newEmail
+     * @param string $name
+     * @param string $surname
+     * @param string $displayname
+     * @param string $bio
+     * @param string $street
+     * @param int $postalCode
+     * @param string $city
+     * @param \DateTime $DOB
+     */
+    public function updatePersonalInfo(string $email,string $newEmail, string $name, string $surname, string $displayname, string $bio, string $street, int $postalCode, string $city, \DateTime $DOB)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        $user->setEmail($newEmail);
+        $user->setFirstName($name);
+        $user->setLastName($surname);
+        $user->setDisplayName($displayname);
+        $user->setDateOfBirth($DOB);
+        $user->setStreet($street);
+        $user->setPostalCode($postalCode);
+        $user->setCity($city);
+        $user->setBio($bio);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+    }
+    public function updatePersonalInfoWPic(string $email,string $newEmail, string $firstname, string $lastname, string $displayname, string $bio, string $street, int $postalCode, string $city, \DateTime $DOB, File $profilePicture)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        $user->setEmail($newEmail);
+        $user->setFirstName($firstname);
+        $user->setLastName($lastname);
+        $user->setDisplayName($displayname);
+        $user->setDateOfBirth($DOB);
+        $user->setStreet($street);
+        $user->setPostalCode($postalCode);
+        $user->setCity($city);
+        $user->setBio($bio);
+        $user->setProfilePicture($profilePicture);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+    }
+
+
+    /**
+     * updatePassword is used to update the password of a user
+     *
+     * @param string $email
+     * @param string $password
+     */
+    public function updatePassword(string $email, string $password)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
     }
 
 
@@ -223,32 +312,15 @@ class auth
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         return $user->getDateOfBirth();
     }
-
-    /**
-     * check if user is logged in
-     * you can find an example of how to call this function in the checkSession function in the loginController
-     *
-     * @param SessionInterface $session - session
-     * @return bool - if user logged in => true else => false
-     */
-    public function isLogged(SessionInterface $session)
-    {
-        if($session->get('email') == ""){
-            return false;
-        }
-        else{$user = $this->UserRepository->findOneBy(['email' => $session->get('email')]);}
-
-        if(password_verify($session->get('password'),$user->getPassword())){
-            return true;
-        }
-        return false;
-    }
-
     public function getID(string $email)
     {
         $user = $this->UserRepository->findOneBy(['email' => $email]);
         return $user->getId();
     }
-
+    public function getBio(string $email)
+    {
+        $user = $this->UserRepository->findOneBy(['email' => $email]);
+        return $user->getBio();
+    }
 
 }

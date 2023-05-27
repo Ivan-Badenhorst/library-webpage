@@ -9,7 +9,6 @@
         <aside class="setting-opt">
             <ul class="settings-list">
                 <li><button class="normalButton" onClick="document.getElementById('personal-information').scrollIntoView()">Personal information</button></li>
-                <li><button class="normalButton" onClick="document.getElementById('preferences').scrollIntoView()">Preferences</button></li>
                 <li><button class="normalButton" onClick="document.getElementById('security').scrollIntoView()">Security/Privacy</button></li>
             </ul>
         </aside>
@@ -17,89 +16,42 @@
             <div class="profile-update">
                 <div class="main-info">
                     <button class="imgButton">
-                        <img class="profile-pic" src="{{ asset('images/profilePicture.jpg') }}" alt="profilePicture">
+                        <img src="data:image/png;base64,{{ profilePicture }}" alt="Profile Picture">
                     </button>
 
                     <div class="name">
-                        <h2>Name</h2>
+                        <h2>{{ displayName }}</h2>
                         <h3>Update your photo and personal data</h3>
                     </div>
                 </div>
             </div>
-            <form>
                 <h2 id="personal-information">Personal information</h2><br>
-                <div class="form-item">
-                    <label for="first-name">First name:</label>
-                    <input type="text" id="first-name" name="first-name"><br>
-                    <label for="last-name">Last name:</label>
-                    <input type="text" id="last-name" name="last-name"><br>
-                    <label for="display-name">Display name:</label>
-                    <input type="text" id="display-name" name="display-name"><br>
-                </div>
-                <div class="form-item">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email"><br>
-                </div>
-                <div class="form-item">
-                    <label for="bio">Bio:</label>
-                    <textarea id="bio" name="bio" rows="4" cols="50"></textarea><br>
-                </div>
-                <div class="form-item">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" name="address"><br>
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city"><br>
-                    <label for="postal-code">Postal code:</label>
-                    <input type="text" id="postal-code" name="postal-code"><br>
-                    <label for="state">State:</label>
-                    <input type="text" id="state" name="state"><br>
-                    <label for="country">Country:</label>
-                    <input type="text" id="country" name="country">
-                </div>
-                <input type="submit" value="Save" class="save-button-info">
-            </form>
-            <form>
-                <h2 id="preferences">Preferences</h2><br>
-                <div class="form-item">
-                <label for="preference1">
-                    <input type="checkbox" id="preference1" name="preferences" value="preference1">
-                    Preference 1
-                </label><br>
+            {{ message }}
+                    {{ form_start(personalInfo) }}
+                    {{ form_row(personalInfo.firstName, {'id': 'firstName', 'label': 'First Name: '~ firstName }) }}
+                    {{ form_row(personalInfo.lastName, {'id': 'lastName', 'label': 'Last Name: '~ lastName}) }}
+                    {{ form_row(personalInfo.dateOfBirth, {'id': 'dateOfBirth', 'label': 'Date of Birth: '~ DOB}) }}
+                    {{ form_row(personalInfo.displayName, {'id': 'displayName', 'label': 'Display Name: '~ displayName}) }}
+                    {{ form_row(personalInfo.email, {'id': 'email', 'label': 'Email: '~ email}) }}
+                    {{ form_row(personalInfo.street, {'id': 'street', 'label': 'Street: '~ street}) }}
+                    {{ form_row(personalInfo.city, {'id': 'city', 'label': 'City: '~ city}) }}
+                    {{ form_row(personalInfo.postalCode, {'id': 'postalCode', 'label': 'Postal Code: '~ postalCode}) }}
+                    {{ form_row(personalInfo.bio, {'id': 'bio', 'label': 'Bio: '~ bio}) }}
+                    {{ form_row(personalInfo.profilePicture, {'id': 'profilePicture', 'label': 'Profile Picture'}) }}
+                    {{ form_row(personalInfo.save, {'id': 'save', 'label': 'Save'}) }}
+                    {{ form_end(personalInfo) }}
 
-                <label for="preference2">
-                    <input type="checkbox" id="preference2" name="preferences" value="preference2">
-                    Preference 2
-                </label><br>
 
-                <label for="preference3">
-                    <input type="checkbox" id="preference3" name="preferences" value="preference3">
-                    Preference 3
-                </label>
-                </div>
-                <input type="submit" value="Save" class="save-button-pref">
-            </form>
-                <form>
-                    <h2 id="security">Security/Privacy</h2><br>
-                    <label for="password">Password (8 characters minimum):</label>
-                    <input type="password" id="password" name="password" minlength="8" required style="width: 20em; margin-right: 10px">
-                    <input type="submit" value="Save" class="save-button-pass"><br>
-                    <label>
-                        <input type="checkbox" onclick="myFunction()">
-                    </label>Show Password
-                    <script>
-                        function myFunction() {
-                            const x = document.getElementById("password");
-                            if (x.type === "password") {
-                                x.type = "text";
-                            } else {
-                                x.type = "password";
-                            }
-                        }
-                    </script>
-                </form>
+            <h2 id="security">Security/Privacy</h2><br>
+            {{ message2 }}
+                {{ form_start(securityPrivacy) }}
+                {{ form_row(securityPrivacy.password,{'id':'password', 'label': 'New Password' }) }}
+                {{ form_row(securityPrivacy.showPassword,{'id':'passwordCheck' }) }}
+                {{ form_row(securityPrivacy.save,{'id':'save' }) }}
+                {{ form_end(securityPrivacy) }}
         </section>
     </div>
 </div>
 
+    <script src="{{ asset('js/passwordCheckbox_profile.js') }}"></script>
 {% endblock %}
-
