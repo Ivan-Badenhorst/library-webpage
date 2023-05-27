@@ -7,6 +7,13 @@ use App\Entity\User;
 use App\Entity\UserGenre;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * This test was written to test functions written in UserGenre entity, tests are mostly self explanatory
+ */
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 class UserGenreTest extends TestCase
 {
     public function testGettersAndSetters()

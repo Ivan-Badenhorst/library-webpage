@@ -8,6 +8,13 @@ use App\Entity\User;
 use App\Entity\BookReviews;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * This test was written to test functions written in BookReviews entity, tests are mostly self explanatory
+ */
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 class BookReviewsTest extends TestCase
 {
     public function testBookId()

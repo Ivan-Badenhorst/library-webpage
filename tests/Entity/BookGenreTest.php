@@ -7,6 +7,14 @@ use App\Entity\BookGenre;
 use App\Entity\Genre;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * This test was written to test functions written in BookGenre entity, tests are mostly self explanatory
+ */
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
+
 class BookGenreTest extends TestCase
 {
     public function testBookId()

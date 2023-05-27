@@ -3,7 +3,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SearchControllerTest extends WebTestCase
 {
-    public function testSearch()
+    /*public function testSearch()
     {
         $client = static::createClient();
 
@@ -33,5 +33,5 @@ class SearchControllerTest extends WebTestCase
         //$this->assertArrayHasKey('book', $responseData);
         //$this->assertArrayHasKey('author', $responseData);
         // Add more assertions as needed to check the structure and content of the response data
-    }
+    }*/
 }

@@ -7,6 +7,13 @@ use App\Entity\Book;
 use App\Entity\UserBook;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * This test was written to test functions written in UserBook entity, tests are mostly self explanatory
+ */
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 class UserBookTest extends TestCase
 {
     public function testGetId(): void
