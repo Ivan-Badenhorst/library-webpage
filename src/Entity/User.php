@@ -1,4 +1,9 @@
 <?php
+/**
+ * @fileoverview Entity file for the User table in the database, contains definitions of its columns and methods to fetch/change their values.
+ * This table in the database stores all users registered in the website
+ * @version 1.0
+ */
 
 /**
  * @author Aymeric Baume, Thomas Deseure
@@ -12,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -72,23 +79,15 @@ class User
         $this->userBookId = new ArrayCollection();
     }
 
-    /**
-     * @return string|null
-     */
     public function getBio(): ?string
     {
         return $this->bio;
     }
-
-        /**
-         * @param string|null $bio
-     */
     public function setBio(?string $bio): self
     {
         $this->bio = $bio;
         return $this;
     }
-
 
 
     public function getProfilePicture(): ?string
@@ -99,11 +98,17 @@ class User
         if($this->profilePicture == null){
             return "null";
         }
-        return stream_get_contents($this->profilePicture);
+        if (is_resource($this->profilePicture)) {
+            return stream_get_contents($this->profilePicture);
+        } else {
+            return "noload";
+        }
+
     }
 
     public function setProfilePicture(?File $profilePicture): self
     {
+        $this->profilePicture = file_get_contents($profilePicture);
         return $this;
     }
 
