@@ -16,12 +16,10 @@ use App\Form\NextPageControl;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-//use App\Form\Preferences;
 
 
 class BookBinderController extends AbstractController

@@ -11,17 +11,19 @@
 
 namespace App\Controller;
 
+use App\backend\auth;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\PersonalInfo;
 use App\Form\SecurityPrivacy;
-use App\Form\Preferences;
 
 
 class ProfileController extends AbstractController
@@ -38,11 +40,8 @@ class ProfileController extends AbstractController
      * Generates the profile page.
      *
      * @param Request $request
-     * @param BookRepository $bookRepository
-     * @param GenreRepository $genreRepository
      * @param RequestStack $requestStack
      * @return Response -> profile page of the website
-     * @throws \Doctrine\DBAL\Exception
      */
     #[Route('/profile', name: 'profile')]
     public function profile(Request $request,RequestStack $requestStack): Response
@@ -52,7 +51,7 @@ class ProfileController extends AbstractController
         }
         $session = $requestStack->getSession();
 
-        $auth = new \App\backend\auth($this->doctrine->getManager());
+        $auth = new auth($this->doctrine->getManager());
         $this->stylesheets[] = 'profile.css';
 
         $persInfo = $this->createForm(PersonalInfo::class);
@@ -179,7 +178,7 @@ class ProfileController extends AbstractController
     private function checkSession(RequestStack $requestStack): bool
     {
         $session = $requestStack->getSession();
-        $auth = new \App\backend\auth($this->doctrine->getManager());
+        $auth = new auth($this->doctrine->getManager());
         return($auth->isLogged($session));
     }
 
@@ -187,15 +186,15 @@ class ProfileController extends AbstractController
     /**
      * renders the profile page for every error message, it needs to be rerendered with a different message so I made this a different function as not to repeat code
      *
-     * @param \Symfony\Component\Form\FormInterface $persInfo
-     * @param \Symfony\Component\Form\FormInterface $SecPriv
+     * @param FormInterface $persInfo
+     * @param FormInterface $SecPriv
      * @param string $message
      * @param string $message2
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \App\backend\auth $auth
+     * @param SessionInterface $session
+     * @param auth $auth
      * @return Response
      */
-    public function renderProfile(\Symfony\Component\Form\FormInterface $persInfo, \Symfony\Component\Form\FormInterface $SecPriv, string $message,string $message2, \Symfony\Component\HttpFoundation\Session\SessionInterface $session, \App\backend\auth $auth): Response
+    public function renderProfile(FormInterface $persInfo, FormInterface $SecPriv, string $message, string $message2, SessionInterface $session, auth $auth): Response
     {
         return $this->render('profile.html.twig', [
             'stylesheets' => $this->stylesheets,
