@@ -1,7 +1,7 @@
 <?php
 /**
  * @fileoverview Controller for the Book info page, including API calls and rendering the page
- * @version 1.0
+ * @version 1.1
  */
 
 /**
@@ -41,8 +41,6 @@ class BookInfoController extends AbstractController
     }
 
 
-
-
     /**
      * Initializes the book info page after the div containing each book's information is clicked on.
      * Checks for whether the user has the book in their reading list and changes the state of the favorites form accordingly.
@@ -50,7 +48,9 @@ class BookInfoController extends AbstractController
      * @param $bookId -> id of the book that was clicked on, used to find the book and then fetch all its data.
      * @param BookRepository $bookRepository
      * @param UserBookRepository $userBookRepository
-     * @return JsonResponse -> containing the forms and the book that was clicked on
+     * @param RequestStack $requestStack
+     * @param EntityManagerInterface $entityManager
+     * @return Response -> containing the book info page for the given book
      */
     #[Route("/book-info/{bookId}", name: "book-info")]
     public function bookInfo($bookId, BookRepository $bookRepository, UserBookRepository $userBookRepository,  RequestStack $requestStack, EntityManagerInterface $entityManager): Response {
@@ -69,16 +69,19 @@ class BookInfoController extends AbstractController
         else{
             $exists = false;
         }
+
+
+        //form for adding/removing book from favourites
         $form = $this->createForm(BookAdd::class);
         $view = $form->createView();
-
         if($exists){
             $view->children['add_to_favorites']->vars['label'] = 'Remove from favorites';
         }
 
+        //form for viewing more reviews
         $form2 = $this->createForm(BookReview::class);
         $view2 = $form2->createView();
-
+        //form for writing reviews
         $form3 = $this->createForm(WriteReview::class);
         $view3 = $form3->createView();
 
@@ -94,13 +97,15 @@ class BookInfoController extends AbstractController
     }
 
     /**
-     * Listens for API and reacts by adding or removing the book from the reading list database.
+     * Listens for API call and reacts by adding or removing the book from the reading list database.
      *
-     * @param $bookId -> id of the book being displayed
+     * @param $bookId -> id of the book to add/remove from favourites
      * @param BookRepository $bookRepository
      * @param UserRepository $userRepository
      * @param UserBookRepository $userBookRepository
-     * @return JsonResponse -> true since it doesnt need to display anything
+     * @param RequestStack $requestStack
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse -> true since it doesnt need to display anything. Return value is mandatory. True indicates success
      */
     #[Route('/add/{bookId}', name: 'add')]
     public function add($bookId, BookRepository $bookRepository, UserRepository $userRepository, UserBookRepository $userBookRepository, RequestStack $requestStack, EntityManagerInterface $entityManager): Response
