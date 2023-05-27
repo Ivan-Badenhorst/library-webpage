@@ -1,7 +1,7 @@
 <?php
 /**
  * @fileoverview Controller for the home page
- * @version 2.2
+ * @version 2.3
  */
 
 /**
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\Preferences;
+//use App\Form\Preferences;
 
 
 class BookBinderController extends AbstractController
@@ -31,12 +31,12 @@ class BookBinderController extends AbstractController
     public function __construct(private ManagerRegistry $doctrine)
     {
         $this->stylesheets[] = 'base.css';
+        $this->stylesheets[] = 'main.css';
     }
 
     /**
      * Generates the home page. All genres from the database are displayed along with a random list of 40 books
      *
-     * @param Request $request
      * @param BookRepository $bookRepository
      * @param GenreRepository $genreRepository
      * @param RequestStack $requestStack
@@ -57,12 +57,13 @@ class BookBinderController extends AbstractController
 
         //creates a form used as a search bar
         $form = $this->createForm(BookSearch::class);
+
         //create form for page control
         $pageControl = $this->createForm(NextPageControl::class);
-        $this->stylesheets[] = 'main.css';
 
-        //gets a list of 40 random books
+        //gets a list of 40 random books -> first books in the database
         $books = $bookRepository->findLimitedRecords(40);
+        //gets a list of 4 highest rated books
         $favourites = $bookRepository->findFavourites(4);
 
         return $this->render('main.html.twig', [
@@ -72,86 +73,6 @@ class BookBinderController extends AbstractController
             'books'=>$books,
             'pageControl'=>$pageControl->createView(),
             'favourites'=>$favourites,
-            'logged' => $logged
-        ]);
-    }
-
-
-    /**
-     * When clicking on a book, the user is redirected to the book info page
-     * This display more information about the book as well as the option to add it to the reading list
-     * and to add a review or read reviews
-     *
-     * @param RequestStack $requestStack
-     * @return Response
-     */
-    #[Route('/book-info', name: 'bookinfo')]
-    public function infoBook(RequestStack $requestStack): Response
-    {
-        $logged = $this->checkSession($requestStack);
-        $this->stylesheets[] = 'bookinfo.css';
-        return $this->render('bookInfo.html.twig', [
-            'stylesheets'=> $this->stylesheets,
-            'logged' => $logged
-        ]);
-    }
-
-
-    /**
-     * Generates a book list which the user has added to their favorites
-     *
-     * @param RequestStack $requestStack
-     * @return Response
-     */
-    #[Route('/read-list', name: 'readlist')]
-    public function readlist(RequestStack $requestStack): Response
-    {
-        if($this->checkSession($requestStack)==false){
-            return $this->redirectToRoute('login');
-        }
-        $session = $requestStack->getSession();
-        $readingList = new \App\backend\ReadingList($this->doctrine->getManager());
-        $list = $readingList->getReadingList($session->get('email'));
-        $this->stylesheets[] = 'readingList.css';
-        return $this->render('readingList.html.twig', [
-            'stylesheets'=> $this->stylesheets,
-            'list' => $list
-        ]);
-    }
-
-
-    /**
-     * Webpage with information about the website
-     *
-     * @param RequestStack $requestStack
-     * @return Response
-     */
-    #[Route('/about', name: 'about')]
-    public function about(RequestStack $requestStack): Response
-    {
-        $logged = $this->checkSession($requestStack);
-
-        $this->stylesheets[] = 'readingList.css';
-        $this->stylesheets[] = 'about.css';
-        return $this->render('about.html.twig', [
-            'stylesheets'=> $this->stylesheets,
-            'logged'=>$logged
-        ]);
-    }
-
-
-    /**
-     * Webpage with contact information
-     *
-     * @param RequestStack $requestStack
-     * @return Response
-     */
-    #[Route('/Contact', name: 'contact')]
-    public function contact(RequestStack $requestStack){
-        $this->stylesheets[] = 'contact.css';
-        $logged = $this->checkSession($requestStack);
-        return $this->render('contact.html.twig', [
-            'stylesheets'=> $this->stylesheets,
             'logged' => $logged
         ]);
     }
@@ -174,10 +95,10 @@ class BookBinderController extends AbstractController
 
 
     /**
-     * returns true if the user is logged in
+     * Used to check if a user is logged in -> uses session
      *
      * @param RequestStack $requestStack
-     * @return bool
+     * @return bool -> true indicates the user is logged in and vice versa for false
      */
     private function checkSession(RequestStack $requestStack): bool
     {

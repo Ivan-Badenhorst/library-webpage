@@ -71,9 +71,24 @@ class User
         $this->userGenreId = new ArrayCollection();
         $this->userBookId = new ArrayCollection();
     }
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
 
-    private $profilePicture;
+    /**
+     * @return string|null
+     */
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+        /**
+         * @param string|null $bio
+     */
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
+        return $this;
+    }
+
 
 
     public function getProfilePicture(): ?string

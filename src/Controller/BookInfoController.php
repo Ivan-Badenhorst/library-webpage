@@ -40,6 +40,9 @@ class BookInfoController extends AbstractController
         $this->stylesheets[] = 'base.css';
     }
 
+
+
+
     /**
      * Initializes the book info page after the div containing each book's information is clicked on.
      * Checks for whether the user has the book in their reading list and changes the state of the favorites form accordingly.
