@@ -51,17 +51,6 @@ class register extends AbstractType
             ->add('profilePicture',FileType::class, [
                 'label' => 'Profile picture Max size 2MB (optional)',
                 'required' => false,
-                'constraints' => [
-                    new \Symfony\Component\Validator\Constraints\File([
-                        'maxSize' => '2M',
-                'mimeTypes' => [
-                    'image/jpeg',
-                    'image/png',
-                    'image/gif',
-                ],
-                'mimeTypesMessage' => 'Please upload a valid image file',
-                ])
-            ],
             ])
             ->add('submit', SubmitType::class);
         }

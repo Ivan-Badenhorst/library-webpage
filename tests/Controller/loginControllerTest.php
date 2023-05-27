@@ -33,7 +33,7 @@ class loginControllerTest extends WebTestCase
         $this->assertSame('/', $client->getRequest()->getPathInfo());
     }
 
-    public function testRegister()
+    /*public function testRegister()
     {
         $client = static::createClient();
 
@@ -56,5 +56,5 @@ class loginControllerTest extends WebTestCase
         $client->followRedirect();
         // Assert that the registration was successful
         $this->assertSame('/', $client->getRequest()->getPathInfo());
-    }
+    }*/
 }

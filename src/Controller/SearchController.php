@@ -35,7 +35,6 @@ class SearchController extends AbstractController
     {
         $products = $bookRepository->searchOnTitle(41, $title, explode(",", $genres), $offset);
         return new JsonResponse($products);
-
     }
 
 }
