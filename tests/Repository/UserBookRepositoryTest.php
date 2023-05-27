@@ -10,6 +10,14 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * This test was written to test if the repository can save and remove data
+ * Connecting to database slows down test, so instead a mock is created to test if save and remove works
+ */
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 class UserBookRepositoryTest extends KernelTestCase
 {
     private $entityManagerMock;
