@@ -5,8 +5,8 @@
  */
 
 /**
- * @author Ivan Badenhorst, Emile Schockaert
- * @since 2023-04-25.
+ * @author Ivan Badenhorst, Emile Schockaert, Thomas Deseure
+ * @since 2023-05-25.
  */
 
 namespace App\Controller;
@@ -14,12 +14,6 @@ namespace App\Controller;
 use App\Form\BookSearch;
 use App\Form\NextPageControl;
 use App\Repository\BookRepository;
-use App\Repository\UserBookRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Repository\GenreRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +21,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\PersonalInfo;
-use App\Form\SecurityPrivacy;
 use App\Form\Preferences;
 
 
@@ -47,11 +39,12 @@ class BookBinderController extends AbstractController
      * @param Request $request
      * @param BookRepository $bookRepository
      * @param GenreRepository $genreRepository
+     * @param RequestStack $requestStack
      * @return Response -> home page of the website
      * @throws \Doctrine\DBAL\Exception
      */
     #[Route('/', name: 'home')]
-    public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
+    public function home(BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
     {
         $logged = $this->checkSession($requestStack);
         //gets a list of all genres as string
@@ -83,6 +76,15 @@ class BookBinderController extends AbstractController
         ]);
     }
 
+
+    /**
+     * When clicking on a book, the user is redirected to the book info page
+     * This display more information about the book as well as the option to add it to the reading list
+     * and to add a review or read reviews
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/book-info', name: 'bookinfo')]
     public function infoBook(RequestStack $requestStack): Response
     {
@@ -95,7 +97,12 @@ class BookBinderController extends AbstractController
     }
 
 
-
+    /**
+     * Generates a book list which the user has added to their favorites
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/read-list', name: 'readlist')]
     public function readlist(RequestStack $requestStack): Response
     {
@@ -112,84 +119,73 @@ class BookBinderController extends AbstractController
         ]);
     }
 
-    #[Route('/profile', name: 'profile')]
-    public function profile(Request $request,RequestStack $requestStack): Response
+
+    /**
+     * Webpage with information about the website
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
+    #[Route('/about', name: 'about')]
+    public function about(RequestStack $requestStack): Response
     {
-        if($this->checkSession($requestStack)==false){
-            return $this->redirectToRoute('login');
-        }
-        $session = $requestStack->getSession();
+        $logged = $this->checkSession($requestStack);
 
-        $auth = new \App\backend\auth($this->doctrine->getManager());
-        $this->stylesheets[] = 'profile.css';
-
-        $persInfo = $this->createForm(PersonalInfo::class);
-        $pref = $this->createForm(Preferences::class);
-        $SecPriv = $this->createForm(SecurityPrivacy::class);
-
-        $persInfo->handleRequest($request);
-        $pref->handleRequest($request);
-        $SecPriv->handleRequest($request);
-
-        if ($persInfo->isSubmitted() && $persInfo->isValid()) {
-            // Handle form submission and process checkbox values
-
-            // Access checkbox values
-            $checkbox1Value = $persInfo->get('checkbox1')->getData();
-            $checkbox2Value = $persInfo->get('checkbox2')->getData();
-            $checkbox3Value = $persInfo->get('checkbox3')->getData();
-
-            // ... Process the checkbox values as needed
-
-            // Redirect or return a response
-        }
-        if ($pref->isSubmitted() && $pref->isValid()) {
-            // Handle form submission and process checkbox values
-
-            // Access checkbox values
-            $checkbox1Value = $pref->get('checkbox1')->getData();
-            $checkbox2Value = $pref->get('checkbox2')->getData();
-            $checkbox3Value = $pref->get('checkbox3')->getData();
-
-            // ... Process the checkbox values as needed
-
-            // Redirect or return a response
-        }
-        if ($SecPriv->isSubmitted() && $SecPriv->isValid()) {
-            // Handle form submission and process checkbox values
-
-            // Access checkbox values
-            $checkbox1Value = $SecPriv->get('checkbox1')->getData();
-            $checkbox2Value = $SecPriv->get('checkbox2')->getData();
-            $checkbox3Value = $SecPriv->get('checkbox3')->getData();
-
-            // ... Process the checkbox values as needed
-
-            // Redirect or return a response
-        }
-
-        return $this->render('profile.html.twig', [
-            'personalInfo' => $persInfo->createView(),
-            'preferences' => $pref->createView(),
-            'securityPrivacy' => $SecPriv->createView(),
+        $this->stylesheets[] = 'readingList.css';
+        $this->stylesheets[] = 'about.css';
+        return $this->render('about.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'logged' => true,
-            'email' => $session->get('email'),
-            'displayName' => $auth->getDisplayName($session->get('email')),
-            'firstName' => $auth->getFirstName($session->get('email')),
-            'lastName' => $auth->getLastName($session->get('email')),
-            'street' => $auth->getStreet($session->get('email')),
-            'postalCode' => $auth->getPostalCode($session->get('email')),
-            'city' => $auth->getCity($session->get('email')),
-            'DOB' => $auth->getDOB($session->get('email')),
-            'profilePicture' => base64_encode($auth->getProfilePicture($session->get('email')))
+            'logged'=>$logged
         ]);
     }
 
+
+    /**
+     * Webpage with contact information
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
+    #[Route('/Contact', name: 'contact')]
+    public function contact(RequestStack $requestStack){
+        $this->stylesheets[] = 'contact.css';
+        $logged = $this->checkSession($requestStack);
+        return $this->render('contact.html.twig', [
+            'stylesheets'=> $this->stylesheets,
+            'logged' => $logged
+        ]);
+    }
+
+
+    /**
+     * redirect for pages that are still under construction
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
+    #[Route('/underconstr', name: 'underconstr')]
+    public function underconstr(RequestStack $requestStack){
+        $logged = $this->checkSession($requestStack);
+        return $this->render('underconstr.html.twig', [
+            'logged' => $logged,
+            'stylesheets'=> $this->stylesheets
+        ]);
+    }
+
+
+    /**
+     * returns true if the user is logged in
+     *
+     * @param RequestStack $requestStack
+     * @return bool
+     */
     private function checkSession(RequestStack $requestStack): bool
     {
         $session = $requestStack->getSession();
         $auth = new \App\backend\auth($this->doctrine->getManager());
         return($auth->isLogged($session));
     }
+
+
+
 }
