@@ -1,4 +1,13 @@
 <?php
+/**
+ * @fileoverview Controller for the reading list page
+ * @version 1.1
+ */
+
+/**
+ * @author Thomas Deseure
+ * @since 2023-05-25.
+ */
 
 namespace App\Controller;
 
