@@ -25,8 +25,6 @@ use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -138,7 +136,10 @@ class BookInfoController extends AbstractController
      * @param BookRepository $bookRepository
      * @param UserRepository $userRepository
      * @param BookReviewsRepository $bookReviewsRepository
+     * @param RequestStack $requestStack
+     * @param EntityManagerInterface $entityManager
      * @return JsonResponse -> true since it doesnt need to display anything
+     * @throws \Exception
      */
     #[Route('/write/{bookId}/{score}/{comment}', name: 'write')]
     public function writeReview($bookId, $score, $comment, BookRepository $bookRepository,
@@ -181,6 +182,7 @@ class BookInfoController extends AbstractController
      *                                          "date_added":"",
      *                                          "display_name":""
      *                                      }, ...]
+     * @throws Exception
      */
     #[Route('/review/{bookId}/{offset}', name: 'review')]
     public function review($bookId, $offset, BookReviewsRepository $bookReviewsRepository): Response
@@ -191,6 +193,12 @@ class BookInfoController extends AbstractController
     }
 
 
+    /**
+     * returns true if the user is logged in
+     *
+     * @param RequestStack $requestStack
+     * @return bool
+     */
     private function checkSession(RequestStack $requestStack): bool
     {
         $session = $requestStack->getSession();

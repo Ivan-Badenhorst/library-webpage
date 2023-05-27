@@ -13,7 +13,6 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +36,7 @@ class LoginController extends AbstractController
     {
         $this->stylesheets[] = 'login_register.css';
     }
+
 
     /**
      * register function:
@@ -105,15 +105,13 @@ class LoginController extends AbstractController
                 ]);
             }
         }
-
-
-
         return $this->render('register.html.twig', [
             'form' => $form->createView(),
             'stylesheets'=> $this->stylesheets,
             'logged' => false
         ]);
     }
+
 
     /**
      * login function:
@@ -177,38 +175,9 @@ class LoginController extends AbstractController
 
     }
 
-    private \App\Repository\UserRepository $UserRepository;
-    private EntityManagerInterface $entityManager;
 
     /**
-     * example of how to display a profile picture
-     * this function will display the profile picture of the user with the email "newUser@email.com"
-     * the rest of the code to display the blob can be found in templates\displayBlob.html.twig
-     * if the user does not have a profile picture it will display a default image, this image is the
-     * profile picture of newUser@email.com
-     *
-     * @return Response - render page
-     */
-    #[Route('/image', name: 'image')]
-
-
-
-    public function image()
-    {
-        $auth = new \App\backend\auth($this->doctrine->getManager());
-        $imageData = $auth->getProfilePicture("Shell.Lutero@email.com");
-        $imageBase64 = base64_encode($imageData);
-        return $this->render('displayBlob.html.twig', [
-            'image_data' => $imageBase64,
-            'stylesheets'=> $this->stylesheets
-        ]);
-    }
-
-    /**
-     * You can use this function to check if a user is logged in,
-     * the function returns true if the user is logged in and false
-     * if the user is not logged in. You will still have to redirect
-     * them to the login page if they are not logged in.
+     * returns true if the user is logged in
      *
      * @return bool - if logged in => true, else => false
      */
@@ -220,8 +189,7 @@ class LoginController extends AbstractController
 
 
     /**
-     * You can use this function to log a user out.
-     * Redirect to this route to log a user out, it automatically redirects to login
+     * logs user out and redirects them to the login page
      *
      * @return Response - render login
      */

@@ -11,8 +11,6 @@
 
 namespace App\Controller;
 
-use App\Form\BookSearch;
-use App\Form\NextPageControl;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -24,7 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\PersonalInfo;
 use App\Form\SecurityPrivacy;
 use App\Form\Preferences;
-use Symfony\Component\HttpFoundation\File\File;
 
 
 class ProfileController extends AbstractController
@@ -36,6 +33,17 @@ class ProfileController extends AbstractController
         $this->stylesheets[] = 'base.css';
     }
 
+
+    /**
+     * Generates the profile page.
+     *
+     * @param Request $request
+     * @param BookRepository $bookRepository
+     * @param GenreRepository $genreRepository
+     * @param RequestStack $requestStack
+     * @return Response -> profile page of the website
+     * @throws \Doctrine\DBAL\Exception
+     */
     #[Route('/profile', name: 'profile')]
     public function profile(Request $request,RequestStack $requestStack): Response
     {
@@ -162,7 +170,12 @@ class ProfileController extends AbstractController
     }
 
 
-
+    /**
+     * returns true if the user is logged in
+     *
+     * @param RequestStack $requestStack
+     * @return bool
+     */
     private function checkSession(RequestStack $requestStack): bool
     {
         $session = $requestStack->getSession();
@@ -170,7 +183,10 @@ class ProfileController extends AbstractController
         return($auth->isLogged($session));
     }
 
+
     /**
+     * renders the profile page for every error message, it needs to be rerendered with a different message so I made this a different function as not to repeat code
+     *
      * @param \Symfony\Component\Form\FormInterface $persInfo
      * @param \Symfony\Component\Form\FormInterface $SecPriv
      * @param string $message

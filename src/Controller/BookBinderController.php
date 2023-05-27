@@ -21,10 +21,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\PersonalInfo;
-use App\Form\SecurityPrivacy;
 use App\Form\Preferences;
-use Symfony\Component\HttpFoundation\File\File;
 
 
 class BookBinderController extends AbstractController
@@ -42,11 +39,12 @@ class BookBinderController extends AbstractController
      * @param Request $request
      * @param BookRepository $bookRepository
      * @param GenreRepository $genreRepository
+     * @param RequestStack $requestStack
      * @return Response -> home page of the website
      * @throws \Doctrine\DBAL\Exception
      */
     #[Route('/', name: 'home')]
-    public function home(Request $request, BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
+    public function home(BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
     {
         $logged = $this->checkSession($requestStack);
         //gets a list of all genres as string
@@ -78,6 +76,15 @@ class BookBinderController extends AbstractController
         ]);
     }
 
+
+    /**
+     * When clicking on a book, the user is redirected to the book info page
+     * This display more information about the book as well as the option to add it to the reading list
+     * and to add a review or read reviews
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/book-info', name: 'bookinfo')]
     public function infoBook(RequestStack $requestStack): Response
     {
@@ -90,7 +97,12 @@ class BookBinderController extends AbstractController
     }
 
 
-
+    /**
+     * Generates a book list which the user has added to their favorites
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/read-list', name: 'readlist')]
     public function readlist(RequestStack $requestStack): Response
     {
@@ -108,6 +120,12 @@ class BookBinderController extends AbstractController
     }
 
 
+    /**
+     * Webpage with information about the website
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/about', name: 'about')]
     public function about(RequestStack $requestStack): Response
     {
@@ -122,8 +140,12 @@ class BookBinderController extends AbstractController
     }
 
 
-
-
+    /**
+     * Webpage with contact information
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/Contact', name: 'contact')]
     public function contact(RequestStack $requestStack){
         $this->stylesheets[] = 'contact.css';
@@ -134,6 +156,13 @@ class BookBinderController extends AbstractController
         ]);
     }
 
+
+    /**
+     * redirect for pages that are still under construction
+     *
+     * @param RequestStack $requestStack
+     * @return Response
+     */
     #[Route('/underconstr', name: 'underconstr')]
     public function underconstr(RequestStack $requestStack){
         $logged = $this->checkSession($requestStack);
@@ -143,6 +172,13 @@ class BookBinderController extends AbstractController
         ]);
     }
 
+
+    /**
+     * returns true if the user is logged in
+     *
+     * @param RequestStack $requestStack
+     * @return bool
+     */
     private function checkSession(RequestStack $requestStack): bool
     {
         $session = $requestStack->getSession();
