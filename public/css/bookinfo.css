@@ -86,3 +86,25 @@
 .checked {
     color: orange;
 }
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row > * {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 5px 0;
+}
+
+label {
+    margin-right: 10px;
+}
+
+textarea {
+    padding: 5px;
+    resize: none;
+}
