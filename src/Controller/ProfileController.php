@@ -33,6 +33,7 @@ class ProfileController extends AbstractController
     public function __construct(private ManagerRegistry $doctrine)
     {
         $this->stylesheets[] = 'base.css';
+        $this->stylesheets[] = 'profile.css';
     }
 
 

@@ -17,23 +17,6 @@
     width: 10%;
 }
 
-.title {
-    font-size: 5em;
-    font-weight: bold;
-}
-
-.title:after {
-    content:' ';
-    display:block;
-    border:2px solid #007090;
-    border-radius:4px;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
-}
-
 .settings-list {
     display: flex;
     flex-direction: column;
@@ -59,13 +42,10 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 70%;
 }
 
-form {
-    margin-top: 40px;
-    width: 60%;
-}
+
 
 .profile-update {
     display: flex;
@@ -99,19 +79,30 @@ img {
     margin-right: 50px;
 }
 
-.save {
-    background-color: #383838;
-    color: white;
+.imgButton {
+    border: none;
+    position: relative;
+    display: inline-block;
+    background-color: transparent;
+    padding: 0;
+    transition: transform 0.3s;
+}
+
+.imgButton:hover {
+    transform: scale(1.1);
+}
+
+form {
+    margin-top: 40px;
+    width: 50%;
+}
+
+form > * {
+    margin: 20px 0;
 }
 
 textarea {
     resize: none;
-}
-
-.form-item {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
 }
 
 input[type="text"],
@@ -129,51 +120,8 @@ h2 {
     font-size: 50px;
 }
 
-.save-button-info,
-.save-button-pref,
-.save-button-pass {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-color: black;
-    border-width: 1px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.save-button-info,
-.save-button-pref {
-    margin-top: 20px;
-}
-
-input[type="submit"]:hover {
-    background-color: #e1e1e1;
-}
-
-input[type="submit"]:focus {
-    outline: none;
-}
-
-#id_password {
-    width: 40%;
-}
-
-
-
-.imgButton {
-    border: none;
-    position: relative;
-    display: inline-block;
-    background-color: transparent;
-    padding: 0;
-}
-
-.profile-pic{
-    border-radius: 50%;
-    transition: transform 0.3s;
-}
-
-.profile-pic:hover {
-    transform: scale(1.1);
+#dateOfBirth,
+#profilePicture,
+#passwordCheck {
+    margin-left: 10px;
 }
