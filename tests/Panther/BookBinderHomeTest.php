@@ -4,7 +4,7 @@ namespace App\Tests\Panther;
 
 use Symfony\Component\Panther\PantherTestCase;
 
-class BookBinderHome extends PantherTestCase
+class BookBinderHomeTest extends PantherTestCase
 {
 
     public function testOpen(): void{
