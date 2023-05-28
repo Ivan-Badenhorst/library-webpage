@@ -2,6 +2,8 @@
 
 namespace App\Tests\Panther;
 
+use Symfony\Component\Panther\Client;
+use Symfony\Component\Panther\DomCrawler\Crawler;
 use Symfony\Component\Panther\PantherTestCase;
 
 class BookBinderHomeTest extends PantherTestCase
@@ -151,17 +153,82 @@ class BookBinderHomeTest extends PantherTestCase
 
 
 
+    public function testFilterValues(): void{
+        $client = static::createPantherClient(); // Your app is automatically started using the built-in web server
+        $crawler = $client->request('GET', '/');
 
+        $checkboxes = $crawler->filter('.checkboxes input[type="checkbox"]');
+        $labels = $crawler->filterXPath('//div[@class="checkboxes"]//label');
+
+//
+        $labelTexts = [];
+        $labels->each(function ($label) use (&$labelTexts) {
+            $labelTexts[] = $label->text();
+        });
+
+        // Assert the labels of the checkboxes
+        $expectedLabels = ['Fantasy', 'Science Fiction', 'Mystery', 'Romance', 'Thriller', 'Horror', 'Academic', 'Biography'];//known from database
+        $this->assertEquals($expectedLabels, $labelTexts, 'Checkbox labels do not match.');
+
+    }
+
+
+    public function testFiltering(): void{
+
+        $client = static::createPantherClient(); // Your app is automatically started using the built-in web server
+        $crawler = $client->request('GET', '/');
+
+        //to test filtering:
+        /*
+         * Search for term with few results
+         * Apply filters leading to known results
+         * Count results
+         */
+
+
+        //search with 2 results
+        $searchInput = $crawler->filterXPath('//input[@id="book_search_search_term"]')->first();
+        $searchInput->sendKeys('hunger');
+        $submitButton = $crawler->filterXPath('//button[@id="book_search_search"]')->first();
+        $crawler = $client->submit($submitButton->form());
+        $containerDiv = $crawler->filter('div.book-listings')->first();
+        $this->waitForSearch($crawler, $client, 1);
+        $crawler = $client->refreshCrawler();
+        $divCount = $containerDiv->filter('div')->count();
+
+
+        $checkboxes = $crawler->filter('input[type="checkbox"]')->slice(0, 2);
+        //Click the first two checkboxes
+        $checkboxes->each(function ($checkbox) use ($client) {
+            $client->executeScript('arguments[0].checked = false;', [$checkbox]);
+           // $client->executeScript('arguments[0].dispatchEvent(new Event("change"))', [$checkbox]);
+        });
+        $client->executeScript('
+            const formElement = document.getElementById("filter_genre");
+            const event = new Event("change");
+            formElement.dispatchEvent(event);
+        ');
+
+        sleep(5);
+
+        $screenshotPath = 'filter.png';
+        $client->takeScreenshot($screenshotPath);
+
+        $divCount = $containerDiv->filter('div')->count();
+        $expectedCount = 1; // Update with the expected count
+        $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
+
+    }
 
 
 
 
     /**
-     * @param \Symfony\Component\Panther\DomCrawler\Crawler|\Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Component\Panther\Client $client
+     * @param Crawler|\Symfony\Component\DomCrawler\Crawler $crawler
+     * @param Client $client
      * @param $expectedResults
      */
-    public function waitForSearch(\Symfony\Component\Panther\DomCrawler\Crawler|\Symfony\Component\DomCrawler\Crawler $crawler, \Symfony\Component\Panther\Client $client, $expectedResults): void
+    public function waitForSearch(Crawler|\Symfony\Component\DomCrawler\Crawler $crawler, Client $client, $expectedResults): void
     {
         $timeout = 10; // Maximum time to wait in seconds
         $start = time();
