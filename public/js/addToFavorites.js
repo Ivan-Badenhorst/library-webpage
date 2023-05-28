@@ -39,7 +39,7 @@ favoriteForm.addEventListener('submit', function(event) {
 function add(bookId){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
-    xhr.open('GET', '/add/' + bookId , true);
+    xhr.open('GET', 'https://a22web32.studev.groept.be/public/index.php/add/' + bookId , true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log("got response")
