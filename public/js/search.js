@@ -206,7 +206,7 @@
                 nextButton.disabled = true;
 
                 let slash = '/';
-                let onclickString = `onclick="switchPage('`+ slash + `book-info` + slash + book.id + `')"`;
+                let onclickString = `onclick="switchPage('https://a22web32.studev.groept.be/public/index.php`+ slash + `book-info` + slash + book.id + `')"`;
 
                 //if(checkStringForElements(book.genres.toUpperCase(), genres)) {
                     let text = '<div id="book-container" class="book"' + onclickString + '>' +
