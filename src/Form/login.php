@@ -35,6 +35,7 @@ class login extends AbstractType
             ->add('showPassword', CheckboxType::class, [
                 'label' => 'Show Password',
                 'required' => false,
+                'attr' => ['class' => 'show-password'],
             ])
             ->add('submit', SubmitType::class);
     }
