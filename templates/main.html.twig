@@ -56,7 +56,7 @@
 
                         {% for row in books %}
 
-                                <div id="book-container" class="book" onclick="switchPage( '/book-info/{{ row.id }}' )">
+                                <div id="book-container" class="book" onclick="switchPage( 'https://a22web32.studev.groept.be/public/index.php/book-info/{{ row.id }}' )">
                                     <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
                                         <h2>{{ row.title }}</h2>
