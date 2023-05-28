@@ -108,6 +108,19 @@ class BookBinderHomeTest extends PantherTestCase
         $expectedCount = 2; // Update with the expected count
         $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
 
+        $searchInput = $crawler->filterXPath('//input[@id="book_search_search_term"]')->first();
+
+        $client->executeScript('arguments[0].value = "";', [$searchInput->getElement(0)]);
+
+
+        $searchInput->sendKeys('por');
+        $submitButton = $crawler->filterXPath('//button[@id="book_search_search"]')->first();
+        $crawler = $client->submit($submitButton->form());
+        $this->waitForSearch($crawler, $client, 4);
+        $crawler = $client->refreshCrawler();
+        $divCount = $containerDiv->filter('div')->count();
+        $expectedCount = 4; // Update with the expected count
+        $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
 
     }
 
