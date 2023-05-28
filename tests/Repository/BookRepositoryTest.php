@@ -1,4 +1,14 @@
 <?php
+/**
+ * @fileoverview This test was written to test if the repository can save and remove data
+ * Connecting to database slows down test, so instead a mock is created to test if save and remove works
+ * @version 1.0
+ */
+
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 namespace App\Tests\Repository;
 
 use App\Entity\Book;
@@ -6,14 +16,7 @@ use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
-/**
- * This test was written to test if the repository can save and remove data
- * Connecting to database slows down test, so instead a mock is created to test if save and remove works
- */
-/**
- * @author Wout Houpeline
- * @since 2023-05-27
- */
+
 class BookRepositoryTest extends TestCase
 {
     private $entityManagerMock;

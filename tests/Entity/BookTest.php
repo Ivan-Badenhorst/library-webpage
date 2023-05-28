@@ -1,16 +1,18 @@
 <?php
 namespace App\Tests\Entity;
-
-use App\Entity\Book;
-use PHPUnit\Framework\TestCase;
-
 /**
- * This test was written to test functions written in Book entity, tests are mostly self explanatory
+ * @fileoverview This test was written to test functions written in Book entity
+ * Tests are mostly self explanatory
+ * @version 1.0
  */
+
 /**
  * @author Wout Houpeline
  * @since 2023-05-27
  */
+use App\Entity\Book;
+use PHPUnit\Framework\TestCase;
+
 class BookTest extends TestCase
 {
 public function testGettersAndSetters()

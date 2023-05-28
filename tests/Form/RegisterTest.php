@@ -1,17 +1,19 @@
 <?php
+/**
+ * @fileoverview This test was written to test functions written in Register form
+ * Tests are mostly self explanatory, data is created and submitted and checked if its correct
+ * @version 1.0
+ */
+
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 namespace App\Tests\Form;
 
 use App\Form\register;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * This test was written to test functions written in Register form
- * Tests are mostly self explanatory, data is created and submitted and checked if its correct
- */
-/**
- * @author Wout Houpeline
- * @since 2023-05-27
- */
 class RegisterTest extends TypeTestCase
 {
     public function testSubmitValidData()

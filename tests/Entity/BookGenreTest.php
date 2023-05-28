@@ -1,19 +1,20 @@
 <?php
+/**
+ * @fileoverview This test was written to test functions written in BookGenre entity
+ * Tests are mostly self explanatory
+ * @version 1.0
+ */
 
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 namespace App\Tests\Entity;
 
 use App\Entity\Book;
 use App\Entity\BookGenre;
 use App\Entity\Genre;
 use PHPUnit\Framework\TestCase;
-
-/**
- * This test was written to test functions written in BookGenre entity, tests are mostly self explanatory
- */
-/**
- * @author Wout Houpeline
- * @since 2023-05-27
- */
 
 class BookGenreTest extends TestCase
 {

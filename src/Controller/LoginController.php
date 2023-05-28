@@ -65,7 +65,7 @@ class LoginController extends AbstractController
             //get profile picture and set it to default if none is given
             $profilePicture = $form->getData()['profilePicture'];
             if ($profilePicture == null) {
-                $profilePicture = new File('../public/img/defaultProfilePicture.png');
+                $profilePicture = new File(__DIR__ . '/../../public/img/defaultProfilePicture.png');
             }
             else if($profilePicture->getSize()>2000000){
                 return $this->render('register.html.twig', [
