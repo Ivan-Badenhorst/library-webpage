@@ -9,8 +9,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    var passwordField = document.getElementById('security_privacy_password');
-    var showPasswordCheckbox = document.getElementById('security_privacy_showPassword');
+    var passwordField = document.getElementById('password');
+    var showPasswordCheckbox = document.getElementById('passwordCheck');
 
     showPasswordCheckbox.addEventListener('change', function() {
         var isChecked = this.checked;

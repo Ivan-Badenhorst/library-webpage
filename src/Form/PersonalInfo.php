@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -48,8 +49,9 @@ class PersonalInfo extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => false
             ])
-            ->add('bio', TextType::class, [
-                'required' => false
+            ->add('bio', TextareaType::class, [
+                'required' => false,
+                'attr' => ['rows' => '5', 'cols' => '40']
             ])
             ->add('street', TextType::class, [
                 'required' => false
