@@ -1,0 +1,27 @@
+table {
+    margin: 5em 10em;
+    border: none;
+    collapse: none;
+    width: 60%;
+}
+
+.subcontainer {
+    align-items: center;
+    justify-content: center;
+}
+
+.book-summary {
+    text-align: justify;
+}
+
+.book-text > * {
+    margin: 5px;
+}
+
+.reading-book {
+    transition: transform 0.3s;
+}
+
+.reading-book:hover {
+    transform: scale(1.02);
+}
