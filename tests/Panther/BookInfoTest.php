@@ -88,12 +88,14 @@ class BookInfoTest extends PantherTestCase
         $button = $crawler->filter('#book_add_add_to_favorites')->first();
         // Get the text of the button
         $buttonTextBeforeClick = $button->text();
-
+        echo "before: ".$buttonTextBeforeClick;
         // Click on the button
         $button->click();
+        sleep(1);
 
         // Get the text of the button again
         $buttonTextAfterClick = $button->text();
+        echo "after: ".$buttonTextAfterClick;
 
         self::assertTrue((($buttonTextAfterClick=="Add to favorites" && $buttonTextBeforeClick == "Remove from favorites")||($buttonTextBeforeClick=="Add to favorites" && $buttonTextAfterClick == "Remove from favorites")));
     }
