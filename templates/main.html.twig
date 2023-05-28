@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <div>
+        <section class="favourites">
+            <div class="favourite-text">
+                <h1>OUR FAVORITES</h1>
+                <p>Unsure what to read next? Checkout some of the most trending books last month!</p>
+            </div>
+            <div class="favourite-img">
+                {% for book in favourites %}
+                    <img src="{{ book.book_cover }}" onclick="switchPage( '/book-info/{{ book.id }}' )" alt="favourite book">
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        <div class="form-container">
+            <form id="book-search-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
+                <div class="form-row">
+                    {{ form_widget(form) }}
+                </div>
+                {{ form_end(form) }}
+            </form>
+        </div>
+
+
+        <div class="main-part">
+            <aside class="filters">
+                <div class="sticky-filter">
+
+                    <h1>Filter by genre</h1>
+                    <form id="filter_genre">
+                        <div class="checkboxes">
+
+
+                            {% for genre in genres %}
+                            <label>
+                                <input type="checkbox" name="genre" value="{{ genre }}" checked> {{ genre }}
+                            </label>
+                            {% endfor %}
+
+
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+
+            <section class="book-listings-section">
+                <h1 class="title-browse-books">Browse books</h1>
+                <div class="book-listings" id="books">
+
+
+                    {% if books is defined %}
+
+                        {% for row in books %}
+
+                                <div id="book-container" class="book" onclick="switchPage( '/book-info/{{ row.id }}' )">
+                                    <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
+                                    <div>
+                                        <h2>{{ row.title }}</h2>
+                                        <p>By {{ row.author }}</p>
+                                        <p>Genre: {{ row.genres }}</p>
+                                    </div>
+                                </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                </div>
+                <div class="control-pages">
+                    {{ form_start(pageControl) }}
+
+                    {{ form_row(pageControl.previous, { 'id':'previousButton' }) }}
+                    {{ form_row(pageControl.current, { 'id':'currentPage' }) }}
+                    {{ form_row(pageControl.next, { 'id':'nextButton' }) }}
+
+                    {{ form_end(pageControl) }}
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Include the JavaScript files -->
+    <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/openBookPage.js') }}"></script>
+{% endblock %}

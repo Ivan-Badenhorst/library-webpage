@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #01a7c2;
+    height: 200px;
+    padding-left: 100px;
+    padding-right: 50px;
+}
+
+#navigator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    padding: 2px;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+}
+
+#logo h1 {
+    color: black;
+}
+
+#title {
+    padding-left: 20px;
+}
+
+footer {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #01a7c2;
+}
+
+footer p {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.logo-image {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+}
+
+nav {
+    justify-content: right;
+}
+
+header nav ul {
+    width: 500px;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+li a{
+    font-weight: bold;
+    color: black;
+}
+
+li {
+    transition: transform 0.1s;
+}
+
+#navigator nav ul li:hover,
+#navigator nav ul li a:hover{
+    color: blue;
+    transform: scale(1.05);
+}
+
+.normalButton {
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+}
+
+.normalButton:hover,
+.normalButton:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.normalButton:hover {
+    transform: translateY(-1px);
+}
+
+.normalButton:active {
+    background-color: #F0F0F1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(0, 0, 0, 0.65);
+    transform: translateY(0);
+}
+
+footer p > * {
+    text-decoration: none;
+    color: black;
+}
+
+footer p > *:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
+#register-button {
+    margin-left: 20px;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    color: black;
+    background-color: #f1f1f1;
+    transition: transform 0.1s;
+    margin: 10px 0;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+

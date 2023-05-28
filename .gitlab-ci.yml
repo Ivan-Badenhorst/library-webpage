@@ -18,7 +18,7 @@ before_script:
 deploy-job:
     # run this job only when there is a push on the master branch
     only:
-    - master
+    - login
     script:
         - composer install
         # rsync is a copy/sync tool we use to copy the current folder ./ to studev

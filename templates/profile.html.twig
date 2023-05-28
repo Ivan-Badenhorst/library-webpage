@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="title">
+        Settings
+    </h1>
+    <div class="subcontainer">
+        <aside class="setting-opt">
+            <ul class="settings-list">
+                <li><button class="normalButton" onClick="document.getElementById('personal-information').scrollIntoView()">Personal information</button></li>
+                <li><button class="normalButton" onClick="document.getElementById('security').scrollIntoView()">Security/Privacy</button></li>
+            </ul>
+        </aside>
+        <section>
+            <div class="profile-update">
+                <div class="main-info">
+                    <button class="imgButton">
+                        <img src="data:image/png;base64,{{ profilePicture }}" alt="Profile Picture">
+                    </button>
+
+                    <div class="name">
+                        <h2>{{ displayName }}</h2>
+                        <h3>Update your photo and personal data</h3>
+                    </div>
+                </div>
+            </div>
+                <h2 id="personal-information">Personal information</h2><br>
+            {{ message }}
+                    {{ form_start(personalInfo) }}
+                    {{ form_row(personalInfo.firstName, {'id': 'firstName', 'label': 'First Name: '~ firstName }) }}
+                    {{ form_row(personalInfo.lastName, {'id': 'lastName', 'label': 'Last Name: '~ lastName}) }}
+                    {{ form_row(personalInfo.dateOfBirth, {'id': 'dateOfBirth', 'label': 'Date of Birth: '~ DOB}) }}
+                    {{ form_row(personalInfo.displayName, {'id': 'displayName', 'label': 'Display Name: '~ displayName}) }}
+                    {{ form_row(personalInfo.email, {'id': 'email', 'label': 'Email: '~ email}) }}
+                    {{ form_row(personalInfo.street, {'id': 'street', 'label': 'Street: '~ street}) }}
+                    {{ form_row(personalInfo.city, {'id': 'city', 'label': 'City: '~ city}) }}
+                    {{ form_row(personalInfo.postalCode, {'id': 'postalCode', 'label': 'Postal Code: '~ postalCode}) }}
+                    {{ form_row(personalInfo.bio, {'id': 'bio', 'label': 'Bio: '~ bio}) }}
+                    {{ form_row(personalInfo.profilePicture, {'id': 'profilePicture', 'label': 'Profile Picture'}) }}
+                    {{ form_row(personalInfo.save, {'id': 'save', 'label': 'Save'}) }}
+                    {{ form_end(personalInfo) }}
+
+
+            <h2 id="security">Security/Privacy</h2><br>
+            {{ message2 }}
+                {{ form_start(securityPrivacy) }}
+                {{ form_row(securityPrivacy.password,{'id':'password', 'label': 'New Password' }) }}
+                {{ form_row(securityPrivacy.showPassword,{'id':'passwordCheck' }) }}
+                {{ form_row(securityPrivacy.save,{'id':'save' }) }}
+                {{ form_end(securityPrivacy) }}
+        </section>
+    </div>
+</div>
+
+    <script src="{{ asset('js/passwordCheckbox_profile.js') }}"></script>
+{% endblock %}

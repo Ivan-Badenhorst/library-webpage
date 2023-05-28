@@ -1,0 +1,156 @@
+.book {
+    display: inline-block;
+    position: relative;
+    flex-wrap: wrap;
+    width: 19em;
+    padding: 20px;
+    transition: transform 0.1s;
+}
+
+.book:hover {
+    transform: scale(1.05);
+}
+
+.book img {
+    width: 19em;
+    height: 30em;
+    border: 1px solid #ccc;
+    margin: 5px;
+}
+
+.favourites {
+    padding-left: 100px;
+    background: rgba(4, 167, 194, 0.25);
+    display: flex;
+    flex-direction: row;
+}
+
+.favourite-img {
+    justify-content: center;
+    align-items: center;
+}
+
+.favourite-img img:hover {
+    transform: scale(1.05);
+}
+
+.favourite-img img {
+    width: 10em;
+    height: 15em;
+    margin: 20px;
+    transition: transform 0.1s;
+}
+
+.favourite-text {
+    display: flex;
+    flex-wrap: wrap;
+    width: 15em;
+    font-size: 200%;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 50px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-row > * {
+    display: flex;
+    flex-direction: row;
+}
+
+.title-browse-books {
+    display: flex;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.main-part {
+    background: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+input[type="text"] {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
+    font-size: 16px;
+    width: 300px;
+}
+
+button[type="submit"] {
+    margin: 10px;
+    color: white;
+    background-color: blue;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-1px);
+}
+
+.checkboxes label {
+    display: block;
+    margin-left: 20px;
+}
+
+.book-listings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-listings-section {
+    width: 100%;
+    border-width : 0.1em;
+    border-style : solid;
+    border-color : black;
+    border-radius: 10px;
+}
+
+.filters {
+    display : inline-block;
+    width: 18em;
+}
+
+.sticky-filter {
+    position: sticky;
+    top: 20px;
+}
+
+aside h1 {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.control-pages > * {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+#currentPage {
+    width: 10px;
+}
+
+p {
+    text-align: left;
+}

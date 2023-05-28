@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="book-title">
+        {{ book.title }}
+    </h1>
+
+    <div class="top-info">
+        <div class="main-info-book">
+            <h2 class="author">
+                By {{ book.author }}
+            </h2>
+            <h3>
+                Genre Category and rating
+            </h3>
+            <p id="bookId">
+                {{ book.id }}
+            </p>
+        </div>
+        {% if logged %}
+        <form id="book-add-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
+            <div class="form-row">
+                {{ form_widget(form) }}
+            </div>
+            {{ form_end(form) }}
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="subcontainer">
+        <img loading="eager" src="{{ book.bookCover }}" alt="Image of trending books">
+        <p class="summary">
+            {{ book.summary }}
+        </p>
+
+    </div>
+
+    <div class="reviews">
+        <div id="reviewDisplay" class="review-container">
+
+        </div>
+
+        <form id="book-review-form" method="{{ form2.vars.method }}" action="{{ form2.vars.action }}">
+            <div class="form-row">
+                {{ form_widget(form2) }}
+            </div>
+            {{ form_end(form2) }}
+        </form>
+
+    </div>
+    <form id="write-review-form" method="{{ form3.vars.method }}" action="{{ form3.vars.action }}">
+        <div class="form-row">
+            {{ form_row(form3.score) }}
+            {% if logged %}
+                {{ form_row(form3.comment,    { 'attr': {
+                    'id': 'commentTextArea',
+                    'logged': 'true'}
+                }) }}
+            {% else %}
+                {{ form_row(form3.comment,    { 'attr': {
+                    'id': 'commentTextArea',
+                    'logged': 'false'}
+                }) }}
+            {% endif %}
+
+            {{ form_row(form3.submit_review) }}
+        </div>
+
+        {{ form_end(form3) }}
+        </form>
+</div>
+
+    <!-- Include the JavaScript files -->
+    <script src="{{ asset('js/getReviews.js') }}"></script>
+    <script src="{{ asset('js/writeReview.js') }}"></script>
+    <script src="{{ asset('js/addToFavorites.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="css/login_register.css">
+</head>
+<body>
+<div class="container">
+    <div class="container">
+
+            <section class="login">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+
+
+
+            </section>
+        {% if error is defined %}
+            <p id="message">{{ error }}</p>
+        {% endif %}
+            <p id="switch">Don't have an account? <a href="register">Register here</a></p>
+
+    </div>
+</div>
+</body>
+</html>
+
+<script src="{{ asset('js/passwordCheckbox_login.js') }}"></script>
