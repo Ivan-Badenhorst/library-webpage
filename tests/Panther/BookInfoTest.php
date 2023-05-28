@@ -103,6 +103,66 @@ class BookInfoTest extends PantherTestCase
 
 
 
+    /**
+     * this test checks to see if the right buttons and boxes are visible when we look at bookinfo
+     * it also checks if we are able to write a review
+     */
+    public function testReviews(): void {
+        // Load the page containing the book reviews
+        $client = static::createPantherClient();
+        // Go to book info page
+        $crawler = $client->request('GET', '/book-info/26');
+
+        // test that when you are not logged in, the review textbox is disabled
+        $textAreaDis = $crawler->filter('#write_review_comment')->isEnabled();
+        $this->assertFalse($textAreaDis);
+
+        $crawler = $client->request('GET', '/login');
+        $form = $crawler->filter('form[name="login"]')->form();
+        $form['login[email]'] = 'newUser@email.com'; // Update with the desired email
+        $form['login[password]'] = 'password'; // Update with the desired password
+
+        $crawler = $client->submit($form);
+
+        $crawler = $client->request('GET', '/book-info/26');
+
+        // Find the button with ID "book_review_view_reviews" and check its existence
+        $buttonExists = $crawler->filter('#book_review_view_reviews')->count() > 0;
+        $this->assertTrue($buttonExists);
+
+        // Click on the button to see reviews
+        $button = $crawler->filter('#book_review_view_reviews')->first();
+        $button->click();
+        sleep(1);
+        self::assertTrue($button->text()=="see more...");
+
+        // Find the text with ID "book_review_view_reviews" and check if it exists
+        $textAreaExists = $crawler->filter('#write_review_comment')->count() > 0;
+        $this->assertTrue($textAreaExists);
+
+        //This checks if you're able to write a review when logged in
+        $textAreaDis = $crawler->filter('#write_review_comment')->isEnabled();
+        $this->assertTrue($textAreaDis);
+
+        // Submit a review
+        $form = $crawler->filter('#write_review_comment')->sendKeys("This is a great book!");
+
+        // Find the button with ID "book_review_view_reviews" and check its existence
+        $buttonExists = $crawler->filter('#write_review_submit_review')->count() > 0;
+        $this->assertTrue($buttonExists);
+
+        // Click on the button to see reviews
+        $button = $crawler->filter('#write_review_submit_review')->first();
+        $button->click();
+        sleep(1);
+
+        $textAreaEmpty = $crawler->filter('#write_review_comment')->text();
+        self::assertTrue($textAreaEmpty=="");
+    }
+
+
+
+
 
 
 
