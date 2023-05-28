@@ -13,6 +13,7 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\AbstractBrowser;
+use Symfony\Component\HttpFoundation\File\File;
 
 class loginControllerTest extends WebTestCase
 {
@@ -28,7 +29,7 @@ class loginControllerTest extends WebTestCase
         parent::__construct();
     }
 
-    /*public function testLogin(){
+    public function testLogin(){
         $client = static::createClient();
 
         // Simulate submitting the registration form
@@ -40,7 +41,7 @@ class loginControllerTest extends WebTestCase
         $client->followRedirect();
         // Assert that the registration was successful
         $this->assertSame('/', $client->getRequest()->getPathInfo());
-    }*/
+    }
 
     public function testLoginWithWrongPassword()
     {
@@ -78,7 +79,7 @@ class loginControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/register');
         $this->assertSame('/register', $client->getRequest()->getPathInfo());
         $form = $crawler->selectButton('Submit')->form();
-        $form['register[email]'] = "wouta@example.com";
+        $form['register[email]'] = "wout1@example1.com";
         $form['register[password]'] = "12345678";
         $form['register[name]'] = "Wout";
         $form['register[surname]'] = "Example";
@@ -92,7 +93,66 @@ class loginControllerTest extends WebTestCase
         // Assert that the registration was successful
         $this->assertSame('/register', $client->getRequest()->getPathInfo());
     }
-        public function testRegisterWrong()
+
+    public function testRegisterWrongProfilePicType()
+    {
+        $client = static::createClient();
+
+
+        // Create a mock file for profile picture
+        $defaultImagePath = __DIR__ . '/../../public/images/book.svg';
+        $profilePicture = new File($defaultImagePath);
+
+        // Simulate submitting the registration form with valid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        $form['register[email]'] = "wout1@example1.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $form['register[profilePicture]'] = $profilePicture;
+        $crawler = $client->submit($form);
+
+        // Assert that the registration was successful
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterWrongProfilePicSize()
+    {
+        $client = static::createClient();
+
+
+        // Create a mock file for profile picture
+        $defaultImagePath = __DIR__ . '/../../public/images/too_big_png_test.jpg';
+        $profilePicture = new File($defaultImagePath);
+
+        // Simulate submitting the registration form with valid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        $form['register[email]'] = "wout1@example1.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $form['register[profilePicture]'] = $profilePicture;
+        $crawler = $client->submit($form);
+
+        // Assert that the registration was successful
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+        public function testRegisterLongEmail()
     {
         $client = static::createClient();
 
@@ -115,7 +175,7 @@ class loginControllerTest extends WebTestCase
         $this->assertSame('/register', $client->getRequest()->getPathInfo());
     }
 
-    public function testRegisterWrongData()
+    public function testRegisterLongPassword()
     {
         $client = static::createClient();
         // Simulate submitting the registration form with invalid data
@@ -123,15 +183,176 @@ class loginControllerTest extends WebTestCase
         $this->assertSame('/register', $client->getRequest()->getPathInfo());
         $form = $crawler->selectButton('Submit')->form();
         // Set invalid or incomplete form data
-        $form['register[email]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@example.com";
-        $form['register[password]'] = "password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12";
-        $form['register[name]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
-        $form['register[surname]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
-        $form['register[displayname]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
-        $form['register[DateOfBirth]'] = "";
-        $form['register[street]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
-        $form['register[postalCode]'] = " '1234567891023456789 ";
-        $form['register[city]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterShortPassword()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "Wout";
+        $form['register[name]'] = "test";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterLongName()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterLongSurname()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterLongDisplayName()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterLongStreet()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterLongCity()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[city]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        $form['register[postalCode]'] = "1234";
+        $form['register[street]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration failed and appropriate error messages are displayed
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterLongPostalCode()
+    {
+        $client = static::createClient();
+        // Simulate submitting the registration form with invalid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        // Set invalid or incomplete form data
+        $form['register[email]'] = "hey@test.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "test";
+        $form['register[postalCode]'] = "12345678910";
+        $form['register[city]'] = "example";
         $crawler = $client->submit($form);
 
         // Assert that the registration failed and appropriate error messages are displayed

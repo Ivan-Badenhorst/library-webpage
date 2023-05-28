@@ -162,25 +162,6 @@ class auth
     }
 
     /**
-     * delete user
-     * this function should not be called directly, but rather through the delete function in the loginController
-     *
-     * @param String $email - email with which the user is trying to register
-     * @return string - message that reports status of register
-     */
-    public function delete(String $email): string
-    {
-        $user = $this->entityManager->getRepository(User::class)->find($email);
-
-        if ($user) {
-            $this->entityManager->remove($user);
-            $this->entityManager->flush();
-            return "succes";
-        }
-        return "no user with such email";
-    }
-
-    /**
      * returns profilepicture for a certain email
      * if profilepicture == "null" (a String assigned to the $profilePicture variable in the User class
      * when there is no profile picture on the database for this user) a default profilePicture will be returned
