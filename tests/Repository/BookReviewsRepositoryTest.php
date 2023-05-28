@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 <?php
 /**
  * @fileoverview This test was written to test if the repository can save and remove data
