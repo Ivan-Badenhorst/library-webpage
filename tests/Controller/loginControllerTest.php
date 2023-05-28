@@ -35,7 +35,7 @@ class loginControllerTest extends WebTestCase
         // Simulate submitting the registration form
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('Submit')->form();
-        $form['login[email]'] = "wout@example.com";
+        $form['login[email]'] = "wout@example2.com";
         $form['login[password]'] = "12345678";
         $client->submit($form);
         $client->followRedirect();
@@ -79,7 +79,7 @@ class loginControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/register');
         $this->assertSame('/register', $client->getRequest()->getPathInfo());
         $form = $crawler->selectButton('Submit')->form();
-        $form['register[email]'] = "wout1@example1.com";
+        $form['register[email]'] = "wout@example6.com";
         $form['register[password]'] = "12345678";
         $form['register[name]'] = "Wout";
         $form['register[surname]'] = "Example";

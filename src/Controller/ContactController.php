@@ -31,7 +31,7 @@ class ContactController extends AbstractController
      * @param RequestStack $requestStack
      * @return Response
      */
-    #[Route('/Contact', name: 'contact')]
+    #[Route('/contact', name: 'contact')]
     public function contact(RequestStack $requestStack){
         $this->stylesheets[] = 'contact.css';
         $logged = $this->checkSession($requestStack);
