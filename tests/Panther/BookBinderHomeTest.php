@@ -209,7 +209,7 @@ class BookBinderHomeTest extends PantherTestCase
             formElement.dispatchEvent(event);
         ');
 
-        sleep(5);
+        sleep(8);
 
         $screenshotPath = 'filter.png';
         $client->takeScreenshot($screenshotPath);
