@@ -50,7 +50,7 @@ class register extends AbstractType
             ->add('city', TextType::class)
             ->add('profilePicture',FileType::class, [
                 'label' => 'Profile picture Max size 2MB (optional)',
-                'required' => false
+                'required' => false,
             ])
             ->add('submit', SubmitType::class);
         }

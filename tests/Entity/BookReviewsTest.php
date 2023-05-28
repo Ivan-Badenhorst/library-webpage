@@ -1,5 +1,14 @@
 <?php
+/**
+ * @fileoverview This test was written to test functions written in BookReviews entity
+ * Tests are mostly self explanatory
+ * @version 1.0
+ */
 
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 
 namespace App\Tests\Entity;
 

@@ -86,6 +86,20 @@ class UserRepository extends ServiceEntityRepository
         return $query->getResult()[0];
     }
 
+    public function findUserByEmail(int $userEmail): User
+    {
+        // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT u
+            FROM App\Entity\User u
+            WHERE u.email = :userEmail'
+        )->setParameter('userEmail', $userEmail);
+
+        return $query->getResult()[0];
+    }
+
 
 
 

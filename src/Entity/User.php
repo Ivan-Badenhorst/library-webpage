@@ -297,10 +297,6 @@ class User
         return $this;
     }
 
-
-
-
-
     /**
      * @return Collection<int, BookReviews>
      */

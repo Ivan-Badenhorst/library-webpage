@@ -1,9 +1,20 @@
 <?php
+/**
+ * @fileoverview This test was written to test functions written in User entity
+ * Tests are mostly self explanatory
+ * @version 1.0
+ */
+
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 namespace App\Tests\Entity;
 
 use App\Entity\User;
 use App\Entity\UserGenre;
 use App\Entity\UserBook;
+use App\Entity\BookReviews;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -21,6 +32,7 @@ class UserTest extends TestCase
         $postalCode = 12345;
         $city = 'Anytown';
         $loginTries = 3;
+        $bio = 'This is a test.';
 
         // Test setters
         $user->setEmail($email);
@@ -33,6 +45,7 @@ class UserTest extends TestCase
         $user->setPostalCode($postalCode);
         $user->setCity($city);
         $user->setLoginTries($loginTries);
+        $user->setBio($bio);
 
         // Test getters
         $this->assertEquals($email, $user->getEmail());
@@ -45,6 +58,7 @@ class UserTest extends TestCase
         $this->assertEquals($postalCode, $user->getPostalCode());
         $this->assertEquals($city, $user->getCity());
         $this->assertEquals($loginTries, $user->getLoginTries());
+        $this->assertEquals($bio, $user->getBio());
     }
 
     public function testUserGenres()
@@ -78,5 +92,14 @@ class UserTest extends TestCase
         // Test the initial value of id
         $this->assertNull($user->getId());
     }
+
+    public function testProfilePicture()
+    {
+        $user = new User();
+
+        // Test the initial value of profile picture
+        $this->assertEquals("null", $user->getProfilePicture());
+    }
+
 }
 

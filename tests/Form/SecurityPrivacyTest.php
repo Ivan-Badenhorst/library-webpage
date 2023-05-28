@@ -1,6 +1,6 @@
 <?php
 /**
- * @fileoverview This test was written to test functions written in BookReview form
+ * @fileoverview This test was written to test functions written in SecurityPrivacy form
  * Tests are mostly self explanatory, data is created and submitted and checked if its correct
  * @version 1.0
  */
@@ -11,18 +11,19 @@
  */
 namespace App\Tests\Form;
 
-use App\Form\BookReview;
+use App\Form\SecurityPrivacy;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class BookReviewTest extends TypeTestCase
+class SecurityPrivacyTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
         $formData = [
-            'view_reviews' => 'View Reviews',
+            'password' => 'newpassword',
+            'showPassword' => true,
         ];
 
-        $form = $this->factory->create(BookReview::class);
+        $form = $this->factory->create(SecurityPrivacy::class);
 
         $form->submit($formData);
 
