@@ -112,7 +112,6 @@ class LoginController extends AbstractController
         ]);
     }
 
-
     /**
      * login function:
      * makes a form, when the form is filled in and valid, data is sent to the auth class to be processed.

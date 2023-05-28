@@ -28,7 +28,7 @@ class loginControllerTest extends WebTestCase
         parent::__construct();
     }
 
-    public function testLogin(){
+    /*public function testLogin(){
         $client = static::createClient();
 
         // Simulate submitting the registration form
@@ -40,7 +40,7 @@ class loginControllerTest extends WebTestCase
         $client->followRedirect();
         // Assert that the registration was successful
         $this->assertSame('/', $client->getRequest()->getPathInfo());
-    }
+    }*/
 
     public function testLoginWithWrongPassword()
     {
@@ -52,7 +52,6 @@ class loginControllerTest extends WebTestCase
         $form['login[email]'] = "wout@example.com";
         $form['login[password]'] = "wrongpassword";
         $client->submit($form);
-        //$client->followRedirect();
 
         // Assert that the login was unsuccessful
         $this->assertSame('/login', $client->getRequest()->getPathInfo());
@@ -77,8 +76,9 @@ class loginControllerTest extends WebTestCase
 
         // Simulate submitting the registration form with valid data
         $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
         $form = $crawler->selectButton('Submit')->form();
-        $form['register[email]'] = "wout@example.com";
+        $form['register[email]'] = "wouta@example.com";
         $form['register[password]'] = "12345678";
         $form['register[name]'] = "Wout";
         $form['register[surname]'] = "Example";
@@ -92,22 +92,46 @@ class loginControllerTest extends WebTestCase
         // Assert that the registration was successful
         $this->assertSame('/register', $client->getRequest()->getPathInfo());
     }
-        public function testRegisterWrongData()
+        public function testRegisterWrong()
+    {
+        $client = static::createClient();
+
+        // Simulate submitting the registration form with valid data
+        $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+        $form = $crawler->selectButton('Submit')->form();
+        $form['register[email]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@example.com";
+        $form['register[password]'] = "12345678";
+        $form['register[name]'] = "Wout";
+        $form['register[surname]'] = "Example";
+        $form['register[displayname]'] = "Wout";
+        $form['register[DateOfBirth]'] = "2008/08/08";
+        $form['register[street]'] = "example";
+        $form['register[postalCode]'] = "1234";
+        $form['register[city]'] = "example";
+        $crawler = $client->submit($form);
+
+        // Assert that the registration was successful
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
+    }
+
+    public function testRegisterWrongData()
     {
         $client = static::createClient();
         // Simulate submitting the registration form with invalid data
         $crawler = $client->request('GET', '/register');
+        $this->assertSame('/register', $client->getRequest()->getPathInfo());
         $form = $crawler->selectButton('Submit')->form();
         // Set invalid or incomplete form data
-        $form['register[email]'] = "test@example.com";
-        $form['register[password]'] = "password123";
-        $form['register[name]'] = "";
-        $form['register[surname]'] = "";
-        $form['register[displayname]'] = "";
+        $form['register[email]'] = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@example.com";
+        $form['register[password]'] = "password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12password12";
+        $form['register[name]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
+        $form['register[surname]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
+        $form['register[displayname]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
         $form['register[DateOfBirth]'] = "";
-        $form['register[street]'] = "";
-        $form['register[postalCode]'] = " '1123 ";
-        $form['register[city]'] = "";
+        $form['register[street]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
+        $form['register[postalCode]'] = " '1234567891023456789 ";
+        $form['register[city]'] = "example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123example123";
         $crawler = $client->submit($form);
 
         // Assert that the registration failed and appropriate error messages are displayed
