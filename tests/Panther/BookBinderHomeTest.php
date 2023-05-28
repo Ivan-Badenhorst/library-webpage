@@ -87,9 +87,9 @@ class BookBinderHomeTest extends PantherTestCase
         $client = static::createPantherClient(); // Your app is automatically started using the built-in web server
         $crawler = $client->request('GET', '/');
 
-        // Find the input element by its ID and fill in the text
+        //search with 0 results
         $searchInput = $crawler->filterXPath('//input[@id="book_search_search_term"]')->first();
-        $searchInput->sendKeys('hunger');
+        $searchInput->sendKeys('abcdqporn ad');
 
         // Find the submit button by its ID and click it
         $submitButton = $crawler->filterXPath('//button[@id="book_search_search"]')->first();
@@ -100,21 +100,31 @@ class BookBinderHomeTest extends PantherTestCase
         $containerDiv = $crawler->filter('div.book-listings')->first();
 
 
-        $this->waitForSearch($crawler, $client, 2);
+        $this->waitForSearch($crawler, $client, 1);
         $crawler = $client->refreshCrawler();
         $divCount = $containerDiv->filter('div')->count();
 
         // Assert the expected number of div elements
-        $expectedCount = 2; // Update with the expected count
+        $expectedCount = 0; // Update with the expected count
         $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
 
-        $searchInput = $crawler->filterXPath('//input[@id="book_search_search_term"]')->first();
 
+        //search with 2 results
         $client->executeScript('arguments[0].value = "";', [$searchInput->getElement(0)]);
 
+        $searchInput->sendKeys('hunger');
+        $crawler = $client->submit($submitButton->form());
+        $this->waitForSearch($crawler, $client, 2);
+        $crawler = $client->refreshCrawler();
+        $divCount = $containerDiv->filter('div')->count();
+        $expectedCount = 2;// Update with the expected count
+        $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
+
+
+        //search with 4 results
+        $client->executeScript('arguments[0].value = "";', [$searchInput->getElement(0)]);
 
         $searchInput->sendKeys('por');
-        $submitButton = $crawler->filterXPath('//button[@id="book_search_search"]')->first();
         $crawler = $client->submit($submitButton->form());
         $this->waitForSearch($crawler, $client, 4);
         $crawler = $client->refreshCrawler();
@@ -122,7 +132,29 @@ class BookBinderHomeTest extends PantherTestCase
         $expectedCount = 4; // Update with the expected count
         $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
 
+
+        //search with more results than can fit on a page
+        $client->executeScript('arguments[0].value = "";', [$searchInput->getElement(0)]);
+
+        $searchInput->sendKeys('a');
+        $crawler = $client->submit($submitButton->form());
+        $this->waitForSearch($crawler, $client, 40);
+        $crawler = $client->refreshCrawler();
+        $divCount = $containerDiv->filter('div')->count();
+        $expectedCount = 40; // Update with the expected count
+        $this->assertEquals($expectedCount*2, $divCount, 'The actual count of book elements does not match the expected count.');
+
+
+
     }
+
+
+
+
+
+
+
+
 
     /**
      * @param \Symfony\Component\Panther\DomCrawler\Crawler|\Symfony\Component\DomCrawler\Crawler $crawler
