@@ -38,7 +38,7 @@ class BookInfoControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1.book-title', 'The Hunger Games');
 
         /**
-         * Here we test adding a book
+         * Here we test adding a book to reading list
          */
 
         // Simulate a POST request to the "/add/{bookId}" route
