@@ -1,5 +1,9 @@
 <?php
+
+namespace App\Tests\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panther\PantherTestCase;
 
 /**
  * This test was written to test functions written in AboutController
@@ -8,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @author Wout Houpeline
  * @since 2023-05-27
  */
-class AboutControllerTest extends WebTestCase
+class AboutControllerTest extends PantherTestCase
 {
     /**
      * This test was written to test that when the page is loaded the about.html

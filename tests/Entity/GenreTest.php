@@ -1,17 +1,20 @@
 <?php
+/**
+ * @fileoverview This test was written to test functions written in Genre entity
+ * Tests are mostly self explanatory
+ * @version 1.0
+ */
+
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 use App\Entity\BookGenre;
 use App\Entity\Genre;
 use App\Entity\UserGenre;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
-/**
- * This test was written to test functions written in Genre entity, tests are mostly self explanatory
- */
-/**
- * @author Wout Houpeline
- * @since 2023-05-27
- */
 class GenreTest extends TestCase
 {
     private $genre;

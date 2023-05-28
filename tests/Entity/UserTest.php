@@ -1,18 +1,22 @@
 <?php
+/**
+ * @fileoverview This test was written to test functions written in User entity
+ * Tests are mostly self explanatory
+ * @version 1.0
+ */
+
+/**
+ * @author Wout Houpeline
+ * @since 2023-05-27
+ */
 namespace App\Tests\Entity;
 
 use App\Entity\User;
 use App\Entity\UserGenre;
 use App\Entity\UserBook;
+use App\Entity\BookReviews;
 use PHPUnit\Framework\TestCase;
 
-/**
- * This test was written to test functions written in User entity, tests are mostly self explanatory
- */
-/**
- * @author Wout Houpeline
- * @since 2023-05-27
- */
 class UserTest extends TestCase
 {
     public function testGettersAndSetters()
@@ -96,5 +100,6 @@ class UserTest extends TestCase
         // Test the initial value of profile picture
         $this->assertEquals("null", $user->getProfilePicture());
     }
+
 }
 
