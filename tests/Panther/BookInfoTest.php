@@ -111,6 +111,7 @@ class BookInfoTest extends PantherTestCase
         // Load the page containing the book reviews
         $client = static::createPantherClient();
         // Go to book info page
+        $crawler = $client->request('GET', '/logout');
         $crawler = $client->request('GET', '/book-info/26');
 
         // test that when you are not logged in, the review textbox is disabled
