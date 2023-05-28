@@ -245,16 +245,7 @@ class BookBinderHomeTest extends PantherTestCase
         }
     }
 
-    private function login($client, $crawler){
-        $logoutButton = $crawler->filter('a.normalButton')->first();
-        $crawler = $client->click($logoutButton->link());
 
-        $form = $crawler->filter('form[name="login"]')->form();
-        $form['login[email]'] = 'newUser@email.com'; // Update with the desired email
-        $form['login[password]'] = 'password'; // Update with the desired password
-
-        return $client->submit($form);
-    }
 
 
 }
