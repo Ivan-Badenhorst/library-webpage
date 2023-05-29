@@ -22,6 +22,7 @@ var num = -5;
 reviewButton.addEventListener('submit', function(event) {
     event.preventDefault();
     let bookId = document.getElementById('bookId').textContent;
+    bookId = bookId.replace(/\s/g, "");
     num += 5;
     console.log(num)
     getReviews(bookId, num);
