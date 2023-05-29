@@ -157,6 +157,7 @@ class BookInfoController extends AbstractController
 
         $comment  = str_replace('%*%*%', '.', $comment);
         $comment  = str_replace('this_is_a_space', ' ', $comment);
+        $comment  = str_replace('this_is_a_question', '?', $comment);
         $email = $requestStack->getSession()->get('email');
         //get id from email
         $auth = new auth($entityManager);
