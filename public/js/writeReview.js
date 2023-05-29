@@ -36,9 +36,9 @@ writeReviewForm.addEventListener('submit', function(event) {
     let bookId = parseInt(book_id.textContent)
     let reviewScore = parseInt(score.value)
     let reviewComment = comment.value
-    reviewComment = reviewComment.replace(/\./g, "%*%*%");
-    reviewComment = reviewComment.replace(/ /g, "this_is_a_space");
-    reviewComment = reviewComment.replace(/\?/g, "this_is_a_question");
+    reviewComment = reviewComment.replace(/\./g, "_period_");
+    reviewComment = reviewComment.replace(/ /g, "_space_");
+    reviewComment = reviewComment.replace(/\?/g, "_question_");
     writeReview(bookId, reviewScore, reviewComment)
 
     score.value = 0
