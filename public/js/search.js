@@ -164,7 +164,7 @@
         }else{
             genresString = genres.join(",")
         }
-
+        genresString = genresString.replace(/ /g, '%#%#%');
         let offset = page*40;
 
         //open URL that returns JSON search results
