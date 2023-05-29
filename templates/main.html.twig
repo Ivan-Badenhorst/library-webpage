@@ -8,7 +8,7 @@
             </div>
             <div class="favourite-img">
                 {% for book in favourites %}
-                    <img src="{{ book.book_cover }}" onclick="switchPage( '/book-info/{{ book.id }}' )" alt="favourite book">
+                    <img src="{{ book.book_cover }}" onclick="switchPage( 'https://a22web32.studev.groept.be/public/index.php/book-info/{{ book.id }}' )" alt="favourite book">
                 {% endfor %}
 
             </div>
