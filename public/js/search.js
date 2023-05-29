@@ -102,7 +102,7 @@
         let title = "";
         title += titleInput.value;
         if( title === "" || title == null){
-            title = "%"
+            title = "title_place_holder"
         }
 
         page = 0;
