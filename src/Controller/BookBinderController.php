@@ -107,7 +107,7 @@ class BookBinderController extends AbstractController
     public function search($title, $genres, $offset, BookRepository $bookRepository): Response
     {
 
-        $genres = str_replace('title_place_holder', '%', $genres);
+        $title = str_replace('title_place_holder', '%', $title);
         $genres = str_replace('this_is_a_space', ' ', $genres);
         $products = $bookRepository->searchOnTitle(41, $title, explode(",", $genres), $offset);
         return new JsonResponse($products);
