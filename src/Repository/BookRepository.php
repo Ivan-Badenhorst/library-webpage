@@ -139,8 +139,7 @@ class BookRepository extends ServiceEntityRepository
                 $sql = $sql.' or ';
             }
             $count += 1;
-            $sql = $sql.'FIND_IN_SET('.'\''.$genre.'\''.', genres) > 0';
-
+            $sql = $sql.'genres LIKE \'%'.$genre.'%\'';
         }
 
         $sql = $sql.' limit '.$limit.' offset '.$offset;
