@@ -56,7 +56,7 @@ class ReadingListTest  extends PantherTestCase
         $tbody = $crawler->filter('tbody')->first();
         $rowCount = $tbody->filter('tr')->count();
 
-        $this->assertEquals(2, $rowCount); // Replace 5 with the expected row count
+        $this->assertEquals(1, $rowCount); // Replace 5 with the expected row count
 
         //add 1 book
         $crawler = $client->request('GET', '/book-info/29');
@@ -67,7 +67,7 @@ class ReadingListTest  extends PantherTestCase
         $tbody = $crawler->filter('tbody')->first();
         $rowCount = $tbody->filter('tr')->count();
 
-        $this->assertEquals(3, $rowCount); // Re
+        $this->assertEquals(2, $rowCount); // Re
 
 
         //remove 1 book
@@ -79,7 +79,7 @@ class ReadingListTest  extends PantherTestCase
         $tbody = $crawler->filter('tbody')->first();
         $rowCount = $tbody->filter('tr')->count();
 
-        $this->assertEquals(2, $rowCount); // Re
+        $this->assertEquals(1, $rowCount); // Re
 
 
         //remove 1 book

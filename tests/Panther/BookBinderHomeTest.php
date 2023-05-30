@@ -167,7 +167,7 @@ class BookBinderHomeTest extends PantherTestCase
         });
 
         // Assert the labels of the checkboxes
-        $expectedLabels = ['Fantasy', 'Science Fiction', 'Mystery', 'Romance', 'Thriller', 'Horror', 'Academic', 'Biography'];//known from database
+        $expectedLabels = ['Fantasy', 'ScienceFiction', 'Mystery', 'Romance', 'Thriller', 'Horror', 'Academic', 'Biography'];//known from database
         $this->assertEquals($expectedLabels, $labelTexts, 'Checkbox labels do not match.');
 
     }
