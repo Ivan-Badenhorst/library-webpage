@@ -7,11 +7,6 @@
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/vendor" />
-            <excludedPath local="true" path="$PROJECT_DIR$/var" />
-            <excludedPath local="true" path="$PROJECT_DIR$/.env" />
-          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
