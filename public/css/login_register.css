@@ -1,4 +1,31 @@
-.container {
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(5px);
+}
+
+.container-login {
+    height: 230px;
+}
+
+.container-register {
+    height: 580px;
+}
+
+.container-login,
+.container-register {
+    margin: 20px;
     width: 400px;
     background-color: #f2f2f2;
     border-radius: 10px;
@@ -10,6 +37,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin-bottom: 10px;
 }
 
@@ -17,37 +45,37 @@ p {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
-    color: #4CAF50;
-    padding: 10px;
+}
+
+p a {
+    color: blue;
 }
 
 #message{
-text-align: center;
+    text-align: center;
     font-size: 16px;
     font-weight: bold;
     color: #FF0000;
     padding: 10px;
 }
 
-label {
-    margin-top: 10px;
-}
-
 input {
+    margin: 7px;
     padding: 5px;
     border: none;
     border-radius: 3px;
 }
 
-.register {
-    text-align: center;
-    margin-top: 20px;
+input[type="checkbox"] {
+    padding: 0;
+    margin: 0 0 0 5px;
 }
 
-.register a {
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
+#login > *,
+#register > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .error {
@@ -60,26 +88,9 @@ input {
     margin-top: 10px;
 }
 
-
-
-
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form input[type="date"],
-form input[type="checkbox"] {
-    flex-basis: calc(50% - 5px);
-    height: 30px;
-    margin-bottom: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-p{
-
-    text-align-all: center;
+#register div:nth-child(11) {
+    display: flex;
+    flex-direction: column;
 }
 
 button {
@@ -92,7 +103,13 @@ button {
     border: none;
     border-radius: 4px;
     color: black;
-    background-color: #f1f1f1;
+    background-color: #01a7c2;
     transition: transform 0.1s;
-    margin: 10px 0;
+    margin-top: 10px;
+
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }

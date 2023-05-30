@@ -46,7 +46,9 @@ class WriteReview extends AbstractType
                     '10' => '10',
                     ]
                 ])
-            ->add('comment', TextareaType::class)
+            ->add('comment', TextareaType::class, [
+                'attr' => ['rows' => '5', 'cols' => '40']
+            ])
             ->add('submit_review', SubmitType::class);
     }
 }

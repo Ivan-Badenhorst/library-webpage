@@ -44,9 +44,13 @@ class ReadingListController extends AbstractController
         $readingList = new \App\backend\ReadingList($this->doctrine->getManager());
         $list = $readingList->getReadingList($session->get('email'));
         $this->stylesheets[] = 'readingList.css';
+
+        $logged = $this->checkSession($requestStack);
+
         return $this->render('readingList.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'list' => $list
+            'list' => $list,
+            'logged'=>$logged
         ]);
     }
 

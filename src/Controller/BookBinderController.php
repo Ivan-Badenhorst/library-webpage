@@ -41,7 +41,7 @@ class BookBinderController extends AbstractController
      * @param GenreRepository $genreRepository
      * @param RequestStack $requestStack
      * @return Response -> home page of the website
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     #[Route('/', name: 'home')]
     public function home(BookRepository $bookRepository, GenreRepository $genreRepository, RequestStack $requestStack): Response
