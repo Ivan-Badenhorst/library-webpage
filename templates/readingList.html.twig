@@ -10,7 +10,7 @@
         <table>
             {% for index in 0..(list[0]|length - 1) %}
                 <tr class="reading-book" Onclick="switchPage( '/book-info/{{ list[0][index] }}' )">
-                    <td class="book-cover"><img src="{{ list[4][index] }}" alt="cover" ></td>
+                    <td class="book-cover"><img class="image-book-reading-list" src="{{ list[4][index] }}" alt="cover" ></td>
                     <td class="book-text">
                         <b>{{ list[1][index] }}</b>
                         <p class="book-summary">{{ list[2][index] }}</p>
