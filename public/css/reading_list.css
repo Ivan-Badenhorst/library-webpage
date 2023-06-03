@@ -18,11 +18,17 @@ table {
     margin: 5px;
 }
 
+.image-book-reading-list {
+    display: block;
+}
+
 .reading-book {
     transition: transform 0.3s;
+    padding: 10px;
 }
 
 .reading-book:hover {
     cursor: pointer;
+    background-color: #e5e5e5;
     transform: scale(1.02);
 }
