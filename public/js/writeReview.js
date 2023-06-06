@@ -36,8 +36,9 @@ writeReviewForm.addEventListener('submit', function(event) {
     let bookId = parseInt(book_id.textContent)
     let reviewScore = parseInt(score.value)
     let reviewComment = comment.value
-    reviewComment = reviewComment.replace(/\./g, "%*%*%");
-
+    reviewComment = reviewComment.replace(/\./g, "_period_");
+    reviewComment = reviewComment.replace(/ /g, "_space_");
+    reviewComment = reviewComment.replace(/\?/g, "_question_");
     writeReview(bookId, reviewScore, reviewComment)
 
     score.value = 0
@@ -55,7 +56,7 @@ writeReviewForm.addEventListener('submit', function(event) {
 function writeReview(bookId, reviewScore, reviewComment){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
-    xhr.open('GET', '/write/' + bookId + '/' + reviewScore + '/' + reviewComment, true);
+    xhr.open('GET', 'https://a22web32.studev.groept.be/public/index.php/write/' + bookId + '/' + reviewScore + '/' + reviewComment, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log("got response")

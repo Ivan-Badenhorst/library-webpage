@@ -8,7 +8,7 @@
             </div>
             <div class="favourite-img">
                 {% for book in favourites %}
-                    <img src="{{ book.book_cover }}" onclick="switchPage( '/book-info/{{ book.id }}' )" alt="favourite book">
+                    <img src="{{ book.book_cover }}" onclick="switchPage( 'https://a22web32.studev.groept.be/public/index.php/book-info/{{ book.id }}' )" alt="favourite book">
                 {% endfor %}
 
             </div>
@@ -56,7 +56,7 @@
 
                         {% for row in books %}
 
-                                <div id="book-container" class="book" onclick="switchPage( '/book-info/{{ row.id }}' )">
+                                <div id="book-container" class="book" onclick="switchPage( 'https://a22web32.studev.groept.be/public/index.php/book-info/{{ row.id }}' )">
                                     <img loading="lazy" src="{{row.book_cover}}" alt="Entity Image">
                                     <div>
                                         <h2>{{ row.title }}</h2>
