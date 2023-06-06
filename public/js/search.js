@@ -172,7 +172,6 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 books = JSON.parse(xhr.responseText);
-                //display books on page
                 displayBooks(getGenres());
             }
         };
