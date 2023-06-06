@@ -48,7 +48,7 @@
         let title = "";
         title += titleInput.value;
         if( title === "" || title == null){
-            title = "%"
+            title = "title_place_holder"
         }
         searchBar.scrollIntoView();
         fetchBooks(title, genres);
@@ -67,7 +67,7 @@
         let title = "";
         title += titleInput.value;
         if( title === "" || title == null){
-            title = "%"
+            title = "title_place_holder"
         }
         searchBar.scrollIntoView();
         fetchBooks(title, genres);
@@ -116,11 +116,11 @@
         console.log(books);
     });
 
-    nextButton.addEventListener('click', function(){
-
-        //display next set of books
-
-    });
+    // nextButton.addEventListener('click', function(){
+    //
+    //     //display next set of books
+    //
+    // });
 
 
 
