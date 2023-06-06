@@ -106,6 +106,9 @@ class BookBinderController extends AbstractController
     #[Route('/search/{title}/{genres}/{offset}', name: 'search')]
     public function search($title, $genres, $offset, BookRepository $bookRepository): Response
     {
+
+        $title = str_replace('title_place_holder', '%', $title);
+        $genres = str_replace('this_is_a_space', ' ', $genres);
         $products = $bookRepository->searchOnTitle(41, $title, explode(",", $genres), $offset);
         return new JsonResponse($products);
 

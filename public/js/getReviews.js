@@ -22,6 +22,7 @@ var num = -5;
 reviewButton.addEventListener('submit', function(event) {
     event.preventDefault();
     let bookId = document.getElementById('bookId').textContent;
+    bookId = bookId.replace(/\s/g, "");
     num += 5;
     console.log(num)
     getReviews(bookId, num);
@@ -38,7 +39,7 @@ reviewButton.addEventListener('submit', function(event) {
 function getReviews(bookId, offset){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
-    xhr.open('GET', '/review/' + bookId +'/' + offset, true);
+    xhr.open('GET', 'https://a22web32.studev.groept.be/public/index.php/review/' + bookId +'/' + offset, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             let reviews = JSON.parse(xhr.responseText);
