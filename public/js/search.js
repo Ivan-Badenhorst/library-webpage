@@ -168,7 +168,7 @@
         let offset = page*40;
 
         //open URL that returns JSON search results
-        xhr.open('GET', 'https://a22web32.studev.groept.be/public/index.php/search/' + title + '/' + genresString +'/' + offset.toString(), true);
+        xhr.open('GET', '/search/' + title + '/' + genresString +'/' + offset.toString(), true);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 books = JSON.parse(xhr.responseText);

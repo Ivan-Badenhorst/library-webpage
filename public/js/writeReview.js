@@ -56,7 +56,7 @@ writeReviewForm.addEventListener('submit', function(event) {
 function writeReview(bookId, reviewScore, reviewComment){
     let xhr = new XMLHttpRequest();
     //open URL that returns JSON search results
-    xhr.open('GET', 'https://a22web32.studev.groept.be/public/index.php/write/' + bookId + '/' + reviewScore + '/' + reviewComment, true);
+    xhr.open('GET', '/write/' + bookId + '/' + reviewScore + '/' + reviewComment, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log("got response")
