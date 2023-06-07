@@ -13,7 +13,7 @@ use Symfony\Component\Panther\PantherTestCase;
 
 
 
-class ReadingListControllerTest extends PantherTestCase
+class ReadingListTest extends PantherTestCase
 {
     public function testReadListRedirectsToLoginIfNotLoggedIn()
     {

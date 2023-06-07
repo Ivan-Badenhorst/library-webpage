@@ -2,6 +2,8 @@
 
 namespace App\Tests\Panther;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use http\Client;
 use Symfony\Component\Panther\PantherTestCase;
 
@@ -28,7 +30,6 @@ class ReadingListTest  extends PantherTestCase
         $form['login[password]'] = 'password'; // Update with the desired password
 
         $crawler = $client->submit($form);
-
 
         $crawler = $client->request('GET', '/read-list');
 
