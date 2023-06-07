@@ -8,6 +8,7 @@
 }
 
 .book:hover {
+    cursor: pointer;
     transform: scale(1.05);
 }
 
@@ -31,6 +32,7 @@
 }
 
 .favourite-img img:hover {
+    cursor: pointer;
     transform: scale(1.05);
 }
 

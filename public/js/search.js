@@ -102,7 +102,7 @@
         let title = "";
         title += titleInput.value;
         if( title === "" || title == null){
-            title = "%"
+            title = "title_place_holder"
         }
 
         page = 0;
@@ -164,7 +164,7 @@
         }else{
             genresString = genres.join(",")
         }
-
+        genresString = genresString.replace(/ /g, 'this_is_a_space');
         let offset = page*40;
 
         //open URL that returns JSON search results
@@ -172,7 +172,6 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 books = JSON.parse(xhr.responseText);
-                //display books on page
                 displayBooks(getGenres());
             }
         };
@@ -206,7 +205,7 @@
                 nextButton.disabled = true;
 
                 let slash = '/';
-                let onclickString = `onclick="switchPage('`+ slash + `book-info` + slash + book.id + `')"`;
+                let onclickString = `onclick="switchPage('https://a22web32.studev.groept.be/public/index.php`+ slash + `book-info` + slash + book.id + `')"`;
 
                 //if(checkStringForElements(book.genres.toUpperCase(), genres)) {
                     let text = '<div id="book-container" class="book"' + onclickString + '>' +
