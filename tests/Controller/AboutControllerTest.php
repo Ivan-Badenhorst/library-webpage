@@ -26,6 +26,6 @@ class AboutControllerTest extends PantherTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorExists('h1');
-        $this->assertSelectorTextContains('section h1', 'About Us');
+        $this->assertSelectorTextContains('h1.book-title', 'About Us');
     }
 }
