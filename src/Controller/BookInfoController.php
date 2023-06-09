@@ -58,6 +58,7 @@ class BookInfoController extends AbstractController
 
         $logged = $this->checkSession($requestStack);
         $book = $bookRepository->findBook($bookId);
+        $bookRating = $bookRepository->findBookRating($bookId);
 
         if($logged) {
             $email = $requestStack->getSession()->get('email');
@@ -93,7 +94,8 @@ class BookInfoController extends AbstractController
             'viewReviewsForm'=>$view2,
             'writeReviewForm'=>$view3,
             'book'=>$book,
-            'logged'=>$logged
+            'logged'=>$logged,
+            'rating'=>$bookRating
         ]);
     }
 
