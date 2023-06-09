@@ -44,6 +44,7 @@ class BookInfoController extends AbstractController
     /**
      * Initializes the book info page after the div containing each book's information is clicked on.
      * Checks for whether the user has the book in their reading list and changes the state of the favorites form accordingly.
+     * Also checks whether the user is logged in, allowing them to write reviews.
      *
      * @param $bookId -> id of the book that was clicked on, used to find the book and then fetch all its data.
      * @param BookRepository $bookRepository
@@ -71,26 +72,26 @@ class BookInfoController extends AbstractController
         }
 
 
-        //form for adding/removing book from favourites
-        $form = $this->createForm(BookAdd::class);
-        $view = $form->createView();
+        //Form for adding/removing book from favourites
+        $favoritesForm = $this->createForm(BookAdd::class);
+        $view = $favoritesForm->createView();
         if($exists){
             $view->children['add_to_favorites']->vars['label'] = 'Remove from favorites';
         }
 
-        //form for viewing more reviews
-        $form2 = $this->createForm(BookReview::class);
-        $view2 = $form2->createView();
-        //form for writing reviews
-        $form3 = $this->createForm(WriteReview::class);
-        $view3 = $form3->createView();
+        //Form for viewing more reviews
+        $viewReviewsForm = $this->createForm(BookReview::class);
+        $view2 = $viewReviewsForm->createView();
+        //Form for writing reviews
+        $writeReviewForm = $this->createForm(WriteReview::class);
+        $view3 = $writeReviewForm->createView();
 
         $this->stylesheets[] = 'bookinfo.css';
         return $this->render('bookInfo.html.twig', [
             'stylesheets'=> $this->stylesheets,
-            'form'=>$view,
-            'form2'=>$view2,
-            'form3'=>$view3,
+            'favoritesForm'=>$view,
+            'viewReviewsForm'=>$view2,
+            'writeReviewForm'=>$view3,
             'book'=>$book,
             'logged'=>$logged
         ]);
