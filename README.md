@@ -14,7 +14,7 @@ BookBinder contains a variety of features:
 
 ## Usage 
 
-To browse to the website, users can search for https://a22web32.studev.groept.be/public/index.php/.
+To browse to the website, users can search for https://a22web32.studev.groept.be.
 
 BookBinder functions on any web browser and is designed for easy use. The homepage contains a few recommendations as well as a list of all books in the database. It also has a top bar allowing users to access different pages like their reading list and the contact page for the website. The book list being displayed can be changed by using the search bar as well as the filter by genres checkboxes. These allow the user to find any book they are looking for through their title or genre. 
 
