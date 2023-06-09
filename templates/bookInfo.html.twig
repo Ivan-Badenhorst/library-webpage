@@ -12,7 +12,14 @@
                 By {{ book.author }}
             </h2>
             <h3>
-                Average Rating: {{ rating }}
+                Average Rating:
+                {% for i in 1..5 %}
+                    {% if i <= rating / 2  %}
+                        <span class="fa fa-star checked"></span>
+                    {% else %}
+                        <span class="fa fa-star"></span>
+                    {% endif %}
+                {% endfor %}
             </h3>
             <p id="bookId">
                 {{ book.id }}
