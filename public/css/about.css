@@ -1,6 +1,16 @@
 .subcontainer {
     display: flex;
     flex-direction: row;
+    border-top: 3px solid #007090; /* Adjust the color and thickness as needed */
+    padding-top: 10px;
+}
+
+.section1,
+.section2 {
+    flex: 1; /* Make the sections occupy equal width */
+    margin: 10px; /* Adjust the margin value to control the spacing between sections */
+    background-color: #e1eff0;
+    padding: 15px;
 }
 
 section {
@@ -16,9 +26,16 @@ ul {
     text-align: justify;
 }
 
+ul li {
+    margin-bottom: 10px;
+}
+
 p {
     margin-bottom: 4px;
     text-align: justify;
 }
 
+h2 {
+    color: #0059b3;
+}
 

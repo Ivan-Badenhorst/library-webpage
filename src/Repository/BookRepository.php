@@ -108,7 +108,32 @@ class BookRepository extends ServiceEntityRepository
         return $query->getResult()[0];
     }
 
+    /**
+     * Returns the average rating of a book in the database
+     *
+     * @param int $bookID -> id of the book in the database
+     * @return int -> average rating
+     */
+    public function findBookRating(int $bookID): int
+    {
+        // $repository = $this->getEntityManager()->getRepository(Book::class);
+        $entityManager = $this->getEntityManager();
 
+        $query = $entityManager->createQuery(
+            'SELECT AVG(r.score) AS average_score
+            FROM App\Entity\BookReviews AS r
+            WHERE r.bookId = :bookID'
+        )->setParameter('bookID', $bookID);
+
+        $result = $query->getSingleScalarResult();
+
+        if($result != 0){
+            return $result;
+        }
+        else{
+            return 0;
+        }
+    }
 
     /**
      * Returns a list of books based on a search term

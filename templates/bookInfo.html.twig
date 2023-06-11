@@ -12,18 +12,25 @@
                 By {{ book.author }}
             </h2>
             <h3>
-                Genre Category and rating
+                Average Rating:
+                {% for i in 1..5 %}
+                    {% if i <= rating / 2  %}
+                        <span class="fa fa-star checked"></span>
+                    {% else %}
+                        <span class="fa fa-star"></span>
+                    {% endif %}
+                {% endfor %}
             </h3>
             <p id="bookId">
                 {{ book.id }}
             </p>
         </div>
         {% if logged %}
-        <form id="book-add-form" method="{{ form.vars.method }}" action="{{ form.vars.action }}">
+        <form id="book-add-form" method="{{ favoritesForm.vars.method }}" action="{{ favoritesForm.vars.action }}">
             <div class="form-row">
-                {{ form_widget(form) }}
+                {{ form_widget(favoritesForm) }}
             </div>
-            {{ form_end(form) }}
+            {{ form_end(favoritesForm) }}
         </form>
         {% endif %}
     </div>
@@ -41,33 +48,32 @@
 
         </div>
 
-        <form id="book-review-form" method="{{ form2.vars.method }}" action="{{ form2.vars.action }}">
+        <form id="book-review-form" method="{{ viewReviewsForm.vars.method }}" action="{{ viewReviewsForm.vars.action }}">
             <div class="form-row">
-                {{ form_widget(form2) }}
+                {{ form_widget(viewReviewsForm) }}
             </div>
-            {{ form_end(form2) }}
+            {{ form_end(viewReviewsForm) }}
         </form>
-
     </div>
-    <form id="write-review-form" method="{{ form3.vars.method }}" action="{{ form3.vars.action }}">
+    <form id="write-review-form" method="{{ writeReviewForm.vars.method }}" action="{{ writeReviewForm.vars.action }}">
         <div class="form-row">
-            {{ form_row(form3.score) }}
+            {{ form_row(writeReviewForm.score) }}
             {% if logged %}
-                {{ form_row(form3.comment,    { 'attr': {
+                {{ form_row(writeReviewForm.comment,    { 'attr': {
                     'id': 'commentTextArea',
                     'logged': 'true'}
                 }) }}
             {% else %}
-                {{ form_row(form3.comment,    { 'attr': {
+                {{ form_row(writeReviewForm.comment,    { 'attr': {
                     'id': 'commentTextArea',
                     'logged': 'false'}
                 }) }}
             {% endif %}
 
-            {{ form_row(form3.submit_review) }}
+            {{ form_row(writeReviewForm.submit_review) }}
         </div>
 
-        {{ form_end(form3) }}
+        {{ form_end(writeReviewForm) }}
         </form>
 </div>
 
